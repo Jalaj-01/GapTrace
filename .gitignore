@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+frontend/dist/
+frontend/build/
+
+# Testing & Coverage
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Local Environment Variables (keep .env.example tracked)
+.env
+backend/.env
+frontend/.env.local
+
+# Data storage files (keep directories with .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/embeddings/*
+!data/embeddings/.gitkeep
+data/metadata/*
+!data/metadata/.gitkeep
+*.db
+*.sqlite3
+*.bin
+*.log
