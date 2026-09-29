@@ -42,6 +42,18 @@ class Paper(Base, TimestampMixin):
         cascade="all, delete-orphan",
         order_by="PaperReference.ref_index",
     )
+    scientific_sentences: Mapped[List["ScientificSentence"]] = relationship(
+        "ScientificSentence",
+        back_populates="paper",
+        cascade="all, delete-orphan",
+        order_by="ScientificSentence.sentence_order",
+    )
+    scientific_extractions: Mapped[List["ScientificExtraction"]] = relationship(
+        "ScientificExtraction",
+        back_populates="paper",
+        cascade="all, delete-orphan",
+        order_by="ScientificExtraction.id",
+    )
     gaps: Mapped[List["ResearchGap"]] = relationship(
         "ResearchGap",
         back_populates="paper",
@@ -86,6 +98,46 @@ class PaperReference(Base, TimestampMixin):
     venue: Mapped[Optional[str]] = mapped_column(String(256), nullable=True)
 
     paper: Mapped["Paper"] = relationship("Paper", back_populates="references")
+
+
+class ScientificSentence(Base, TimestampMixin):
+    """Segmented scientific sentence with full provenance tracking (Phase 2)."""
+
+    __tablename__ = "scientific_sentences"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
+    paper_id: Mapped[int] = mapped_column(Integer, ForeignKey("papers.id", ondelete="CASCADE"), nullable=False, index=True)
+    paragraph_id: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    sentence_order: Mapped[int] = mapped_column(Integer, default=0, nullable=False, index=True)
+    source_text: Mapped[str] = mapped_column(Text, nullable=False)
+    section_name: Mapped[str] = mapped_column(String(128), default="Unknown", nullable=False, index=True)
+    page_number: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+
+    paper: Mapped["Paper"] = relationship("Paper", back_populates="scientific_sentences")
+    extractions: Mapped[List["ScientificExtraction"]] = relationship(
+        "ScientificExtraction",
+        back_populates="sentence",
+        cascade="all, delete-orphan",
+        order_by="ScientificExtraction.id",
+    )
+
+
+class ScientificExtraction(Base, TimestampMixin):
+    """Scientifically classified claim or entity with provenance (Phase 2)."""
+
+    __tablename__ = "scientific_extractions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
+    paper_id: Mapped[int] = mapped_column(Integer, ForeignKey("papers.id", ondelete="CASCADE"), nullable=False, index=True)
+    sentence_id: Mapped[int] = mapped_column(Integer, ForeignKey("scientific_sentences.id", ondelete="CASCADE"), nullable=False, index=True)
+    extraction_type: Mapped[str] = mapped_column(String(64), nullable=False, index=True)  # PROBLEM, OBJECTIVE, METHOD, DATASET, METRIC, RESULT, LIMITATION, FUTURE_WORK, OTHER
+    extracted_text: Mapped[str] = mapped_column(Text, nullable=False)
+    confidence: Mapped[float] = mapped_column(Float, default=1.0, nullable=False)
+    extraction_method: Mapped[str] = mapped_column(String(128), default="rule_based", nullable=False)
+    provenance: Mapped[Dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
+
+    paper: Mapped["Paper"] = relationship("Paper", back_populates="scientific_extractions")
+    sentence: Mapped["ScientificSentence"] = relationship("ScientificSentence", back_populates="extractions")
 
 
 class ResearchGap(Base, TimestampMixin):
@@ -179,3 +231,82 @@ class HealthCheckResponse(BaseModel):
     timestamp: str
     database: Dict[str, Any]
     services: Dict[str, str]
+
+
+# ==============================================================================
+# Phase 2: Scientific NLP Schemas
+# ==============================================================================
+
+class ProvenanceSchema(BaseModel):
+    paper_id: int
+    section_name: str
+    page_number: int
+    paragraph_id: int
+    sentence_id: Optional[int] = None
+    sentence_order: Optional[int] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ScientificSentenceResponse(BaseModel):
+    id: int
+    paper_id: int
+    paragraph_id: int
+    sentence_order: int
+    source_text: str
+    section_name: str
+    page_number: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ScientificExtractionResponse(BaseModel):
+    id: int
+    paper_id: int
+    sentence_id: int
+    extraction_type: str
+    extracted_text: str
+    confidence: float
+    extraction_method: str
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PaperNLPProcessResponse(BaseModel):
+    paper_id: int
+    title: str
+    total_sentences: int
+    total_extractions: int
+    extractions_by_type: Dict[str, int]
+    processed_at: str
+    provenance_verified: bool = True
+
+
+class LimitationExtractionResponse(BaseModel):
+    id: int
+    paper_id: int
+    sentence_id: int
+    limitation_text: str
+    limitation_type: str  # computational, data_scarcity, generalization, methodological, generic
+    confidence: float
+    provenance: Dict[str, Any]
+    section_name: str
+    page_number: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class FutureWorkExtractionResponse(BaseModel):
+    id: int
+    paper_id: int
+    sentence_id: int
+    future_work_text: str
+    confidence: float
+    provenance: Dict[str, Any]
+    section_name: str
+    page_number: int
+
+    model_config = ConfigDict(from_attributes=True)
+
