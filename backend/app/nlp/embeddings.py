@@ -26,17 +26,19 @@ class BaseEmbeddingService(ABC):
 
 
 class EmbeddingService(BaseEmbeddingService):
-    """Sentence Transformers / SciBERT / SPECTER embedding service stub for Phase 1."""
+    """Sentence Transformers embedding service implementation (Phase 3)."""
 
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model_name = model_name
+        from backend.app.services.embeddings.embedding_service import SentenceTransformerEmbeddingService
+        self._service = SentenceTransformerEmbeddingService(model_name=model_name)
 
     def embed_query(self, text: str) -> np.ndarray:
-        raise NotImplementedError("Embedding generation will be implemented in Phase 1.")
+        return self._service.embed_query(text)
 
     def embed_documents(self, documents: List[str]) -> np.ndarray:
-        raise NotImplementedError("Batch document embedding will be implemented in Phase 1.")
+        return self._service.embed_documents(documents)
 
     @property
     def dimension(self) -> int:
-        return 384
+        return self._service.dimension
