@@ -41,12 +41,12 @@ export default function ResearchSessionView() {
 
   const tabs = [
     { id: 'overview', label: 'Overview' },
-    { id: 'evidence', label: 'Evidence', count: activeSession.evidence?.length || 17 },
+    { id: 'evidence', label: 'Evidence', count: activeSession.evidence?.length || 0 },
     { id: 'timeline', label: 'Timeline' },
     { id: 'genealogy', label: 'Genealogy' },
-    { id: 'counter-evidence', label: 'Counter-Evidence', count: activeSession.counterCount || 3 },
+    { id: 'counter-evidence', label: 'Counter-Evidence', count: activeSession.counterCount || 0 },
     { id: 'graph', label: 'Graph' },
-    { id: 'questions', label: 'Research Questions', count: activeSession.researchQuestions?.length || 3 },
+    { id: 'questions', label: 'Research Questions', count: activeSession.researchQuestions?.length || 0 },
   ];
 
   const handleStartAnalysis = () => {
@@ -61,7 +61,7 @@ export default function ResearchSessionView() {
           <span className="banner-badge">Research Session</span>
           <h2 className="banner-title truncate">{activeSession.title}</h2>
           <span className="banner-meta">
-            {activeSession.papersCount || 12} Papers • {activeSession.yearSpan || '2019–2026'}
+            {activeSession.papersCount || 0} Papers • {activeSession.yearSpan || '2020–2026'}
           </span>
         </div>
 
@@ -192,7 +192,7 @@ export default function ResearchSessionView() {
                   role="button"
                 >
                   <span className="stat-label">Supporting evidence</span>
-                  <span className="stat-number font-mono">{activeSession.supportingCount || 17} papers</span>
+                  <span className="stat-number font-mono">{activeSession.supportingCount || 0} papers</span>
                   <span className="stat-hint">Consistent limitations reported</span>
                 </div>
 
@@ -202,7 +202,7 @@ export default function ResearchSessionView() {
                   role="button"
                 >
                   <span className="stat-label">Addressing evidence</span>
-                  <span className="stat-number font-mono">{activeSession.addressingCount || 6} papers</span>
+                  <span className="stat-number font-mono">{activeSession.addressingCount || 0} papers</span>
                   <span className="stat-hint">Partial solutions attempted</span>
                 </div>
 
@@ -212,7 +212,7 @@ export default function ResearchSessionView() {
                   role="button"
                 >
                   <span className="stat-label">Counter-evidence</span>
-                  <span className="stat-number font-mono">{activeSession.counterCount || 3} papers</span>
+                  <span className="stat-number font-mono">{activeSession.counterCount || 0} papers</span>
                   <span className="stat-hint">Competing empirical claims</span>
                 </div>
               </div>

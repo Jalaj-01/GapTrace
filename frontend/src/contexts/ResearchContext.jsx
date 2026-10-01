@@ -16,7 +16,7 @@ export function ResearchProvider({ children }) {
 
   // Active Research Session (for conversational research exploration)
   const [recentSessions, setRecentSessions] = useState(RECENT_SESSIONS);
-  const [activeSession, setActiveSession] = useState(RECENT_SESSIONS[0]);
+  const [activeSession, setActiveSession] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
 
   // Staged files for composer / uploader
@@ -167,6 +167,36 @@ export function ResearchProvider({ children }) {
     setActiveView('session');
     setActiveTab('overview');
 
+    if (promptQuery && promptQuery.trim().length > 0) {
+      const customSession = {
+        id: `session-${Date.now()}`,
+        title: promptQuery.length > 32 ? promptQuery.slice(0, 32) + '...' : promptQuery,
+        query: promptQuery,
+        gapTitle: `Research Analysis: ${promptQuery}`,
+        status: 'EMERGING',
+        papersCount: stagedFiles.length,
+        yearSpan: '2024–2026',
+        supportingCount: 0,
+        addressingCount: 0,
+        counterCount: 0,
+        summary: `Evidence-grounded analysis initiated for query: ${promptQuery.toLowerCase()}.`,
+        whyItAppears: [],
+        evidence: [],
+        timeline: [],
+        genealogy: [],
+        counterEvidence: [],
+        researchQuestions: [
+          `How can the core limitations identified in ${promptQuery} be formally characterized?`,
+          `What benchmark evaluations establish counter-evidence against standard baselines?`,
+          `Can novel regularization mechanisms guarantee generalization on out-of-distribution targets?`,
+        ],
+        graphData: { nodes: [], links: [] },
+      };
+
+      setActiveSession(customSession);
+      setRecentSessions((prev) => [customSession, ...prev.slice(0, 7)]);
+    }
+
     const steps = [
       'Preparing scientific papers...',
       'Extracting empirical evidence & citations...',
@@ -176,39 +206,10 @@ export function ResearchProvider({ children }) {
       'Synthesizing gap genealogy & research questions...',
     ];
 
+    const stepDelay = typeof process !== 'undefined' && process.env?.NODE_ENV === 'test' ? 10 : 250;
     for (let i = 0; i < steps.length; i++) {
       setAnalysisStep(steps[i]);
-      await new Promise((res) => setTimeout(res, 300));
-    }
-
-    if (promptQuery && promptQuery.trim().length > 0) {
-      const customSession = {
-        id: `session-${Date.now()}`,
-        title: promptQuery.length > 32 ? promptQuery.slice(0, 32) + '...' : promptQuery,
-        query: promptQuery,
-        gapTitle: `Persistent Gap in: ${promptQuery}`,
-        status: 'PERSISTENT',
-        papersCount: Math.max(stagedFiles.length, 12),
-        yearSpan: '2021–2026',
-        supportingCount: 17,
-        addressingCount: 6,
-        counterCount: 3,
-        summary: `Evidence-grounded synthesis across ${Math.max(stagedFiles.length, 12)} papers demonstrates an unresolved bottleneck regarding ${promptQuery.toLowerCase()}.`,
-        whyItAppears: RECENT_SESSIONS[0].whyItAppears,
-        evidence: RECENT_SESSIONS[0].evidence,
-        timeline: RECENT_SESSIONS[0].timeline,
-        genealogy: RECENT_SESSIONS[0].genealogy,
-        counterEvidence: RECENT_SESSIONS[0].counterEvidence,
-        researchQuestions: [
-          `How can the core limitations identified in ${promptQuery} be formally characterized?`,
-          `What benchmark evaluations establish counter-evidence against standard baselines?`,
-          `Can novel regularization mechanisms guarantee generalization on out-of-distribution targets?`,
-        ],
-        graphData: RECENT_SESSIONS[0].graphData,
-      };
-
-      setActiveSession(customSession);
-      setRecentSessions((prev) => [customSession, ...prev.slice(0, 7)]);
+      await new Promise((res) => setTimeout(res, stepDelay));
     }
 
     setIsAnalyzing(false);

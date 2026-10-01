@@ -172,7 +172,6 @@ export default function ResearchReportPage() {
                 <option value="gemini">Google Gemini</option>
                 <option value="openai">OpenAI GPT-4o</option>
                 <option value="local">Local HuggingFace LLM</option>
-                <option value="mock">Deterministic Test Mock</option>
               </select>
             </div>
 

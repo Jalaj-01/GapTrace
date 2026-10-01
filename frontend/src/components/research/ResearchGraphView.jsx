@@ -28,36 +28,20 @@ export default function ResearchGraphView({ graphData, onOpenPaper }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('ALL');
 
-  // Default fallback graph data if session has empty graph
-  const defaultNodes = useMemo(
-    () => [
-      { id: 'lim-1', label: 'Cross-Dataset Generalization', type: 'Limitation', x: 420, y: 190, color: NODE_COLORS.Limitation, confidence: 0.96, page: 8, paper: 'Biomedical Transfer 2024' },
-      { id: 'p-1', label: 'Biomedical Transfer 2024', type: 'Paper', x: 200, y: 130, color: NODE_COLORS.Paper, confidence: 0.98, page: 1, paper: 'Biomedical Transfer 2024' },
-      { id: 'p-2', label: 'In Search of Lost Invariance', type: 'Paper', x: 210, y: 300, color: NODE_COLORS.Paper, confidence: 0.94, page: 11, paper: 'Arjovsky et al.' },
-      { id: 'm-1', label: 'Invariant Risk Minimization', type: 'Method', x: 380, y: 340, color: NODE_COLORS.Method, confidence: 0.92, page: 4, paper: 'Arjovsky et al.' },
-      { id: 'd-1', label: 'MIMIC-III EHR Cohort', type: 'Dataset', x: 140, y: 220, color: NODE_COLORS.Dataset, confidence: 0.99, page: 5, paper: 'Johnson et al.' },
-      { id: 'd-2', label: 'WILDS Benchmark Suite', type: 'Dataset', x: 580, y: 360, color: NODE_COLORS.Dataset, confidence: 0.95, page: 7, paper: 'Koh et al.' },
-      { id: 'c-1', label: 'Catastrophic Degradation (28%)', type: 'Claim', x: 620, y: 150, color: NODE_COLORS.Claim, confidence: 0.91, page: 9, paper: 'Biomedical Transfer 2024' },
-      { id: 'rd-1', label: 'Causal Invariant Graph Regularizer', type: 'Research Direction', x: 640, y: 260, color: NODE_COLORS['Research Direction'], confidence: 0.88, page: 15, paper: 'Future Work 2026' },
-    ],
-    []
-  );
+  const nodes = graphData?.nodes || [];
+  const links = graphData?.links || [];
 
-  const defaultLinks = useMemo(
-    () => [
-      { source: 'p-1', target: 'lim-1', relation: 'identifies' },
-      { source: 'p-1', target: 'd-1', relation: 'evaluates_on' },
-      { source: 'lim-1', target: 'c-1', relation: 'leads_to' },
-      { source: 'p-2', target: 'm-1', relation: 'evaluates' },
-      { source: 'm-1', target: 'd-2', relation: 'tested_on' },
-      { source: 'm-1', target: 'lim-1', relation: 'fails_to_solve' },
-      { source: 'lim-1', target: 'rd-1', relation: 'motivates' },
-    ],
-    []
-  );
-
-  const nodes = graphData?.nodes?.length ? graphData.nodes : defaultNodes;
-  const links = graphData?.links?.length ? graphData.links : defaultLinks;
+  if (!nodes || nodes.length === 0) {
+    return (
+      <div className="empty-state-box p-8 text-center border border-dashed border-subtle rounded-lg my-6">
+        <FileText size={32} className="mx-auto mb-2 opacity-40 text-muted-foreground" />
+        <p className="empty-title text-sm font-semibold">No knowledge graph data available</p>
+        <p className="empty-sub text-xs text-muted-foreground mt-1">
+          Ingest papers and build the research knowledge graph to visualize provenance relationships.
+        </p>
+      </div>
+    );
+  }
 
   // Filter nodes
   const filteredNodes = useMemo(() => {
