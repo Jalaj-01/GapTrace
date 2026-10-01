@@ -5,10 +5,16 @@ import { RECENT_SESSIONS } from '../services/researchData';
 const ResearchContext = createContext(null);
 
 export function ResearchProvider({ children }) {
-  // Navigation & Workspace views: 'welcome' | 'session' | 'papers' | 'landscape' | 'gaps' | 'graph' | 'evidence'
+  // Navigation & Workspace views:
+  // 'welcome' | 'session' | 'dashboard' | 'papers' | 'paper-detail' | 'landscape' | 'graph' |
+  // 'gaps' | 'gap-detail' | 'genealogy' | 'lifecycle' | 'counter-evidence' | 'evidence' | 'report'
   const [activeView, setActiveView] = useState('welcome');
 
-  // Active Research Session
+  // Currently inspected entity identifiers across views
+  const [selectedPaperId, setSelectedPaperId] = useState(null);
+  const [selectedGapId, setSelectedGapId] = useState(null);
+
+  // Active Research Session (for conversational research exploration)
   const [recentSessions, setRecentSessions] = useState(RECENT_SESSIONS);
   const [activeSession, setActiveSession] = useState(RECENT_SESSIONS[0]);
   const [activeTab, setActiveTab] = useState('overview');
@@ -44,12 +50,47 @@ export function ResearchProvider({ children }) {
     setIsLoadingPapers(true);
     try {
       const data = await fetchPapers(0, 100);
-      setBackendPapers(Array.isArray(data) ? data : []);
+      const papers = Array.isArray(data) ? data : [];
+      setBackendPapers(papers);
+      if (papers.length > 0 && !selectedPaperId) {
+        setSelectedPaperId(papers[0].id);
+      }
     } catch {
       // Keep existing
     } finally {
       setIsLoadingPapers(false);
     }
+  };
+
+  // Deep-linking navigation helpers
+  const openPaperDetail = (paperId) => {
+    setSelectedPaperId(paperId);
+    setActiveView('paper-detail');
+  };
+
+  const openGapDetail = (gapId) => {
+    setSelectedGapId(gapId);
+    setActiveView('gap-detail');
+  };
+
+  const openGapGenealogy = (gapId) => {
+    setSelectedGapId(gapId);
+    setActiveView('genealogy');
+  };
+
+  const openGapLifecycle = (gapId) => {
+    setSelectedGapId(gapId);
+    setActiveView('lifecycle');
+  };
+
+  const openGapCounterEvidence = (gapId) => {
+    setSelectedGapId(gapId);
+    setActiveView('counter-evidence');
+  };
+
+  const openGapReport = (gapId) => {
+    setSelectedGapId(gapId);
+    setActiveView('report');
   };
 
   // Start fresh research session
@@ -87,14 +128,12 @@ export function ResearchProvider({ children }) {
     // Process each file with real backend upload + Phase 2 NLP
     for (const item of newItems) {
       try {
-        // Upload phase
         setStagedFiles((curr) =>
           curr.map((f) => (f.id === item.id ? { ...f, status: 'processing', progress: 50 } : f))
         );
 
         const uploadedPaper = await uploadPaperFile(item.file);
 
-        // NLP extraction phase
         setStagedFiles((curr) =>
           curr.map((f) => (f.id === item.id ? { ...f, status: 'extracting', progress: 75, backendPaperId: uploadedPaper.id } : f))
         );
@@ -102,14 +141,13 @@ export function ResearchProvider({ children }) {
         try {
           await processPaperNLP(uploadedPaper.id);
         } catch {
-          // Non-blocking if already processed or offline
+          // Non-blocking
         }
 
         setStagedFiles((curr) =>
           curr.map((f) => (f.id === item.id ? { ...f, status: 'ready', progress: 100 } : f))
         );
 
-        // Refresh database papers list
         loadPapers();
       } catch (err) {
         setStagedFiles((curr) =>
@@ -140,10 +178,9 @@ export function ResearchProvider({ children }) {
 
     for (let i = 0; i < steps.length; i++) {
       setAnalysisStep(steps[i]);
-      await new Promise((res) => setTimeout(res, 600));
+      await new Promise((res) => setTimeout(res, 300));
     }
 
-    // Construct or update active session
     if (promptQuery && promptQuery.trim().length > 0) {
       const customSession = {
         id: `session-${Date.now()}`,
@@ -183,6 +220,16 @@ export function ResearchProvider({ children }) {
       value={{
         activeView,
         setActiveView,
+        selectedPaperId,
+        setSelectedPaperId,
+        selectedGapId,
+        setSelectedGapId,
+        openPaperDetail,
+        openGapDetail,
+        openGapGenealogy,
+        openGapLifecycle,
+        openGapCounterEvidence,
+        openGapReport,
         activeSession,
         setActiveSession,
         activeTab,

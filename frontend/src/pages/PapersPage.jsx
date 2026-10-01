@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   BookOpen,
   Search,
@@ -12,254 +12,351 @@ import {
   Layers,
   Sparkles,
   ArrowRight,
+  Filter,
+  Eye,
 } from 'lucide-react';
 import { useResearch } from '../contexts/ResearchContext';
-import { fetchPaperDetails, fetchPaperSentences, fetchPaperLimitations, processPaperNLP } from '../services/api';
+import { fetchPapers, uploadPaperFile, processPaperNLP, fetchTopics } from '../services/api';
+import { LoadingSpinner, SkeletonTable } from '../components/ui/LoadingSkeleton';
+import ErrorBanner from '../components/ui/ErrorBanner';
+import EmptyState from '../components/ui/EmptyState';
 
 export default function PapersPage() {
-  const { backendPapers, loadPapers, isLoadingPapers, setIsUploaderOpen, runAnalysis } = useResearch();
+  const { openPaperDetail, setIsUploaderOpen } = useResearch();
+
+  const [papers, setPapers] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedPaper, setSelectedPaper] = useState(null);
-  const [paperDetails, setPaperDetails] = useState(null);
-  const [paperSentences, setPaperSentences] = useState([]);
-  const [paperLimitations, setPaperLimitations] = useState([]);
-  const [isProcessingNLP, setIsProcessingNLP] = useState(false);
-  const [nlpMessage, setNlpMessage] = useState('');
+  const [selectedYear, setSelectedYear] = useState('ALL');
+  const [selectedTopic, setSelectedTopic] = useState('ALL');
 
-  // Filter papers by search
-  const filteredPapers = backendPapers.filter((p) => {
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      p.title?.toLowerCase().includes(q) ||
-      p.filename?.toLowerCase().includes(q) ||
-      p.authors?.some((a) => a.toLowerCase().includes(q))
-    );
-  });
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  const handleSelectPaper = async (paper) => {
-    setSelectedPaper(paper);
-    setNlpMessage('');
+  // Uploading state inside page
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
+
+  const loadData = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const details = await fetchPaperDetails(paper.id);
-      setPaperDetails(details);
+      const [papersData, topicsData] = await Promise.allSettled([
+        fetchPapers(0, 200),
+        fetchTopics(),
+      ]);
 
-      // Fetch sentences & limitations if already processed
-      const sents = await fetchPaperSentences(paper.id);
-      setPaperSentences(sents);
+      const papersList = papersData.status === 'fulfilled' && Array.isArray(papersData.value) ? papersData.value : [];
+      const topicsList = topicsData.status === 'fulfilled' && Array.isArray(topicsData.value) ? topicsData.value : [];
 
-      const limits = await fetchPaperLimitations(paper.id);
-      setPaperLimitations(limits);
-    } catch {
-      // Ignore
+      setPapers(papersList);
+      setTopics(topicsList);
+    } catch (err) {
+      setError(err.message || 'Failed to load paper library.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleProcessNLP = async (paperId) => {
-    setIsProcessingNLP(true);
-    setNlpMessage('Running Phase 2 Scientific NLP pipeline...');
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // Compute unique years from paper collection
+  const availableYears = useMemo(() => {
+    const years = new Set();
+    papers.forEach((p) => {
+      if (p.year) years.add(p.year);
+    });
+    return Array.from(years).sort((a, b) => b - a);
+  }, [papers]);
+
+  // Filter papers
+  const filteredPapers = useMemo(() => {
+    return papers.filter((p) => {
+      // Search query
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const matchesTitle = p.title?.toLowerCase().includes(q);
+        const matchesFilename = p.filename?.toLowerCase().includes(q);
+        const matchesAuthors = Array.isArray(p.authors)
+          ? p.authors.some((a) => String(a).toLowerCase().includes(q))
+          : false;
+        if (!matchesTitle && !matchesFilename && !matchesAuthors) return false;
+      }
+
+      // Year filter
+      if (selectedYear !== 'ALL') {
+        if (Number(p.year) !== Number(selectedYear)) return false;
+      }
+
+      // Topic filter
+      if (selectedTopic !== 'ALL') {
+        if (p.topic_name && p.topic_name !== selectedTopic) return false;
+      }
+
+      return true;
+    });
+  }, [papers, searchQuery, selectedYear, selectedTopic]);
+
+  // Paginated view
+  const totalPages = Math.max(1, Math.ceil(filteredPapers.length / pageSize));
+  const paginatedPapers = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredPapers.slice(start, start + pageSize);
+  }, [filteredPapers, currentPage, pageSize]);
+
+  const handleInlineFileUpload = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setUploadMessage(`Uploading ${file.name}...`);
     try {
-      const res = await processPaperNLP(paperId);
-      setNlpMessage(`Successfully processed! Extracted ${res.sentences_count} sentences and ${res.extractions_count} entities.`);
-      const sents = await fetchPaperSentences(paperId);
-      setPaperSentences(sents);
-      const limits = await fetchPaperLimitations(paperId);
-      setPaperLimitations(limits);
+      const uploaded = await uploadPaperFile(file);
+      setUploadMessage(`Parsing NLP for ${file.name}...`);
+      try {
+        await processPaperNLP(uploaded.id);
+      } catch {
+        // NLP can finish asynchronously
+      }
+      setUploadMessage(`Successfully ingested "${file.name}"!`);
+      await loadData();
     } catch (err) {
-      setNlpMessage(`Error: ${err.message}`);
+      setError(`Upload failed: ${err.message}`);
     } finally {
-      setIsProcessingNLP(false);
+      setIsUploading(false);
+      setTimeout(() => setUploadMessage(''), 4000);
     }
   };
 
   return (
-    <div className="papers-page-container">
-      {/* Page Header */}
-      <div className="page-header-row">
+    <div className="papers-page-container p-6 space-y-6 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-subtle">
         <div>
-          <h2 className="page-title">Scientific Paper Library</h2>
-          <p className="page-subtitle">
-            Manage ingested PDF papers, inspect section hierarchies, and run Phase 2 NLP discourse extraction.
+          <h1 className="text-2xl font-bold tracking-tight text-primary flex items-center gap-2">
+            <BookOpen size={24} className="text-blue-400" />
+            Scientific Paper Library
+          </h1>
+          <p className="text-sm text-secondary mt-1">
+            Browse ingested publications, search evidence passages, and view structured scientific extractions.
           </p>
         </div>
 
-        <div className="page-header-actions">
-          <button className="btn-secondary" onClick={loadPapers} disabled={isLoadingPapers}>
-            <RotateCw size={14} className={isLoadingPapers ? 'spin-icon' : ''} />
-            <span>Refresh</span>
-          </button>
-          <button className="btn-primary" onClick={() => setIsUploaderOpen(true)}>
-            <UploadCloud size={15} />
-            <span>Upload New PDF</span>
+        <div className="flex items-center gap-2">
+          <label className="cursor-pointer px-3 py-1.5 text-xs font-semibold bg-primary text-primary-contrast rounded-md hover:opacity-90 transition flex items-center gap-1.5">
+            <UploadCloud size={14} />
+            <span>Upload PDF</span>
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleInlineFileUpload}
+              className="hidden"
+              disabled={isUploading}
+            />
+          </label>
+          <button
+            onClick={loadData}
+            disabled={loading}
+            className="p-1.5 border border-subtle rounded-md hover:bg-muted text-secondary hover:text-primary transition"
+            title="Reload papers"
+          >
+            <RotateCw size={14} className={loading ? 'animate-spin' : ''} />
           </button>
         </div>
       </div>
 
-      {/* Search Toolbar */}
-      <div className="papers-search-bar">
-        <Search size={16} className="search-icon" />
-        <input
-          type="text"
-          placeholder="Search ingested papers by title, author, or filename..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+      <ErrorBanner message={error} onRetry={loadData} />
+
+      {uploadMessage && (
+        <div className="p-3 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs rounded-md flex items-center gap-2">
+          <Sparkles size={14} className="animate-spin" />
+          <span>{uploadMessage}</span>
+        </div>
+      )}
+
+      {/* Filter and Search Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 bg-card border border-subtle rounded-lg p-3">
+        {/* Search */}
+        <div className="sm:col-span-6 relative">
+          <Search size={15} className="absolute left-3 top-2.5 text-secondary" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
+            placeholder="Search papers by title, author, or keyword..."
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-muted/30 border border-subtle rounded-md text-primary focus:outline-none focus:border-primary"
+          />
+        </div>
+
+        {/* Year Filter */}
+        <div className="sm:col-span-3 flex items-center gap-2">
+          <Calendar size={14} className="text-secondary flex-shrink-0" />
+          <select
+            value={selectedYear}
+            onChange={(e) => {
+              setSelectedYear(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full py-1.5 px-2 text-xs bg-muted/30 border border-subtle rounded-md text-primary"
+          >
+            <option value="ALL">All Years</option>
+            {availableYears.map((yr) => (
+              <option key={yr} value={yr}>
+                {yr}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Topic Filter */}
+        <div className="sm:col-span-3 flex items-center gap-2">
+          <Layers size={14} className="text-secondary flex-shrink-0" />
+          <select
+            value={selectedTopic}
+            onChange={(e) => {
+              setSelectedTopic(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full py-1.5 px-2 text-xs bg-muted/30 border border-subtle rounded-md text-primary"
+          >
+            <option value="ALL">All Topics</option>
+            {topics.map((t) => (
+              <option key={t.topic_id} value={t.topic_name}>
+                {t.topic_name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Paper List Content */}
+      {loading ? (
+        <div className="space-y-4">
+          <LoadingSpinner text="Fetching scientific publications..." />
+          <SkeletonTable rows={6} cols={5} />
+        </div>
+      ) : filteredPapers.length === 0 ? (
+        <EmptyState
+          icon={FileText}
+          title="No papers found"
+          description={
+            searchQuery || selectedYear !== 'ALL' || selectedTopic !== 'ALL'
+              ? 'No publications match your filter criteria. Try clearing filters.'
+              : 'The paper library is empty. Upload scientific PDF publications to begin research intelligence analysis.'
+          }
+          actionLabel="Clear Filters"
+          onAction={() => {
+            setSearchQuery('');
+            setSelectedYear('ALL');
+            setSelectedTopic('ALL');
+          }}
         />
-        <span className="results-count font-mono">{filteredPapers.length} papers</span>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="papers-layout-grid">
-        {/* Left: Paper List */}
-        <div className="papers-list-column">
-          {filteredPapers.length === 0 ? (
-            <div className="empty-state-box">
-              <BookOpen size={36} />
-              <p className="empty-title">No papers found</p>
-              <p className="empty-sub">
-                {searchQuery
-                  ? 'No papers match your search query.'
-                  : 'Upload your first research paper to begin.'}
-              </p>
-              <button
-                className="btn-primary mt-3"
-                onClick={() => setIsUploaderOpen(true)}
-              >
-                Upload Paper
-              </button>
+      ) : (
+        <div className="space-y-4">
+          <div className="border border-subtle rounded-lg bg-card overflow-hidden shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-muted/50 border-b border-subtle text-secondary uppercase font-mono tracking-wider">
+                  <tr>
+                    <th className="py-3 px-4">ID</th>
+                    <th className="py-3 px-4">Title & Publication</th>
+                    <th className="py-3 px-4">Authors</th>
+                    <th className="py-3 px-4">Year</th>
+                    <th className="py-3 px-4">Sections</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-subtle">
+                  {paginatedPapers.map((paper) => (
+                    <tr
+                      key={paper.id}
+                      className="hover:bg-muted/20 transition group cursor-pointer"
+                      onClick={() => openPaperDetail(paper.id)}
+                    >
+                      <td className="py-3 px-4 font-mono text-secondary">
+                        #{paper.id}
+                      </td>
+                      <td className="py-3 px-4 max-w-md">
+                        <div className="font-semibold text-primary group-hover:text-blue-400 transition">
+                          {paper.title || paper.filename}
+                        </div>
+                        {paper.abstract && (
+                          <div className="text-[11px] text-secondary line-clamp-1 mt-0.5">
+                            {paper.abstract}
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-3 px-4 text-secondary max-w-xs truncate">
+                        {Array.isArray(paper.authors)
+                          ? paper.authors.join(', ')
+                          : paper.authors || 'Unknown'}
+                      </td>
+                      <td className="py-3 px-4 font-mono text-secondary">
+                        {paper.year || '—'}
+                      </td>
+                      <td className="py-3 px-4 font-mono text-secondary">
+                        {paper.section_count || paper.sections?.length || 0}
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openPaperDetail(paper.id);
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-medium border border-subtle rounded hover:bg-muted text-primary transition inline-flex items-center gap-1"
+                        >
+                          <Eye size={12} />
+                          <span>Inspect</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ) : (
-            <div className="papers-cards-stream">
-              {filteredPapers.map((paper) => {
-                const isSelected = selectedPaper?.id === paper.id;
-                return (
-                  <article
-                    key={paper.id}
-                    className={`paper-item-card ${isSelected ? 'selected' : ''}`}
-                    onClick={() => handleSelectPaper(paper)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="paper-card-top">
-                      <span className="paper-year font-mono">{paper.year || '2024'}</span>
-                      <span className="paper-id-tag font-mono">#{paper.id}</span>
-                    </div>
+          </div>
 
-                    <h4 className="paper-card-title truncate" title={paper.title}>
-                      {paper.title || paper.filename}
-                    </h4>
-
-                    <div className="paper-card-authors truncate">
-                      {paper.authors && paper.authors.length > 0
-                        ? paper.authors.join(', ')
-                        : 'Authors unspecified'}
-                    </div>
-
-                    <div className="paper-card-footer">
-                      <span className="file-size-badge font-mono">
-                        {(paper.file_size_bytes / (1024 * 1024)).toFixed(2)} MB
-                      </span>
-                      <span className="sections-badge font-mono">
-                        {paper.section_count || 0} sections
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between text-xs text-secondary px-2">
+              <div>
+                Showing {(currentPage - 1) * pageSize + 1} to{' '}
+                {Math.min(currentPage * pageSize, filteredPapers.length)} of{' '}
+                {filteredPapers.length} papers
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  className="px-2.5 py-1 border border-subtle rounded disabled:opacity-40 hover:bg-muted"
+                >
+                  Previous
+                </button>
+                <span className="px-2 font-mono">
+                  {currentPage} / {totalPages}
+                </span>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  className="px-2.5 py-1 border border-subtle rounded disabled:opacity-40 hover:bg-muted"
+                >
+                  Next
+                </button>
+              </div>
             </div>
           )}
         </div>
-
-        {/* Right: Selected Paper Detail Panel */}
-        <div className="paper-detail-column">
-          {selectedPaper ? (
-            <div className="paper-detail-card">
-              <div className="detail-header">
-                <div className="detail-meta-pill">Paper ID #{selectedPaper.id}</div>
-                <h3 className="detail-title">{selectedPaper.title || selectedPaper.filename}</h3>
-                <div className="detail-authors">
-                  {selectedPaper.authors?.join(', ') || 'Authors extracted from PDF'}
-                </div>
-              </div>
-
-              {/* Action Toolbar */}
-              <div className="detail-actions-bar">
-                <button
-                  className="btn-nlp-process"
-                  onClick={() => handleProcessNLP(selectedPaper.id)}
-                  disabled={isProcessingNLP}
-                >
-                  <Sparkles size={14} className={isProcessingNLP ? 'spin-icon' : ''} />
-                  <span>{isProcessingNLP ? 'Processing NLP...' : 'Run Phase 2 NLP'}</span>
-                </button>
-
-                <button
-                  className="btn-secondary"
-                  onClick={() => runAnalysis(selectedPaper.title)}
-                >
-                  <ArrowRight size={14} />
-                  <span>Trace Gaps For This Paper</span>
-                </button>
-              </div>
-
-              {nlpMessage && <div className="nlp-status-alert">{nlpMessage}</div>}
-
-              {/* Abstract */}
-              {selectedPaper.abstract && (
-                <div className="detail-section">
-                  <h4 className="section-label">Abstract</h4>
-                  <p className="abstract-text">{selectedPaper.abstract}</p>
-                </div>
-              )}
-
-              {/* Detected Limitations */}
-              <div className="detail-section">
-                <h4 className="section-label">
-                  Detected Limitations ({paperLimitations.length})
-                </h4>
-                {paperLimitations.length === 0 ? (
-                  <p className="empty-hint">
-                    No limitations classified yet. Click "Run Phase 2 NLP" to extract discourse categories.
-                  </p>
-                ) : (
-                  <div className="limitations-micro-list">
-                    {paperLimitations.map((lim, idx) => (
-                      <div key={idx} className="micro-limitation-pill">
-                        <span className="lim-badge">{lim.subtype || 'Limitation'}</span>
-                        <span className="lim-text">{lim.source_text}</span>
-                        <span className="lim-page font-mono">Page {lim.page_number}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Section Hierarchy */}
-              {paperDetails?.sections && paperDetails.sections.length > 0 && (
-                <div className="detail-section">
-                  <h4 className="section-label">
-                    Parsed Section Hierarchy ({paperDetails.sections.length})
-                  </h4>
-                  <div className="sections-tree-list">
-                    {paperDetails.sections.map((sec, idx) => (
-                      <div key={idx} className="section-tree-item">
-                        <span className="sec-order font-mono">§{idx + 1}</span>
-                        <span className="sec-title">{sec.section_name}</span>
-                        <span className="sec-page font-mono">Page {sec.page_start}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="detail-placeholder-box">
-              <FileText size={40} />
-              <h4>Select a Paper</h4>
-              <p>Choose any paper from the library to inspect its parsed sections, metadata, and extracted limitations.</p>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

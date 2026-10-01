@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Compass,
   BookOpen,
   Layers,
   Target,
@@ -14,7 +13,12 @@ import {
   Laptop,
   ChevronRight,
   Sparkles,
-  CheckCircle2,
+  GitBranch,
+  Clock,
+  ShieldAlert,
+  FileCode,
+  FileText,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useResearch } from '../../contexts/ResearchContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -32,15 +36,42 @@ export default function Sidebar({ isOpen, onToggleCollapse, isMobile }) {
     setIsAboutOpen,
   } = useResearch();
 
-  const { theme, effectiveTheme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
-  const navItems = [
-    { id: 'welcome', label: 'New Research', icon: Sparkles },
-    { id: 'papers', label: 'Papers', icon: BookOpen, count: backendPapers.length },
-    { id: 'landscape', label: 'Research Landscape', icon: Layers },
-    { id: 'gaps', label: 'Potential Gaps', icon: Target },
-    { id: 'graph', label: 'Research Graph', icon: Share2 },
-    { id: 'evidence', label: 'Evidence Explorer', icon: FileSearch },
+  const navSections = [
+    {
+      group: 'Intelligence',
+      items: [
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { id: 'welcome', label: 'New Research', icon: Sparkles },
+      ],
+    },
+    {
+      group: 'Literature',
+      items: [
+        { id: 'papers', label: 'Papers', icon: BookOpen, count: backendPapers.length },
+        { id: 'paper-detail', label: 'Paper Detail', icon: FileText },
+        { id: 'evidence', label: 'Evidence Explorer', icon: FileSearch },
+      ],
+    },
+    {
+      group: 'Macro Landscape',
+      items: [
+        { id: 'landscape', label: 'Research Landscape', icon: Layers },
+        { id: 'graph', label: 'Research Graph', icon: Share2 },
+      ],
+    },
+    {
+      group: 'Research Gaps',
+      items: [
+        { id: 'gaps', label: 'Potential Gaps', icon: Target },
+        { id: 'gap-detail', label: 'Gap Detail', icon: Target },
+        { id: 'genealogy', label: 'Gap Genealogy', icon: GitBranch },
+        { id: 'lifecycle', label: 'Gap Lifecycle', icon: Clock },
+        { id: 'counter-evidence', label: 'Counter-Evidence', icon: ShieldAlert },
+        { id: 'report', label: 'Research Report', icon: FileCode },
+      ],
+    },
   ];
 
   return (
@@ -48,9 +79,9 @@ export default function Sidebar({ isOpen, onToggleCollapse, isMobile }) {
       className={`sidebar-root ${isOpen ? 'expanded' : 'collapsed'} ${isMobile ? 'mobile-drawer' : ''}`}
       aria-label="Application Sidebar"
     >
-      {/* Top Header: GapTrace Branding */}
+      {/* Top Header: Branding */}
       <div className="sidebar-header">
-        <div className="brand-lockup" onClick={startNewResearch} role="button" tabIndex={0}>
+        <div className="brand-lockup" onClick={() => setActiveView('dashboard')} role="button" tabIndex={0}>
           <div className="logo-glyph" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path
@@ -98,27 +129,36 @@ export default function Sidebar({ isOpen, onToggleCollapse, isMobile }) {
         </button>
       </div>
 
-      {/* Primary Navigation List */}
-      <nav className="sidebar-nav">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeView === item.id;
-          return (
-            <button
-              key={item.id}
-              className={`nav-item-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setActiveView(item.id)}
-              title={item.label}
-              aria-current={isActive ? 'page' : undefined}
-            >
-              <Icon size={17} className="nav-icon" />
-              {isOpen && <span className="nav-label">{item.label}</span>}
-              {isOpen && typeof item.count === 'number' && (
-                <span className="nav-badge">{item.count}</span>
-              )}
-            </button>
-          );
-        })}
+      {/* Primary Navigation List with Groupings */}
+      <nav className="sidebar-nav overflow-y-auto max-h-[calc(100vh-320px)]">
+        {navSections.map((sec, sIdx) => (
+          <div key={sIdx} className="mb-2">
+            {isOpen && sec.group && (
+              <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-secondary/70">
+                {sec.group}
+              </div>
+            )}
+            {sec.items.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeView === item.id;
+              return (
+                <button
+                  key={item.id}
+                  className={`nav-item-btn ${isActive ? 'active' : ''}`}
+                  onClick={() => setActiveView(item.id)}
+                  title={item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <Icon size={16} className="nav-icon" />
+                  {isOpen && <span className="nav-label">{item.label}</span>}
+                  {isOpen && typeof item.count === 'number' && (
+                    <span className="nav-badge">{item.count}</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
       {/* Divider */}
@@ -183,6 +223,7 @@ export default function Sidebar({ isOpen, onToggleCollapse, isMobile }) {
             className="footer-btn"
             onClick={() => setIsSettingsOpen(true)}
             title="Settings"
+            aria-label="Settings"
           >
             <Settings size={15} />
             {isOpen && <span>Settings</span>}

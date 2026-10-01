@@ -2,17 +2,24 @@ import React from 'react';
 import { useResearch } from '../../contexts/ResearchContext';
 import ResearchComposer from '../research/ResearchComposer';
 import ResearchSessionView from '../research/ResearchSessionView';
+import Dashboard from '../../pages/Dashboard';
 import PapersPage from '../../pages/PapersPage';
+import PaperDetailPage from '../../pages/PaperDetailPage';
 import LandscapePage from '../../pages/LandscapePage';
+import ResearchGraphPage from '../../pages/ResearchGraphPage';
 import PotentialGapsPage from '../../pages/PotentialGapsPage';
+import GapDetailPage from '../../pages/GapDetailPage';
+import GapGenealogyPage from '../../pages/GapGenealogyPage';
+import GapLifecyclePage from '../../pages/GapLifecyclePage';
+import CounterEvidencePage from '../../pages/CounterEvidencePage';
 import EvidenceExplorerPage from '../../pages/EvidenceExplorerPage';
-import ResearchGraphView from '../research/ResearchGraphView';
+import ResearchReportPage from '../../pages/ResearchReportPage';
 import PaperUploaderModal from '../research/PaperUploaderModal';
 import SettingsModal from '../ui/SettingsModal';
 import AboutModal from '../ui/AboutModal';
 
 export default function MainWorkspace() {
-  const { activeView, activeSession, stagedFiles, runAnalysis } = useResearch();
+  const { activeView, runAnalysis } = useResearch();
 
   const samplePromptStarters = [
     'Cross-dataset generalization under subpopulation shifts in biomedical NLP',
@@ -24,6 +31,13 @@ export default function MainWorkspace() {
   return (
     <main className="main-workspace-root" role="main">
       <div className="workspace-scroll-area">
+        {/* ================= VIEW: DASHBOARD ================= */}
+        {activeView === 'dashboard' && (
+          <div className="page-wrapper animate-fade-in">
+            <Dashboard />
+          </div>
+        )}
+
         {/* ================= VIEW: WELCOME / NEW RESEARCH ================= */}
         {activeView === 'welcome' && (
           <div className="welcome-screen-container animate-fade-in">
@@ -32,7 +46,7 @@ export default function MainWorkspace() {
               <div className="welcome-logo-glyph">
                 <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
                   <path
-                    d="M12 2L2 7L12 12L22 7L12 12Z"
+                    d="M12 2L2 7L12 12L22 7L12 2Z"
                     stroke="currentColor"
                     strokeWidth="1.8"
                     strokeLinecap="round"
@@ -55,7 +69,7 @@ export default function MainWorkspace() {
                 </svg>
               </div>
 
-              {/* Minimal Heading & Subheading (Section 4) */}
+              {/* Minimal Heading & Subheading */}
               <h1 className="welcome-heading">What would you like to research?</h1>
               <p className="welcome-subheading">
                 Upload scientific papers and trace how research gaps emerge, evolve, and are addressed.
@@ -75,7 +89,7 @@ export default function MainWorkspace() {
               </div>
             </div>
 
-            {/* Bottom-Center Input Composer (Section 5) */}
+            {/* Bottom-Center Input Composer */}
             <div className="composer-anchor-bottom">
               <ResearchComposer />
             </div>
@@ -86,7 +100,6 @@ export default function MainWorkspace() {
         {activeView === 'session' && (
           <div className="session-screen-container animate-fade-in">
             <ResearchSessionView />
-            {/* Ambient Composer for iterative follow-up inquiries */}
             <div className="composer-anchor-sticky">
               <ResearchComposer />
             </div>
@@ -100,10 +113,24 @@ export default function MainWorkspace() {
           </div>
         )}
 
+        {/* ================= VIEW: PAPER DETAIL ================= */}
+        {activeView === 'paper-detail' && (
+          <div className="page-wrapper animate-fade-in">
+            <PaperDetailPage />
+          </div>
+        )}
+
         {/* ================= VIEW: LANDSCAPE ================= */}
         {activeView === 'landscape' && (
           <div className="page-wrapper animate-fade-in">
             <LandscapePage />
+          </div>
+        )}
+
+        {/* ================= VIEW: RESEARCH GRAPH ================= */}
+        {activeView === 'graph' && (
+          <div className="page-wrapper animate-fade-in">
+            <ResearchGraphPage />
           </div>
         )}
 
@@ -114,20 +141,31 @@ export default function MainWorkspace() {
           </div>
         )}
 
-        {/* ================= VIEW: RESEARCH GRAPH ================= */}
-        {activeView === 'graph' && (
+        {/* ================= VIEW: GAP DETAIL ================= */}
+        {activeView === 'gap-detail' && (
           <div className="page-wrapper animate-fade-in">
-            <div className="full-graph-wrapper">
-              <div className="page-header-row mb-4">
-                <div>
-                  <h2 className="page-title">Interactive Research Knowledge Graph</h2>
-                  <p className="page-subtitle">
-                    Discourse relations linking papers, methods, datasets, empirical claims, and persistent limitations.
-                  </p>
-                </div>
-              </div>
-              <ResearchGraphView graphData={activeSession?.graphData} />
-            </div>
+            <GapDetailPage />
+          </div>
+        )}
+
+        {/* ================= VIEW: GAP GENEALOGY ================= */}
+        {activeView === 'genealogy' && (
+          <div className="page-wrapper animate-fade-in">
+            <GapGenealogyPage />
+          </div>
+        )}
+
+        {/* ================= VIEW: GAP LIFECYCLE ================= */}
+        {activeView === 'lifecycle' && (
+          <div className="page-wrapper animate-fade-in">
+            <GapLifecyclePage />
+          </div>
+        )}
+
+        {/* ================= VIEW: COUNTER-EVIDENCE ================= */}
+        {activeView === 'counter-evidence' && (
+          <div className="page-wrapper animate-fade-in">
+            <CounterEvidencePage />
           </div>
         )}
 
@@ -135,6 +173,13 @@ export default function MainWorkspace() {
         {activeView === 'evidence' && (
           <div className="page-wrapper animate-fade-in">
             <EvidenceExplorerPage />
+          </div>
+        )}
+
+        {/* ================= VIEW: RESEARCH REPORT ================= */}
+        {activeView === 'report' && (
+          <div className="page-wrapper animate-fade-in">
+            <ResearchReportPage />
           </div>
         )}
       </div>

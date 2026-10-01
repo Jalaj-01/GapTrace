@@ -1,219 +1,295 @@
-import React, { useEffect, useState } from 'react';
-import { FileSearch, Search, Filter, Copy, Check, Quote, ExternalLink, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  FileSearch,
+  Search,
+  Filter,
+  Copy,
+  Check,
+  Quote,
+  Sparkles,
+  RefreshCw,
+  BookOpen,
+} from 'lucide-react';
+import { searchSemanticEvidence, fetchPapers } from '../services/api';
 import { useResearch } from '../contexts/ResearchContext';
-import { fetchPaperSentences } from '../services/api';
-
-const SAMPLE_EVIDENCE_STREAM = [
-  {
-    id: 1,
-    category: 'LIMITATION',
-    confidence: 0.96,
-    text: 'A notable limitation of our method is that quadratic attention memory complexity limits input contexts to 2048 tokens.',
-    paperTitle: 'Flash-Linear Attention: Boundaries and Trade-offs',
-    section: 'Limitations',
-    page: 12,
-    order: 3,
-  },
-  {
-    id: 2,
-    category: 'PROBLEM',
-    confidence: 0.94,
-    text: 'However, existing transformer models suffer from quadratic memory complexity with respect to sequence length.',
-    paperTitle: 'Efficient Transformers: A Systematic Survey',
-    section: 'Introduction',
-    page: 1,
-    order: 4,
-  },
-  {
-    id: 3,
-    category: 'RESULT',
-    confidence: 0.97,
-    text: 'As shown in Table 2, our proposed method surpasses the strong baseline by 3.8 BLEU points (p < 0.01).',
-    paperTitle: 'Self-Supervised Sequence Alignment',
-    section: 'Results',
-    page: 7,
-    order: 2,
-  },
-  {
-    id: 4,
-    category: 'FUTURE_WORK',
-    confidence: 0.93,
-    text: 'In future work, we plan to extend our framework to multilingual and cross-modal scientific paper corpora.',
-    paperTitle: 'GapTrace: Evidence-Grounded Temporal Gap Discovery',
-    section: 'Conclusion',
-    page: 14,
-    order: 6,
-  },
-  {
-    id: 5,
-    category: 'LIMITATION',
-    confidence: 0.95,
-    text: 'The primary limitation is that our empirical findings may not generalize well to non-English language corpora.',
-    paperTitle: 'Cross-Lingual Clinical Question Answering at Scale',
-    section: 'Discussion & Limitations',
-    page: 9,
-    order: 1,
-  },
-  {
-    id: 6,
-    category: 'METHOD',
-    confidence: 0.92,
-    text: 'We optimize the network parameters using the AdamW optimizer with an initial learning rate of 2e-5 and cosine annealing.',
-    paperTitle: 'Linear Complexity Transformers with Dual Attention',
-    section: 'Methodology',
-    page: 4,
-    order: 5,
-  },
-];
+import { LoadingSpinner, SkeletonCard } from '../components/ui/LoadingSkeleton';
+import ErrorBanner from '../components/ui/ErrorBanner';
+import EmptyState from '../components/ui/EmptyState';
 
 export default function EvidenceExplorerPage() {
-  const { backendPapers } = useResearch();
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
-  const [searchQuery, setSearchQuery] = useState('');
+  const { openPaperDetail } = useResearch();
+
+  const [query, setQuery] = useState('limitation generalization attention dataset');
+  const [topK, setTopK] = useState(15);
+  const [selectedType, setSelectedType] = useState('ALL');
+  const [minYear, setMinYear] = useState('');
+  const [maxYear, setMaxYear] = useState('');
+
+  const [results, setResults] = useState([]);
+  const [retrievalMeta, setRetrievalMeta] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
-  const [liveSentences, setLiveSentences] = useState(SAMPLE_EVIDENCE_STREAM);
 
-  // Attempt to load live sentences from first ingested paper if available
+  const handleSearch = async (e) => {
+    if (e) e.preventDefault();
+    if (!query.trim()) return;
+
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await searchSemanticEvidence({
+        q: query.trim(),
+        topK,
+        extractionType: selectedType !== 'ALL' ? selectedType : null,
+        minYear: minYear ? parseInt(minYear, 10) : null,
+        maxYear: maxYear ? parseInt(maxYear, 10) : null,
+      });
+
+      setResults(data?.results || []);
+      setRetrievalMeta({
+        query: data.query,
+        total_results: data.total_results,
+        retrieval_method: data.retrieval_method,
+        model_name: data.model_name,
+      });
+    } catch (err) {
+      setError(err.message || 'Semantic search failed.');
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Run initial search on mount
   useEffect(() => {
-    const loadRealSentences = async () => {
-      if (backendPapers.length > 0) {
-        try {
-          const sents = await fetchPaperSentences(backendPapers[0].id);
-          if (Array.isArray(sents) && sents.length > 0) {
-            const formatted = sents.map((s) => ({
-              id: s.id,
-              category: s.discourse_class || 'OTHER',
-              confidence: s.classification_confidence || 0.9,
-              text: s.source_text,
-              paperTitle: backendPapers[0].title || backendPapers[0].filename,
-              section: s.section_name || 'General',
-              page: s.page_number || 1,
-              order: s.sentence_order || 1,
-            }));
-            setLiveSentences([...formatted, ...SAMPLE_EVIDENCE_STREAM]);
-          }
-        } catch {
-          // Keep defaults
-        }
-      }
-    };
-    loadRealSentences();
-  }, [backendPapers]);
+    handleSearch();
+  }, [selectedType]);
 
-  const categories = [
-    'ALL',
-    'LIMITATION',
-    'PROBLEM',
-    'OBJECTIVE',
-    'METHOD',
-    'DATASET',
-    'METRIC',
-    'RESULT',
-    'FUTURE_WORK',
-  ];
-
-  const filtered = liveSentences.filter((item) => {
-    const matchesCategory =
-      selectedCategory === 'ALL' || item.category === selectedCategory;
-    const matchesSearch =
-      !searchQuery ||
-      item.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.section.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  const handleCopy = (id, text) => {
+  const handleCopyCitation = (item, idx) => {
+    const text = `"${item.source_text}" (${item.paper?.title || 'Unknown publication'}, p. ${item.page}, sec. ${item.section})`;
     navigator.clipboard.writeText(text);
-    setCopiedId(id);
+    setCopiedId(idx);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
   return (
-    <div className="evidence-explorer-container">
-      <div className="page-header-row">
+    <div className="evidence-explorer-page p-6 space-y-6 max-w-7xl mx-auto">
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-subtle">
         <div>
-          <h2 className="page-title">Evidence Explorer</h2>
-          <p className="page-subtitle">
-            Query classified scientific sentences across ingested literature with strict section and page provenance.
+          <h1 className="text-2xl font-bold tracking-tight text-primary flex items-center gap-2">
+            <FileSearch size={24} className="text-blue-400" />
+            Semantic Evidence Explorer
+          </h1>
+          <p className="text-sm text-secondary mt-1">
+            Perform dense vector similarity retrieval across scientific evidence passages with exact section and page provenance.
           </p>
         </div>
       </div>
 
-      {/* Filter Toolbar */}
-      <div className="evidence-filter-bar">
-        <div className="search-input-box">
-          <Search size={15} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search evidence text, keywords, or section headers..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+      <ErrorBanner message={error} onRetry={handleSearch} />
 
-        <div className="category-pills-row">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`cat-pill-btn ${selectedCategory === cat ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Evidence Stream */}
-      <div className="evidence-stream-list">
-        {filtered.length === 0 ? (
-          <div className="empty-state-box">
-            <FileSearch size={36} />
-            <p className="empty-title">No matching evidence</p>
-            <p className="empty-sub">Try selecting another discourse category or adjusting your search keywords.</p>
+      {/* Semantic Search Box */}
+      <form onSubmit={handleSearch} className="bg-card border border-subtle rounded-lg p-4 space-y-3">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3.5 top-3 text-secondary" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search scientific evidence semantically (e.g., 'subpopulation shifts degrade generalization')..."
+              className="w-full pl-10 pr-4 py-2 text-xs bg-muted/30 border border-subtle rounded-md text-primary focus:outline-none focus:border-primary"
+            />
           </div>
-        ) : (
-          filtered.map((item) => (
-            <article key={item.id} className="explorer-evidence-card">
-              <div className="card-top-bar">
-                <span className={`discourse-badge badge-${item.category.toLowerCase()}`}>
-                  {item.category}
-                </span>
-                <span className="confidence-pill font-mono">
-                  {Math.round(item.confidence * 100)}% confidence
-                </span>
-                <button
-                  className="copy-btn"
-                  onClick={() => handleCopy(item.id, item.text)}
-                  title="Copy evidence quote"
-                >
-                  {copiedId === item.id ? (
-                    <Check size={13} className="text-emerald" />
-                  ) : (
-                    <Copy size={13} />
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 text-xs font-semibold bg-primary text-primary-contrast rounded-md hover:opacity-90 transition flex items-center gap-1.5"
+          >
+            <Sparkles size={14} className={loading ? 'animate-spin' : ''} />
+            <span>{loading ? 'Searching...' : 'Search Evidence'}</span>
+          </button>
+        </div>
+
+        {/* Filter Controls Row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
+          {/* Extraction Type */}
+          <div>
+            <label className="text-[10px] uppercase font-mono text-secondary block mb-1">
+              Extraction Type
+            </label>
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="w-full py-1.5 px-2 bg-muted/30 border border-subtle rounded-md text-primary text-xs"
+            >
+              <option value="ALL">All Extractions</option>
+              <option value="LIMITATION">Limitation</option>
+              <option value="FUTURE_WORK">Future Work</option>
+              <option value="PROBLEM">Problem / Gap</option>
+              <option value="METHOD">Method</option>
+              <option value="RESULT">Result</option>
+              <option value="BACKGROUND">Background</option>
+            </select>
+          </div>
+
+          {/* Top K */}
+          <div>
+            <label className="text-[10px] uppercase font-mono text-secondary block mb-1">
+              Top Matches ({topK})
+            </label>
+            <select
+              value={topK}
+              onChange={(e) => setTopK(Number(e.target.value))}
+              className="w-full py-1.5 px-2 bg-muted/30 border border-subtle rounded-md text-primary text-xs"
+            >
+              <option value={5}>Top 5</option>
+              <option value={10}>Top 10</option>
+              <option value={15}>Top 15</option>
+              <option value={25}>Top 25</option>
+              <option value={50}>Top 50</option>
+            </select>
+          </div>
+
+          {/* Min Year */}
+          <div>
+            <label className="text-[10px] uppercase font-mono text-secondary block mb-1">
+              Min Publication Year
+            </label>
+            <input
+              type="number"
+              placeholder="e.g. 2021"
+              value={minYear}
+              onChange={(e) => setMinYear(e.target.value)}
+              className="w-full py-1 px-2 bg-muted/30 border border-subtle rounded-md text-primary text-xs"
+            />
+          </div>
+
+          {/* Max Year */}
+          <div>
+            <label className="text-[10px] uppercase font-mono text-secondary block mb-1">
+              Max Publication Year
+            </label>
+            <input
+              type="number"
+              placeholder="e.g. 2026"
+              value={maxYear}
+              onChange={(e) => setMaxYear(e.target.value)}
+              className="w-full py-1 px-2 bg-muted/30 border border-subtle rounded-md text-primary text-xs"
+            />
+          </div>
+        </div>
+      </form>
+
+      {/* Retrieval Metadata Bar */}
+      {retrievalMeta && (
+        <div className="flex items-center justify-between text-xs text-secondary px-1">
+          <div className="flex items-center gap-2">
+            <span>Query: &ldquo;{retrievalMeta.query}&rdquo;</span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-muted text-secondary">
+              Method: {retrievalMeta.retrieval_method}
+            </span>
+          </div>
+          <span className="font-mono text-xs">
+            {retrievalMeta.total_results} evidence passages retrieved
+          </span>
+        </div>
+      )}
+
+      {/* Evidence Results List */}
+      {loading ? (
+        <div className="space-y-4">
+          <LoadingSpinner text="Computing dense vector cosine similarities..." />
+          <SkeletonCard count={4} height={110} />
+        </div>
+      ) : results.length === 0 ? (
+        <EmptyState
+          icon={FileSearch}
+          title="No Evidence Excerpts Found"
+          description="Try modifying your semantic search terms or expanding filter constraints."
+          actionLabel="Clear Filters"
+          onAction={() => {
+            setQuery('limitation attention model');
+            setSelectedType('ALL');
+            setMinYear('');
+            setMaxYear('');
+            handleSearch();
+          }}
+        />
+      ) : (
+        <div className="space-y-3">
+          {results.map((item, idx) => {
+            const paperTitle = item.paper?.title || `Paper #${item.paper?.paper_id || 'N/A'}`;
+            const similarityScore = (item.similarity_score || 0).toFixed(4);
+
+            return (
+              <div
+                key={idx}
+                className="p-4 border border-subtle rounded-lg bg-card hover:border-primary/40 transition space-y-2.5"
+              >
+                {/* Header row: Paper Title, Extraction Type, Similarity */}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">
+                      {item.extraction_type || 'EMPIRICAL_EVIDENCE'}
+                    </span>
+                    <button
+                      onClick={() => item.paper?.paper_id && openPaperDetail(item.paper.paper_id)}
+                      className="text-xs font-semibold text-primary hover:text-blue-400 transition truncate max-w-md text-left"
+                    >
+                      {paperTitle}
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-xs font-mono text-secondary">
+                    <span>
+                      Similarity:{' '}
+                      <strong className="text-emerald-400 font-bold">
+                        {similarityScore}
+                      </strong>
+                    </span>
+                    <button
+                      onClick={() => handleCopyCitation(item, idx)}
+                      className="p-1 border border-subtle rounded hover:bg-muted text-secondary hover:text-primary transition"
+                      title="Copy grounded citation"
+                    >
+                      {copiedId === idx ? (
+                        <Check size={13} className="text-emerald-400" />
+                      ) : (
+                        <Copy size={13} />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Exact Sentence Text */}
+                <p className="text-xs text-primary leading-relaxed bg-muted/20 border border-subtle p-3 rounded-md">
+                  &ldquo;{item.source_text}&rdquo;
+                </p>
+
+                {/* Provenance Footer: Section, Page, Year */}
+                <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-secondary">
+                  <span>Section: <strong className="text-primary font-normal">{item.section || 'Unknown'}</strong></span>
+                  <span>Page: <strong className="text-primary font-normal">{item.page || 1}</strong></span>
+                  {item.paper?.year && (
+                    <span>Year: <strong className="text-primary font-normal">{item.paper.year}</strong></span>
                   )}
-                </button>
+                  {item.paper?.paper_id && (
+                    <button
+                      onClick={() => openPaperDetail(item.paper.paper_id)}
+                      className="text-blue-400 hover:underline ml-auto"
+                    >
+                      Inspect Paper &rarr;
+                    </button>
+                  )}
+                </div>
               </div>
-
-              <blockquote className="evidence-body">
-                "{item.text}"
-              </blockquote>
-
-              <div className="card-bottom-provenance font-mono">
-                <span className="prov-paper truncate" title={item.paperTitle}>
-                  {item.paperTitle}
-                </span>
-                <span className="prov-dot">•</span>
-                <span className="prov-sec">§ {item.section}</span>
-                <span className="prov-dot">•</span>
-                <span className="prov-page">Page {item.page}</span>
-                <span className="prov-dot">•</span>
-                <span className="prov-order">Sentence #{item.order}</span>
-              </div>
-            </article>
-          ))
-        )}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
