@@ -19,13 +19,15 @@ class BaseTopicModeler(ABC):
 
 
 class TopicModeler(BaseTopicModeler):
-    """BERTopic topic modeling stub for Phase 1."""
+    """BERTopic & c-TF-IDF scientific topic modeling implementation (Phase 4)."""
 
     def __init__(self, embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.embedding_model = embedding_model
+        from backend.app.services.landscape.topic_modeler import ScientificTopicModeler
+        self._modeler = ScientificTopicModeler()
 
     def fit_transform(self, documents: List[str]) -> Tuple[List[int], List[float]]:
-        raise NotImplementedError("Topic modeling pipeline will be implemented in Phase 1.")
+        return self._modeler.fit_transform(documents)
 
     def get_topic_info(self) -> List[Dict[str, Any]]:
-        raise NotImplementedError("Topic info extraction will be implemented in Phase 1.")
+        return self._modeler.get_topic_info()
