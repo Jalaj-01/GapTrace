@@ -1,6 +1,9 @@
 """Application configuration module using Pydantic Settings."""
 
 import os
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
 from pathlib import Path
 from typing import List, Optional, Union
 from pydantic import AnyHttpUrl, field_validator
@@ -63,13 +66,17 @@ class Settings(BaseSettings):
     LOCAL_LLM_BASE_URL: str = "http://localhost:11434/v1"
     DEFAULT_LLM_MODEL: str = "gemini-2.5-flash"
 
-    # NLP & Storage settings (Phase 1 preparation)
+    # NLP & Storage settings (Phase 3 Semantic Representation)
     EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
+    EMBEDDING_DEVICE: str = "cpu"
+    EMBEDDING_BATCH_SIZE: int = 32
+    EMBEDDING_DIMENSION: int = 384
     SPACY_MODEL: str = "en_core_web_sm"
     TOPIC_MODEL_ALGORITHM: str = "BERTopic"
     # Storage & Upload Configuration
     DATA_DIR: str = "./data"
     FAISS_INDEX_PATH: str = "./data/embeddings/faiss_index.bin"
+    VECTOR_METADATA_PATH: str = "./data/embeddings/vector_metadata.json"
     METADATA_DIR: str = "./data/metadata"
     RAW_UPLOAD_DIR: str = "./data/raw"
     MAX_UPLOAD_SIZE_BYTES: int = 25 * 1024 * 1024  # 25 Megabytes

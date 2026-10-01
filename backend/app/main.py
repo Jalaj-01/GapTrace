@@ -1,7 +1,15 @@
 """FastAPI Application Entry Point."""
 
 from contextlib import asynccontextmanager
+from pathlib import Path
+import sys
 from typing import AsyncGenerator
+
+# Ensure repository root is on sys.path for direct execution or script invocation
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -75,7 +83,7 @@ def create_application() -> FastAPI:
                 "environment": settings.ENVIRONMENT,
                 "documentation": "/docs",
                 "health_check": f"{settings.API_V1_PREFIX}/health",
-                "phase": "Phase 0 - Architecture & Development Foundation",
+                "phase": "Phase 11 - Final Experimental Evaluation (Phases 0-11 Complete)",
             }
         )
 

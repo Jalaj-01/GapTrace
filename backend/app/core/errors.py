@@ -111,6 +111,37 @@ class LLMProviderError(AppException):
         )
 
 
+class LLMTimeoutError(LLMProviderError):
+    """LLM request timed out."""
+
+    def __init__(self, message: str = "LLM request timed out", details: Optional[Dict[str, Any]] = None):
+        super().__init__(message=message, details=details)
+        self.status_code = getattr(status, "HTTP_504_GATEWAY_TIMEOUT", 504)
+        self.code = "LLM_TIMEOUT"
+
+
+class LLMRateLimitError(LLMProviderError):
+    """LLM provider rate limit exceeded."""
+
+    def __init__(self, message: str = "LLM provider rate limit exceeded", details: Optional[Dict[str, Any]] = None):
+        super().__init__(message=message, details=details)
+        self.status_code = getattr(status, "HTTP_429_TOO_MANY_REQUESTS", 429)
+        self.code = "LLM_RATE_LIMIT"
+
+
+class CitationValidationError(AppException):
+    """Citation validation failed or hallucinations detected."""
+
+    def __init__(self, message: str = "Citation validation failed", details: Optional[Dict[str, Any]] = None):
+        super().__init__(
+            message=message,
+            status_code=getattr(status, "HTTP_422_UNPROCESSABLE_CONTENT", 422),
+            code="CITATION_VALIDATION_ERROR",
+            details=details,
+        )
+
+
+
 class NLPProcessingError(AppException):
     """NLP pipeline or model failure."""
 
@@ -119,6 +150,30 @@ class NLPProcessingError(AppException):
             message=message,
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             code="NLP_PROCESSING_ERROR",
+            details=details,
+        )
+
+
+class ValidationError(AppException):
+    """Validation or query constraint failure."""
+
+    def __init__(self, message: str = "Validation failed", details: Optional[Dict[str, Any]] = None):
+        super().__init__(
+            message=message,
+            status_code=status.HTTP_400_BAD_REQUEST,
+            code="VALIDATION_ERROR",
+            details=details,
+        )
+
+
+class RetrievalError(AppException):
+    """Retrieval index or search engine error."""
+
+    def __init__(self, message: str = "Retrieval error", details: Optional[Dict[str, Any]] = None):
+        super().__init__(
+            message=message,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            code="RETRIEVAL_ERROR",
             details=details,
         )
 
