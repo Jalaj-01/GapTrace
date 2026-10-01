@@ -161,20 +161,25 @@ class ScientificNLPService:
 
             # B. Specialized Limitation Detection
             lim_res = limitation_detector.detect(s_text, sec_name)
-            if lim_res and primary_label != "LIMITATION":
-                lim_provenance = {**provenance_payload, "limitation_subtype": lim_res["subtype"]}
-                lim_extraction = ScientificExtraction(
-                    paper_id=paper_id,
-                    sentence_id=sent.id,
-                    extraction_type="LIMITATION",
-                    extracted_text=lim_res["limitation_text"],
-                    confidence=lim_res["confidence"],
-                    extraction_method=f"limitation_detector_{lim_res['subtype']}",
-                    provenance=lim_provenance,
-                )
-                db.add(lim_extraction)
-                created_extractions.append(lim_extraction)
-                counts_by_type["LIMITATION"] = counts_by_type.get("LIMITATION", 0) + 1
+            if lim_res:
+                lim_subtype = lim_res["subtype"]
+                if primary_label == "LIMITATION" and primary_extraction is not None:
+                    primary_extraction.provenance = {**provenance_payload, "limitation_subtype": lim_subtype}
+                    primary_extraction.extraction_method = f"limitation_detector_{lim_subtype}"
+                elif primary_label != "LIMITATION":
+                    lim_provenance = {**provenance_payload, "limitation_subtype": lim_subtype}
+                    lim_extraction = ScientificExtraction(
+                        paper_id=paper_id,
+                        sentence_id=sent.id,
+                        extraction_type="LIMITATION",
+                        extracted_text=lim_res["limitation_text"],
+                        confidence=lim_res["confidence"],
+                        extraction_method=f"limitation_detector_{lim_subtype}",
+                        provenance=lim_provenance,
+                    )
+                    db.add(lim_extraction)
+                    created_extractions.append(lim_extraction)
+                    counts_by_type["LIMITATION"] = counts_by_type.get("LIMITATION", 0) + 1
 
             # C. Specialized Future Work Detection
             fw_res = future_work_detector.detect(s_text, sec_name)
@@ -260,6 +265,14 @@ class ScientificNLPService:
             f"Phase 2 processing completed for paper {paper_id}: "
             f"{len(created_sentences)} sentences segmented, {total_ext} scientific extractions."
         )
+
+        # Phase 3: Incremental evidence embedding generation and FAISS index update
+        try:
+            from backend.app.services.retrieval.evidence_retriever import get_evidence_retriever_service
+            get_evidence_retriever_service().embed_paper_evidence(paper_id, db, save_index=True)
+            logger.info(f"Phase 3: Incremental embeddings updated for paper {paper_id}.")
+        except Exception as emb_exc:
+            logger.warning(f"Phase 3: Incremental evidence embedding deferred for paper {paper_id}: {emb_exc}")
 
         return PaperNLPProcessResponse(
             paper_id=paper_id,

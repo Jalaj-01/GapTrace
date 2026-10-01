@@ -224,6 +224,13 @@ class ScientificEntityExtractor:
 
         return extracted
 
+    def extract_entities(self, sentence: str, section_name: str = "") -> List[Dict[str, Any]]:
+        """Extracts methods, datasets, and metrics combined with provenance context."""
+        methods = self.extract_methods(sentence, section_name)
+        datasets = self.extract_datasets(sentence, section_name)
+        metrics = self.extract_metrics(sentence, section_name)
+        return methods + datasets + metrics
+
 
 # Singleton instance
 scientific_entity_extractor = ScientificEntityExtractor()
