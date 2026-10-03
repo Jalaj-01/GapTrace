@@ -25,14 +25,18 @@ pytest-asyncio>=0.23.5
 # Citation & Research Graph
 networkx>=3.2.1
 
+# Scientific NLP, ML & PDF Processing
+numpy>=1.26.0
+scikit-learn>=1.4.0
+pymupdf>=1.23.0
+nest-asyncio>=1.6.0
+
 # ------------------------------------------------------------------------------
-# Phase 1: Scientific NLP, Embeddings, Vector Search & LLMs
-# (Uncomment or install in Phase 1 as components are implemented)
+# Optional Heavy Weights (Only if running on GPU / High RAM)
 # ------------------------------------------------------------------------------
 # torch>=2.2.0
 # transformers>=4.38.0
 # sentence-transformers>=2.5.0
-# scikit-learn>=1.4.0
 # spacy>=3.7.4
 # bertopic>=0.16.0
 # hdbscan>=0.8.33
