@@ -1,0 +1,11 @@
+case_id,title,gold_status,predicted_status,status_correct,accepted_as_open,is_truly_open,supporting_count,counter_count,addressed_count
+c1,Quadratic Attention Scaling,VERIFIED_OPEN,VERIFIED_OPEN,True,True,True,2,0,0
+c2,Multimodal Clinical Data Scarcity,VERIFIED_OPEN,VERIFIED_OPEN,True,True,True,2,0,0
+c3,Citation Homophily in Graph Networks,VERIFIED_OPEN,VERIFIED_OPEN,True,True,True,2,0,0
+c4,Summarization Evaluation Metric Bias,VERIFIED_OPEN,VERIFIED_OPEN,True,True,True,2,0,0
+c5,Fixed Vocabulary OOV Tokenization,ADDRESSED,ADDRESSED,True,False,False,2,0,1
+c6,Exact Kernel Matrix Inversion,ADDRESSED,ADDRESSED,True,False,False,2,0,1
+c7,Gradient Descent Intractability in Deep Linear Networks,REFUTED,REFUTED,True,False,False,2,1,0
+c8,Attention Head Redundancy Disproof,REFUTED,REFUTED,True,False,False,2,1,0
+c9,Dense Passage Inverted Index Latency,UNCERTAIN,UNCERTAIN,True,False,False,1,0,0
+c10,Scale Eliminates Hallucination in Autoregressive Models,UNCERTAIN,UNCERTAIN,True,False,False,2,0,0

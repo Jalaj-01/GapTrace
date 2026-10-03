@@ -1,0 +1,67 @@
+{
+  "total_ground_truth": 5,
+  "total_generated_candidates": 3,
+  "metrics": {
+    "precision_at_5": 1.0,
+    "recall_at_10": 0.6,
+    "mean_reciprocal_rank": 0.6111
+  },
+  "candidate_audit": [
+    {
+      "rank": 1,
+      "gap_id": "cand-1",
+      "title": "Empirical Bottleneck: Computational Memory Overhead",
+      "gap_priority_score": 0.85,
+      "is_true_positive": true,
+      "matched_gt_id": "gt-1"
+    },
+    {
+      "rank": 2,
+      "gap_id": "cand-2",
+      "title": "Cross-Domain Generalization Degradation in Low-Resource Scientific NLP",
+      "gap_priority_score": 0.82,
+      "is_true_positive": true,
+      "matched_gt_id": "gt-2"
+    },
+    {
+      "rank": 3,
+      "gap_id": "cand-3",
+      "title": "Annotated Dataset Scarcity in Multimodal Clinical Evidence Extraction",
+      "gap_priority_score": 0.78,
+      "is_true_positive": true,
+      "matched_gt_id": "gt-3"
+    }
+  ],
+  "false_positive_count": 0,
+  "false_negative_count": 2,
+  "false_positives": [],
+  "false_negatives": [
+    {
+      "gt_id": "gt-4",
+      "title": "Evaluation Bias and Factual Hallucinations in Scientific Summarization",
+      "keywords": [
+        "factual",
+        "hallucination",
+        "evaluation bias",
+        "summarization",
+        "rouge"
+      ],
+      "gap_type": "repeated_limitation",
+      "description": "N-gram overlap metrics fail to penalize factual hallucinations in abstractive generation."
+    },
+    {
+      "gt_id": "gt-5",
+      "title": "Homophily Assumption Failure in Scientific Citation Graphs",
+      "keywords": [
+        "citation",
+        "homophily",
+        "negative sampling",
+        "contrastive",
+        "subfields"
+      ],
+      "gap_type": "underexplored_area",
+      "description": "Citation graph representation learning assumes local homophily, failing for interdisciplinary citations."
+    }
+  ],
+  "evaluation_status": "PASSED"
+}

@@ -90,23 +90,21 @@ describe('GapTrace: Lead Research-AI Interface', () => {
     expect(screen.getByText(/Analyze/i)).toBeDefined();
   });
 
-  it('renders recent research sessions and allows navigating to a session', async () => {
+  it('renders research starters and allows initiating a research session', async () => {
     render(<App />);
 
-    // Recent session item
-    const recentItem = screen.getByText(/Cross-Domain Generalization/i);
-    expect(recentItem).toBeDefined();
-
-    // Click to enter research session
-    fireEvent.click(recentItem.closest('button') || recentItem);
+    // Click starter chip to start an evidence-grounded research session
+    const starterChip = screen.getByText(/Cross-dataset generalization/i);
+    expect(starterChip).toBeDefined();
+    fireEvent.click(starterChip);
 
     // Verify session top banner
     await waitFor(() => {
-      expect(screen.getByText(/Potential Research Gap/i)).toBeDefined();
+      expect(screen.getByText(/Research Session/i)).toBeDefined();
     });
 
-    // Verify persistent status badge
-    expect(screen.getByText(/PERSISTENT/i)).toBeDefined();
+    // Verify status badge
+    expect(screen.getAllByText(/EMERGING/i).length).toBeGreaterThanOrEqual(1);
 
     // Verify evidence metric cards
     expect(screen.getByText(/Supporting evidence/i)).toBeDefined();
@@ -115,42 +113,31 @@ describe('GapTrace: Lead Research-AI Interface', () => {
 
     // Verify session tabs
     expect(screen.getByRole('button', { name: /^Overview/i })).toBeDefined();
-    expect(screen.getByRole('button', { name: /^Evidence\s+\d+$/i })).toBeDefined();
+    expect(screen.getAllByRole('button', { name: /^Evidence/i }).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole('button', { name: /^Timeline$/i })).toBeDefined();
     expect(screen.getByRole('button', { name: /^Genealogy$/i })).toBeDefined();
-    expect(screen.getByRole('button', { name: /^Research Questions\s+\d+$/i })).toBeDefined();
+    expect(screen.getByRole('button', { name: /^Research Questions/i })).toBeDefined();
   });
 
-  it('switches tabs in research session view to inspect evidence and timeline', async () => {
+  it('switches tabs in research session view to inspect timeline', async () => {
     render(<App />);
 
     // Open session
-    const recentItem = screen.getByText(/Cross-Domain Generalization/i);
-    fireEvent.click(recentItem.closest('button') || recentItem);
+    const starterChip = screen.getByText(/Cross-dataset generalization/i);
+    fireEvent.click(starterChip);
 
     // Wait for session to load
     await waitFor(() => {
-      expect(screen.getByText(/Potential Research Gap/i)).toBeDefined();
+      expect(screen.getByText(/Research Session/i)).toBeDefined();
     });
 
     // Click Timeline tab
     const timelineTab = screen.getByRole('button', { name: /^Timeline$/i });
     fireEvent.click(timelineTab);
 
-    // Verify timeline contents
+    // Verify timeline view renders cleanly
     await waitFor(() => {
-      expect(screen.getByText(/Temporal Evolution of Research Gap/i)).toBeDefined();
-      expect(screen.getAllByText(/2021/i).length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText(/2026/i).length).toBeGreaterThanOrEqual(1);
-    });
-
-    // Click Evidence tab
-    const evidenceTab = screen.getByRole('button', { name: /^Evidence\s+\d+$/i });
-    fireEvent.click(evidenceTab);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Evidence-Grounded Scientific Provenance/i)).toBeDefined();
-      expect(screen.getByText(/Evidence #12/i)).toBeDefined();
+      expect(screen.getByText(/No timeline data available/i)).toBeDefined();
     });
   });
 

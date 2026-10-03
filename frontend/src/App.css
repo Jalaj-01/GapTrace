@@ -32,11 +32,33 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 100vh;
   background-color: var(--bg-sidebar);
   border-right: 1px solid var(--border-subtle);
   transition: width var(--transition-normal), transform var(--transition-normal);
   z-index: 50;
   flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+.sidebar-root::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-root::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-root::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+.sidebar-root::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
 }
 
 .sidebar-root.expanded {
@@ -72,6 +94,7 @@
 /* Sidebar Top Header & Logo */
 .sidebar-header {
   padding: 16px 14px 12px 14px;
+  flex-shrink: 0;
 }
 
 .brand-lockup {
@@ -123,6 +146,7 @@
 /* New Research Action Button */
 .sidebar-action {
   padding: 0 14px 10px 14px;
+  flex-shrink: 0;
 }
 
 .new-research-btn {
@@ -152,6 +176,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 0 10px;
+  flex-shrink: 0;
 }
 
 .nav-item-btn {
@@ -201,16 +226,15 @@
   height: 1px;
   background-color: var(--border-subtle);
   margin: 12px 14px;
+  flex-shrink: 0;
 }
 
 /* Recent Research Sessions */
 .sidebar-recent-section {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
   padding: 0 10px;
+  flex-shrink: 0;
 }
 
 .recent-heading {
@@ -226,8 +250,6 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  overflow-y: auto;
-  flex: 1;
 }
 
 .recent-item-btn {
@@ -281,6 +303,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .theme-toggle-bar {

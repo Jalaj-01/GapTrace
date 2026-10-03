@@ -1,0 +1,3 @@
+Model,Topic Coherence,Topic Stability,Silhouette Score,Outlier Ratio,Expert Quality Rating
+Baseline K-Means (TF-IDF),0.2736,0.184,0.0116,0.0,0.612
+BERTopic (Dense Semantic + c-TF-IDF),0.2695,0.2699,0.0735,0.15,0.888

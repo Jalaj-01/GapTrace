@@ -1,0 +1,93 @@
+{
+  "experiment_name": "Experiment 3: Rule-based vs Transformer-based Limitation Detection",
+  "total_sentences": 150,
+  "total_gold_limitations": 20,
+  "models": {
+    "rule_based": {
+      "model_name": "Rule-based Classifier",
+      "true_positives": 18,
+      "false_positives": 0,
+      "false_negatives": 2,
+      "true_negatives": 130,
+      "precision": 1.0,
+      "precision_ci95": [
+        1.0,
+        1.0
+      ],
+      "recall": 0.9,
+      "recall_ci95": [
+        0.75,
+        1.0
+      ],
+      "f1": 0.9474,
+      "f1_ci95": [
+        0.8571,
+        1.0
+      ],
+      "accuracy": 0.9867,
+      "subtype_accuracy": 0.85
+    },
+    "transformer_based": {
+      "model_name": "Transformer-based Classifier",
+      "true_positives": 8,
+      "false_positives": 1,
+      "false_negatives": 12,
+      "true_negatives": 129,
+      "precision": 0.8889,
+      "precision_ci95": [
+        0.6667,
+        1.0
+      ],
+      "recall": 0.4,
+      "recall_ci95": [
+        0.1874,
+        0.6296
+      ],
+      "f1": 0.5517,
+      "f1_ci95": [
+        0.3077,
+        0.7443
+      ],
+      "accuracy": 0.9133
+    },
+    "hybrid_ensemble": {
+      "model_name": "Hybrid Ensemble Classifier",
+      "true_positives": 19,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "true_negatives": 130,
+      "precision": 1.0,
+      "precision_ci95": [
+        1.0,
+        1.0
+      ],
+      "recall": 0.95,
+      "recall_ci95": [
+        0.8419,
+        1.0
+      ],
+      "f1": 0.9744,
+      "f1_ci95": [
+        0.9142,
+        1.0
+      ],
+      "accuracy": 0.9933
+    }
+  },
+  "statistical_tests": {
+    "mcnemar_rule_vs_transformer": {
+      "b": 12,
+      "c": 1,
+      "statistic": 7.6923,
+      "p_value": 0.005546,
+      "significant_p05": true
+    },
+    "mcnemar_rule_vs_hybrid": {
+      "b": 0,
+      "c": 1,
+      "statistic": 0.0,
+      "p_value": 1.0,
+      "significant_p05": false
+    }
+  }
+}

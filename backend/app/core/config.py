@@ -62,9 +62,10 @@ class Settings(BaseSettings):
     # LLM configuration (provider-independent abstraction)
     LLM_PROVIDER: str = "gemini"
     GEMINI_API_KEY: Optional[str] = None
+    GEMINI_API_KEY_BACKUP: Optional[str] = None
     OPENAI_API_KEY: Optional[str] = None
     LOCAL_LLM_BASE_URL: str = "http://localhost:11434/v1"
-    DEFAULT_LLM_MODEL: str = "gemini-2.5-flash"
+    DEFAULT_LLM_MODEL: str = "gemini-3.8-flash"
 
     # NLP & Storage settings (Phase 3 Semantic Representation)
     EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"

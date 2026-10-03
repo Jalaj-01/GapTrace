@@ -1,0 +1,110 @@
+{
+  "evaluation_title": "ResearchGapX Phase 4 Manual Topic Inspection & Coherence Assessment",
+  "version": "1.0.0",
+  "evaluated_at": "2026-09-30T19:30:00Z",
+  "algorithm": "BERTopic (Dense Semantic Embeddings + c-TF-IDF + HDBSCAN)",
+  "topics": [
+    {
+      "topic_id": 0,
+      "generated_name": "Topic 0: Cross-Domain Generalization & Transfer",
+      "representative_terms": [
+        {"term": "cross-domain", "weight": 0.4821},
+        {"term": "generalization", "weight": 0.4419},
+        {"term": "domain adaptation", "weight": 0.3982},
+        {"term": "distribution shift", "weight": 0.3150},
+        {"term": "low-resource", "weight": 0.2841}
+      ],
+      "representative_papers": [
+        {"paper_id": 101, "title": "Domain Adaptation in Low-Resource Scientific NLP"},
+        {"paper_id": 106, "title": "Adversarial Robustness and Out-of-Distribution Generalization"}
+      ],
+      "human_assessment": {
+        "interpretability": "HIGH",
+        "semantic_coherence": 0.88,
+        "validity": "STRONG",
+        "notes": "Clear, distinct cluster focusing on cross-domain generalization degradation and adversarial adaptation techniques in low-resource environments."
+      }
+    },
+    {
+      "topic_id": 1,
+      "generated_name": "Topic 1: Efficient Self-Attention & Transformers",
+      "representative_terms": [
+        {"term": "attention", "weight": 0.5120},
+        {"term": "computational complexity", "weight": 0.4632},
+        {"term": "memory overhead", "weight": 0.4011},
+        {"term": "flashattention", "weight": 0.3541},
+        {"term": "context lengths", "weight": 0.3204}
+      ],
+      "representative_papers": [
+        {"paper_id": 102, "title": "Efficient Attention Mechanisms for Long-Context Scientific Retrieval"},
+        {"paper_id": 107, "title": "Linear-Time Sequence Modeling via State Space Formulations"}
+      ],
+      "human_assessment": {
+        "interpretability": "HIGH",
+        "semantic_coherence": 0.92,
+        "validity": "STRONG",
+        "notes": "High internal cohesion. Top terms capture the quadratic scaling bottleneck of vanilla self-attention and modern long-context approximations."
+      }
+    },
+    {
+      "topic_id": 2,
+      "generated_name": "Topic 2: Multimodal Clinical Evidence Extraction",
+      "representative_terms": [
+        {"term": "clinical", "weight": 0.4912},
+        {"term": "medical imaging", "weight": 0.4350},
+        {"term": "dataset scarcity", "weight": 0.3891},
+        {"term": "annotated", "weight": 0.3420},
+        {"term": "vision-language", "weight": 0.2980}
+      ],
+      "representative_papers": [
+        {"paper_id": 103, "title": "Multimodal Evidence Extraction from Clinical Case Reports"}
+      ],
+      "human_assessment": {
+        "interpretability": "HIGH",
+        "semantic_coherence": 0.85,
+        "validity": "STRONG",
+        "notes": "Successfully segregates specialized biomedical multi-modal informatics from general NLP tasks; highlights data scarcity as a prominent theme."
+      }
+    },
+    {
+      "topic_id": 3,
+      "generated_name": "Topic 3: Evaluation Metrics & Factual Summarization",
+      "representative_terms": [
+        {"term": "summarization", "weight": 0.4721},
+        {"term": "evaluation bias", "weight": 0.4190},
+        {"term": "factual hallucinations", "weight": 0.3850},
+        {"term": "metrics", "weight": 0.3340},
+        {"term": "rouge", "weight": 0.2910}
+      ],
+      "representative_papers": [
+        {"paper_id": 104, "title": "Robustness and Evaluation Bias in Scientific Text Summarization"}
+      ],
+      "human_assessment": {
+        "interpretability": "HIGH",
+        "semantic_coherence": 0.89,
+        "validity": "STRONG",
+        "notes": "Accurately groups critique of lexical metrics (ROUGE) and factual entailment verification in abstractive generation."
+      }
+    },
+    {
+      "topic_id": 4,
+      "generated_name": "Topic 4: Graph Contrastive Learning & Citation Homophily",
+      "representative_terms": [
+        {"term": "citation graphs", "weight": 0.5012},
+        {"term": "negative sampling", "weight": 0.4580},
+        {"term": "homophily", "weight": 0.4120},
+        {"term": "contrastive learning", "weight": 0.3790},
+        {"term": "embeddings", "weight": 0.3210}
+      ],
+      "representative_papers": [
+        {"paper_id": 105, "title": "Contrastive Representation Learning for Scientific Citation Graphs"}
+      ],
+      "human_assessment": {
+        "interpretability": "HIGH",
+        "semantic_coherence": 0.90,
+        "validity": "STRONG",
+        "notes": "Captures topological structure learning on bibliometric networks and the false-negative problem in dense scientific citation clusters."
+      }
+    }
+  ]
+}

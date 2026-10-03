@@ -1,0 +1,171 @@
+{
+  "experiment_name": "Experiment 1: TF-IDF vs Sentence Transformer Retrieval",
+  "num_queries": 10,
+  "corpus_sentences": 150,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "metrics": {
+    "tfidf_baseline": {
+      "precision@5_mean": 0.2,
+      "precision@5_std": 0.0943,
+      "precision@5_ci95": [
+        0.1326,
+        0.2674
+      ],
+      "recall@5_mean": 0.7,
+      "recall@5_std": 0.3496,
+      "recall@5_ci95": [
+        0.4499,
+        0.9501
+      ],
+      "mrr_mean": 0.6167,
+      "mrr_std": 0.4143,
+      "mrr_ci95": [
+        0.3203,
+        0.913
+      ]
+    },
+    "sentence_transformer": {
+      "precision@5_mean": 0.22,
+      "precision@5_std": 0.0632,
+      "precision@5_ci95": [
+        0.1748,
+        0.2652
+      ],
+      "recall@5_mean": 0.8,
+      "recall@5_std": 0.2582,
+      "recall@5_ci95": [
+        0.6153,
+        0.9847
+      ],
+      "mrr_mean": 0.92,
+      "mrr_std": 0.253,
+      "mrr_ci95": [
+        0.739,
+        1.101
+      ]
+    },
+    "statistical_significance": {
+      "paired_t_test_p@5": {
+        "t_statistic": 1.0,
+        "p_value": 0.343436,
+        "significant_p05": false
+      },
+      "paired_t_test_recall@5": {
+        "t_statistic": 1.0,
+        "p_value": 0.343436,
+        "significant_p05": false
+      },
+      "paired_t_test_mrr": {
+        "t_statistic": 2.3236,
+        "p_value": 0.045219,
+        "significant_p05": true
+      },
+      "wilcoxon_mrr": {
+        "w_statistic": 1.0,
+        "p_value": 0.125
+      }
+    }
+  },
+  "query_level_audit": [
+    {
+      "query_id": "q1",
+      "domain": "Biomedical & Clinical NLP",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 0.5,
+      "semantic_recall@5": 0.5,
+      "tfidf_mrr": 1.0,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q2",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 0.5,
+      "semantic_recall@5": 0.5,
+      "tfidf_mrr": 1.0,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q3",
+      "domain": "Multimodal Scientific Extraction",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 0.5,
+      "semantic_recall@5": 0.5,
+      "tfidf_mrr": 0.25,
+      "semantic_mrr": 0.2
+    },
+    {
+      "query_id": "q4",
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 0.5,
+      "semantic_recall@5": 0.5,
+      "tfidf_mrr": 1.0,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q5",
+      "domain": "Graph Representation Learning & Citation Networks",
+      "tfidf_precision@5": 0.4,
+      "semantic_precision@5": 0.4,
+      "tfidf_recall@5": 1.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 1.0,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q6",
+      "domain": "Biomedical & Clinical NLP",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 1.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 1.0,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q7",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 1.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 0.25,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q8",
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 1.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 0.3333,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q9",
+      "domain": "Graph Representation Learning & Citation Networks",
+      "tfidf_precision@5": 0.2,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 1.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 0.3333,
+      "semantic_mrr": 1.0
+    },
+    {
+      "query_id": "q10",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "tfidf_precision@5": 0.0,
+      "semantic_precision@5": 0.2,
+      "tfidf_recall@5": 0.0,
+      "semantic_recall@5": 1.0,
+      "tfidf_mrr": 0.0,
+      "semantic_mrr": 1.0
+    }
+  ]
+}

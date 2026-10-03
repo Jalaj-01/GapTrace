@@ -29,22 +29,36 @@ export default function Header({ isSidebarOpen, onToggleSidebar }) {
 
   const getViewTitle = () => {
     switch (activeView) {
+      case 'dashboard':
+        return 'Dashboard';
       case 'welcome':
         return 'Research Workspace';
       case 'session':
         return activeSession?.title || 'Research Session';
       case 'papers':
         return 'Paper Library';
+      case 'paper-detail':
+        return 'Paper Detail';
       case 'landscape':
         return 'Research Landscape';
-      case 'gaps':
-        return 'Potential Gaps Catalogue';
       case 'graph':
         return 'Interactive Research Graph';
+      case 'gaps':
+        return 'Potential Gaps Catalogue';
+      case 'gap-detail':
+        return 'Gap Detail';
+      case 'genealogy':
+        return 'Gap Genealogy';
+      case 'lifecycle':
+        return 'Gap Lifecycle';
+      case 'counter-evidence':
+        return 'Counter-Evidence Verification';
       case 'evidence':
         return 'Evidence Explorer';
+      case 'report':
+        return 'Research Report';
       default:
-        return 'GapTrace';
+        return 'Research Workspace';
     }
   };
 

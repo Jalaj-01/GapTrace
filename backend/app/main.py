@@ -62,6 +62,7 @@ def create_application() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
+        allow_origin_regex=r"https://.*\.vercel\.app",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -73,19 +74,37 @@ def create_application() -> FastAPI:
     # 3. Mount Versioned API Routers
     app.include_router(api_v1_router, prefix=settings.API_V1_PREFIX)
 
-    # 4. Root information endpoint
-    @app.get("/", tags=["Root"])
-    async def root_info() -> JSONResponse:
-        return JSONResponse(
-            content={
-                "project": settings.PROJECT_NAME,
-                "version": settings.VERSION,
-                "environment": settings.ENVIRONMENT,
-                "documentation": "/docs",
-                "health_check": f"{settings.API_V1_PREFIX}/health",
-                "phase": "Phase 11 - Final Experimental Evaluation (Phases 0-11 Complete)",
-            }
-        )
+    # 4. Mount Frontend SPA if built, or serve root info
+    frontend_dist = _REPO_ROOT / "frontend" / "dist"
+    if frontend_dist.exists() and (frontend_dist / "index.html").exists():
+        from fastapi.staticfiles import StaticFiles
+        from fastapi.responses import FileResponse
+
+        assets_dir = frontend_dist / "assets"
+        if assets_dir.exists():
+            app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+        @app.get("/{full_path:path}", include_in_schema=False)
+        async def serve_spa(full_path: str):
+            if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("redoc") or full_path == "openapi.json":
+                return JSONResponse({"detail": "Not Found"}, status_code=404)
+            file_candidate = frontend_dist / full_path
+            if full_path and file_candidate.is_file():
+                return FileResponse(file_candidate)
+            return FileResponse(frontend_dist / "index.html")
+    else:
+        @app.get("/", tags=["Root"])
+        async def root_info() -> JSONResponse:
+            return JSONResponse(
+                content={
+                    "project": settings.PROJECT_NAME,
+                    "version": settings.VERSION,
+                    "environment": settings.ENVIRONMENT,
+                    "documentation": "/docs",
+                    "health_check": f"{settings.API_V1_PREFIX}/health",
+                    "phase": "Phase 11 - Final Experimental Evaluation (Phases 0-11 Complete)",
+                }
+            )
 
     return app
 

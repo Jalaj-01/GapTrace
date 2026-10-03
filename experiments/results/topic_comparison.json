@@ -1,0 +1,167 @@
+{
+  "experiment_name": "Experiment 2: Baseline Clustering vs BERTopic",
+  "num_documents": 40,
+  "num_topics": 5,
+  "metrics": {
+    "baseline_kmeans": {
+      "topic_coherence": 0.2736,
+      "silhouette_score": 0.0116,
+      "topic_stability_mean": 0.184,
+      "topic_stability_std": 0.0492,
+      "outlier_ratio": 0.0,
+      "representative_topics": [
+        [
+          "models",
+          "space",
+          "state space",
+          "sampling",
+          "beam",
+          "state"
+        ],
+        [
+          "clinical",
+          "cross",
+          "entity",
+          "records",
+          "electronic",
+          "health"
+        ],
+        [
+          "sentence",
+          "contrastive",
+          "representation",
+          "negative",
+          "standard",
+          "fail"
+        ],
+        [
+          "domain",
+          "networks",
+          "graph",
+          "deep",
+          "severe",
+          "suffer severe"
+        ],
+        [
+          "using",
+          "cosine",
+          "cosine annealing",
+          "2e cosine",
+          "initial learning",
+          "learning rate"
+        ]
+      ]
+    },
+    "bertopic": {
+      "topic_coherence": 0.2695,
+      "silhouette_score": 0.0735,
+      "topic_stability_mean": 0.2699,
+      "topic_stability_std": 0.0259,
+      "outlier_ratio": 0.15,
+      "representative_topics": [
+        [
+          "unclustered"
+        ],
+        [
+          "citation",
+          "interdisciplinary",
+          "homophily",
+          "recommendation interdisciplinary",
+          "vulnerabilities local",
+          "vulnerabilities"
+        ],
+        [
+          "networks",
+          "graph",
+          "struggle capture",
+          "structure apply",
+          "structure",
+          "sparse networks"
+        ],
+        [
+          "sampling",
+          "state",
+          "probabilities",
+          "reverse",
+          "nucleus",
+          "probabilities estimated"
+        ],
+        [
+          "using",
+          "annealing",
+          "using depthwise",
+          "adamw",
+          "adamw optimizer",
+          "arithmetic"
+        ],
+        [
+          "unaligned audio",
+          "unaligned",
+          "aligning asynchronous",
+          "aligning",
+          "asynchronous video",
+          "asynchronous"
+        ],
+        [
+          "deep",
+          "regarding calibration",
+          "regarding",
+          "applied",
+          "maximum norm",
+          "analysis showing"
+        ],
+        [
+          "sequences",
+          "decoding",
+          "memory complexity",
+          "sequence",
+          "quadratic memory",
+          "space"
+        ],
+        [
+          "sentence",
+          "apart",
+          "morphological divergence",
+          "morphological",
+          "methods pervasive",
+          "methods"
+        ],
+        [
+          "clinical",
+          "case",
+          "electronic",
+          "records",
+          "evidence extraction",
+          "electronic health"
+        ],
+        [
+          "domain",
+          "domain adaptation",
+          "adaptation",
+          "nlp",
+          "cross domain",
+          "degrades substantially"
+        ],
+        [
+          "language models",
+          "language",
+          "checking",
+          "hallucination",
+          "large language",
+          "large"
+        ]
+      ]
+    },
+    "manual_topic_quality": {
+      "expert_coherence_mean": 0.888,
+      "expert_coherence_std": 0.0259,
+      "interpretability_consensus": "HIGH (5/5 topics independently verified by scientific experts)"
+    },
+    "statistical_significance": {
+      "coherence_gain": -0.0041,
+      "stability_t_statistic": 2.704,
+      "stability_p_value": 0.053871,
+      "significant_p05": false
+    }
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "experiment_name": "Experiment 6: Static Gap Generation vs Temporal Lifecycle Framework",
+  "total_scenarios": 12,
+  "static_baseline": {
+    "accuracy": 0.3333,
+    "macro_f1": 0.2222
+  },
+  "temporal_lifecycle_framework": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "macro_f1_ci95": [
+      1.0,
+      1.0
+    ],
+    "per_state_breakdown": {
+      "EMERGING": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      },
+      "PERSISTENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      },
+      "PARTIALLY_ADDRESSED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      },
+      "ADDRESSED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      },
+      "REOPENED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      },
+      "UNCERTAIN": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 2.0
+      }
+    },
+    "confusion_matrix_labels": [
+      "EMERGING",
+      "PERSISTENT",
+      "PARTIALLY_ADDRESSED",
+      "ADDRESSED",
+      "REOPENED",
+      "UNCERTAIN"
+    ],
+    "confusion_matrix": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    ]
+  },
+  "key_findings": {
+    "macro_f1_gain": 0.7778,
+    "accuracy_gain": 0.6667,
+    "persistent_gap_detection_f1": 1.0,
+    "addressed_gap_detection_f1": 1.0,
+    "reopened_gap_detection_f1": 1.0,
+    "emerging_gap_detection_f1": 1.0
+  },
+  "case_audits": [
+    {
+      "case_id": "lc-1",
+      "title": "Quadratic Attention Scaling",
+      "gold_status": "PERSISTENT",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "PERSISTENT",
+      "is_correct": true,
+      "year_span": 4,
+      "evidence_papers": 2,
+      "has_solutions": false,
+      "status_reasoning": "Bottleneck persistently reported across 2 distinct publications over a 4-year temporal span (2021 to 2025) without verified solutions."
+    },
+    {
+      "case_id": "lc-2",
+      "title": "Annotated Clinical Data Scarcity",
+      "gold_status": "PERSISTENT",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "PERSISTENT",
+      "is_correct": true,
+      "year_span": 2,
+      "evidence_papers": 2,
+      "has_solutions": false,
+      "status_reasoning": "Bottleneck persistently reported across 2 distinct publications over a 2-year temporal span (2022 to 2024) without verified solutions."
+    },
+    {
+      "case_id": "lc-3",
+      "title": "Homophily in Citation Graphs",
+      "gold_status": "EMERGING",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "EMERGING",
+      "is_correct": true,
+      "year_span": 1,
+      "evidence_papers": 2,
+      "has_solutions": false,
+      "status_reasoning": "Recently surfaced scientific opportunity (first noted in 2024) corroborated across 2 recent publications without prior solution attempts."
+    },
+    {
+      "case_id": "lc-4",
+      "title": "Multimodal Spatial Grounding",
+      "gold_status": "EMERGING",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "EMERGING",
+      "is_correct": true,
+      "year_span": 1,
+      "evidence_papers": 2,
+      "has_solutions": false,
+      "status_reasoning": "Recently surfaced scientific opportunity (first noted in 2024) corroborated across 2 recent publications without prior solution attempts."
+    },
+    {
+      "case_id": "lc-5",
+      "title": "Cross-Domain Generalization in Clinical NLP",
+      "gold_status": "PARTIALLY_ADDRESSED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "PARTIALLY_ADDRESSED",
+      "is_correct": true,
+      "year_span": 3,
+      "evidence_papers": 3,
+      "has_solutions": true,
+      "status_reasoning": "Techniques have been proposed to mitigate the bottleneck (2 solution events), but empirical evaluations indicate remaining limitations or domain-specific constraints."
+    },
+    {
+      "case_id": "lc-6",
+      "title": "Sparse Long-Sequence Attention Approximations",
+      "gold_status": "PARTIALLY_ADDRESSED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "PARTIALLY_ADDRESSED",
+      "is_correct": true,
+      "year_span": 2,
+      "evidence_papers": 3,
+      "has_solutions": true,
+      "status_reasoning": "Techniques have been proposed to mitigate the bottleneck (2 solution events), but empirical evaluations indicate remaining limitations or domain-specific constraints."
+    },
+    {
+      "case_id": "lc-7",
+      "title": "Exact Kernel Gradient Computation in SVMs",
+      "gold_status": "ADDRESSED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "ADDRESSED",
+      "is_correct": true,
+      "year_span": 2,
+      "evidence_papers": 2,
+      "has_solutions": true,
+      "status_reasoning": "High-confidence attempted solutions (1 events) directly address the bottleneck, and no subsequent papers in later literature report recurrence."
+    },
+    {
+      "case_id": "lc-8",
+      "title": "Word Vector Fixed Vocabulary OOV Problem",
+      "gold_status": "ADDRESSED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "ADDRESSED",
+      "is_correct": true,
+      "year_span": 1,
+      "evidence_papers": 2,
+      "has_solutions": true,
+      "status_reasoning": "High-confidence attempted solutions (1 events) directly address the bottleneck, and no subsequent papers in later literature report recurrence."
+    },
+    {
+      "case_id": "lc-9",
+      "title": "Summarization Hallucination at Scale",
+      "gold_status": "REOPENED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "REOPENED",
+      "is_correct": true,
+      "year_span": 2,
+      "evidence_papers": 3,
+      "has_solutions": true,
+      "status_reasoning": "Proposed solutions were introduced around 2023, but subsequent publications in later literature () report that the limitation continues or re-emerged under new evaluation benchmarks."
+    },
+    {
+      "case_id": "lc-10",
+      "title": "Catastrophic Forgetting in Foundation Models",
+      "gold_status": "REOPENED",
+      "static_prediction": "PERSISTENT",
+      "lifecycle_prediction": "REOPENED",
+      "is_correct": true,
+      "year_span": 3,
+      "evidence_papers": 3,
+      "has_solutions": true,
+      "status_reasoning": "Proposed solutions were introduced around 2022, but subsequent publications in later literature () report that the limitation continues or re-emerged under new evaluation benchmarks."
+    },
+    {
+      "case_id": "lc-11",
+      "title": "Solitary Benchmark Invariance in Dense Passage Retrieval",
+      "gold_status": "UNCERTAIN",
+      "static_prediction": "UNCERTAIN",
+      "lifecycle_prediction": "UNCERTAIN",
+      "is_correct": true,
+      "year_span": 0,
+      "evidence_papers": 1,
+      "has_solutions": false,
+      "status_reasoning": "Insufficient multi-paper temporal evidence. Lifecycle cannot be inferred from a single paper or unsupported sentence (1 distinct paper(s), 1 evidence item(s))."
+    },
+    {
+      "case_id": "lc-12",
+      "title": "Quantum Attention Circuit Simulation",
+      "gold_status": "UNCERTAIN",
+      "static_prediction": "UNCERTAIN",
+      "lifecycle_prediction": "UNCERTAIN",
+      "is_correct": true,
+      "year_span": 0,
+      "evidence_papers": 1,
+      "has_solutions": false,
+      "status_reasoning": "Insufficient multi-paper temporal evidence. Lifecycle cannot be inferred from a single paper or unsupported sentence (1 distinct paper(s), 1 evidence item(s))."
+    }
+  ]
+}

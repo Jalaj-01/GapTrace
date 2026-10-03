@@ -130,7 +130,7 @@ export default function Sidebar({ isOpen, onToggleCollapse, isMobile }) {
       </div>
 
       {/* Primary Navigation List with Groupings */}
-      <nav className="sidebar-nav overflow-y-auto max-h-[calc(100vh-320px)]">
+      <nav className="sidebar-nav">
         {navSections.map((sec, sIdx) => (
           <div key={sIdx} className="mb-2">
             {isOpen && sec.group && (

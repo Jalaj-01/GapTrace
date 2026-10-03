@@ -226,14 +226,10 @@ export default function PotentialGapsPage() {
             {filteredCandidates.map((gap) => {
               // Calculate supporting papers
               const suppPapers = gap.supporting_papers || [];
-              const firstYear =
-                suppPapers.length > 0
-                  ? Math.min(
-                      ...suppPapers
-                        .map((p) => p.year)
-                        .filter((y) => typeof y === 'number' && y > 1900)
-                    )
-                  : null;
+              const validYears = suppPapers
+                .map((p) => p.year)
+                .filter((y) => typeof y === 'number' && y > 1900);
+              const firstYear = validYears.length > 0 ? Math.min(...validYears) : null;
 
               // Extract counter-evidence count from signals or supporting items
               const counterCount = gap.signals?.conflicting_evidence

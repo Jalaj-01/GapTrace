@@ -1,0 +1,267 @@
+{
+  "experiment_name": "Experiment 5: Gap Detection With vs Without Counter-Evidence Verification",
+  "total_test_cases": 10,
+  "scientific_nli_evaluation": {
+    "num_pairs": 15,
+    "correct_classifications": 5,
+    "nli_accuracy": 0.3333,
+    "audit": [
+      {
+        "pair_id": "nli-1",
+        "gold_label": "ENTAILMENT",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-2",
+        "gold_label": "CONTRADICTION",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-3",
+        "gold_label": "NEUTRAL",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": true
+      },
+      {
+        "pair_id": "nli-4",
+        "gold_label": "ENTAILMENT",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-5",
+        "gold_label": "CONTRADICTION",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-6",
+        "gold_label": "NEUTRAL",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": true
+      },
+      {
+        "pair_id": "nli-7",
+        "gold_label": "ENTAILMENT",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-8",
+        "gold_label": "CONTRADICTION",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-9",
+        "gold_label": "NEUTRAL",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": true
+      },
+      {
+        "pair_id": "nli-10",
+        "gold_label": "ENTAILMENT",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-11",
+        "gold_label": "CONTRADICTION",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-12",
+        "gold_label": "NEUTRAL",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": true
+      },
+      {
+        "pair_id": "nli-13",
+        "gold_label": "ENTAILMENT",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-14",
+        "gold_label": "CONTRADICTION",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": false
+      },
+      {
+        "pair_id": "nli-15",
+        "gold_label": "NEUTRAL",
+        "pred_label": "NEUTRAL",
+        "confidence": 0.65,
+        "is_correct": true
+      }
+    ]
+  },
+  "without_counter_evidence": {
+    "approach": "Naive Signal Detection (Without Counter-Evidence)",
+    "accepted_candidates": 10,
+    "true_positives": 4,
+    "false_positives": 6,
+    "false_positive_rate": 1.0,
+    "precision_actionable": 0.4,
+    "evidence_support_rate": 0.4,
+    "expert_usefulness": 0.4
+  },
+  "with_counter_evidence": {
+    "approach": "ResearchGapX Active Verification (With Counter-Evidence)",
+    "accepted_candidates": 4,
+    "true_positives": 4,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "true_negatives": 6,
+    "false_positive_rate": 0.0,
+    "precision_actionable": 1.0,
+    "verification_status_accuracy": 1.0,
+    "binary_accuracy": 1.0,
+    "evidence_support_rate": 1.0,
+    "expert_usefulness": 1.0
+  },
+  "statistical_tests": {
+    "false_positive_reduction": 6,
+    "fisher_exact_p_value": 0.084915,
+    "significant_p05": false
+  },
+  "detailed_case_audit": [
+    {
+      "case_id": "c1",
+      "title": "Quadratic Attention Scaling",
+      "gold_status": "VERIFIED_OPEN",
+      "predicted_status": "VERIFIED_OPEN",
+      "status_correct": true,
+      "accepted_as_open": true,
+      "is_truly_open": true,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c2",
+      "title": "Multimodal Clinical Data Scarcity",
+      "gold_status": "VERIFIED_OPEN",
+      "predicted_status": "VERIFIED_OPEN",
+      "status_correct": true,
+      "accepted_as_open": true,
+      "is_truly_open": true,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c3",
+      "title": "Citation Homophily in Graph Networks",
+      "gold_status": "VERIFIED_OPEN",
+      "predicted_status": "VERIFIED_OPEN",
+      "status_correct": true,
+      "accepted_as_open": true,
+      "is_truly_open": true,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c4",
+      "title": "Summarization Evaluation Metric Bias",
+      "gold_status": "VERIFIED_OPEN",
+      "predicted_status": "VERIFIED_OPEN",
+      "status_correct": true,
+      "accepted_as_open": true,
+      "is_truly_open": true,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c5",
+      "title": "Fixed Vocabulary OOV Tokenization",
+      "gold_status": "ADDRESSED",
+      "predicted_status": "ADDRESSED",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 1
+    },
+    {
+      "case_id": "c6",
+      "title": "Exact Kernel Matrix Inversion",
+      "gold_status": "ADDRESSED",
+      "predicted_status": "ADDRESSED",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 1
+    },
+    {
+      "case_id": "c7",
+      "title": "Gradient Descent Intractability in Deep Linear Networks",
+      "gold_status": "REFUTED",
+      "predicted_status": "REFUTED",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 2,
+      "counter_count": 1,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c8",
+      "title": "Attention Head Redundancy Disproof",
+      "gold_status": "REFUTED",
+      "predicted_status": "REFUTED",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 2,
+      "counter_count": 1,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c9",
+      "title": "Dense Passage Inverted Index Latency",
+      "gold_status": "UNCERTAIN",
+      "predicted_status": "UNCERTAIN",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 1,
+      "counter_count": 0,
+      "addressed_count": 0
+    },
+    {
+      "case_id": "c10",
+      "title": "Scale Eliminates Hallucination in Autoregressive Models",
+      "gold_status": "UNCERTAIN",
+      "predicted_status": "UNCERTAIN",
+      "status_correct": true,
+      "accepted_as_open": false,
+      "is_truly_open": false,
+      "supporting_count": 2,
+      "counter_count": 0,
+      "addressed_count": 0
+    }
+  ]
+}

@@ -1,6 +1,13 @@
 """Database connection verification script."""
 
 import sys
+from pathlib import Path
+
+# Ensure repository root is on sys.path
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from sqlalchemy import create_engine, text
 from backend.app.core.config import settings
 from backend.app.core.logging import setup_logging, get_logger

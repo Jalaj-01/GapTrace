@@ -15,12 +15,94 @@ class GeminiProvider(BaseLLMProvider):
 
     BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-2.5-flash", **kwargs: Any):
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        backup_api_key: Optional[str] = None,
+        model: str = "gemini-3.8-flash",
+        **kwargs: Any,
+    ):
         super().__init__(api_key=api_key, model=model, **kwargs)
+        self.backup_api_key = backup_api_key
 
     @property
     def provider_name(self) -> str:
         return "gemini"
+
+    @property
+    def available_keys(self) -> List[str]:
+        keys = []
+        if self.api_key:
+            keys.append(self.api_key)
+        if self.backup_api_key and self.backup_api_key not in keys:
+            keys.append(self.backup_api_key)
+        return keys
+
+    async def _send_generate_content(
+        self,
+        payload: Dict[str, Any],
+        timeout: float = 30.0,
+    ) -> Dict[str, Any]:
+        """Send content generation request with automatic backup key failover."""
+        keys = self.available_keys
+        if not keys:
+            raise LLMProviderError("GEMINI_API_KEY is not configured in environment.")
+
+        last_error: Optional[Exception] = None
+        for idx, key in enumerate(keys):
+            url = f"{self.BASE_URL}/{self.model}:generateContent?key={key}"
+            try:
+                async with httpx.AsyncClient(timeout=timeout) as client:
+                    resp = await client.post(url, json=payload)
+
+                if resp.status_code == 200:
+                    return resp.json()
+
+                error_body = resp.text
+                if resp.status_code == 429:
+                    err = LLMRateLimitError(f"Gemini rate limit exceeded (HTTP 429): {error_body}")
+                elif resp.status_code == 403:
+                    err = LLMProviderError(
+                        f"Gemini API returned HTTP 403 (PERMISSION_DENIED): {error_body}. "
+                        "Please verify that your Google Cloud / Google AI Studio project has enabled the Generative Language API "
+                        "and that the account permissions are active."
+                    )
+                elif resp.status_code == 404:
+                    err = LLMProviderError(f"Gemini model '{self.model}' not found (HTTP 404): {error_body}")
+                else:
+                    err = LLMProviderError(f"Gemini API returned error {resp.status_code}: {error_body}")
+
+                if idx < len(keys) - 1:
+                    logger.warning(
+                        "Gemini key #%d failed with HTTP %d. Attempting backup key failover...",
+                        idx + 1,
+                        resp.status_code,
+                    )
+                    last_error = err
+                    continue
+                else:
+                    raise err
+
+            except httpx.TimeoutException as exc:
+                err = LLMTimeoutError(f"Gemini API request timed out after {timeout}s: {str(exc)}")
+                if idx < len(keys) - 1:
+                    logger.warning("Gemini key #%d timed out. Attempting backup key...", idx + 1)
+                    last_error = err
+                    continue
+                raise err
+            except (LLMRateLimitError, LLMProviderError, LLMTimeoutError):
+                raise
+            except Exception as exc:
+                err = LLMProviderError(f"Unexpected error communicating with Gemini API: {str(exc)}")
+                if idx < len(keys) - 1:
+                    logger.warning("Gemini key #%d encountered error: %s. Trying backup...", idx + 1, str(exc))
+                    last_error = err
+                    continue
+                raise err
+
+        if last_error:
+            raise last_error
+        raise LLMProviderError("Gemini request failed on all configured API keys.")
 
     async def generate_text(
         self,
@@ -30,10 +112,6 @@ class GeminiProvider(BaseLLMProvider):
         timeout: float = 30.0,
     ) -> LLMResponse:
         """Generate text from a prompt using Gemini REST API."""
-        if not self.api_key:
-            raise LLMProviderError("GEMINI_API_KEY is not configured in environment.")
-
-        url = f"{self.BASE_URL}/{self.model}:generateContent?key={self.api_key}"
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
@@ -42,44 +120,29 @@ class GeminiProvider(BaseLLMProvider):
             },
         }
 
-        try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
-                resp = await client.post(url, json=payload)
+        data = await self._send_generate_content(payload=payload, timeout=timeout)
+        candidates = data.get("candidates", [])
+        if not candidates:
+            raise LLMProviderError("Gemini response contained no candidates.")
 
-            if resp.status_code == 429:
-                raise LLMRateLimitError(f"Gemini rate limit exceeded (HTTP 429): {resp.text}")
-            elif resp.status_code >= 400:
-                raise LLMProviderError(f"Gemini API returned error {resp.status_code}: {resp.text}")
+        content_parts = candidates[0].get("content", {}).get("parts", [])
+        if not content_parts or "text" not in content_parts[0]:
+            raise LLMProviderError("Malformed content parts in Gemini response.")
 
-            data = resp.json()
-            candidates = data.get("candidates", [])
-            if not candidates:
-                raise LLMProviderError("Gemini response contained no candidates.")
+        generated_text = content_parts[0]["text"]
+        usage = data.get("usageMetadata", {})
 
-            content_parts = candidates[0].get("content", {}).get("parts", [])
-            if not content_parts or "text" not in content_parts[0]:
-                raise LLMProviderError("Malformed content parts in Gemini response.")
-
-            generated_text = content_parts[0]["text"]
-            usage = data.get("usageMetadata", {})
-
-            return LLMResponse(
-                text=generated_text,
-                model_name=self.model or "gemini-2.5-flash",
-                provider=self.provider_name,
-                usage={
-                    "prompt_tokens": usage.get("promptTokenCount", 0),
-                    "completion_tokens": usage.get("candidatesTokenCount", 0),
-                    "total_tokens": usage.get("totalTokenCount", 0),
-                },
-                metadata={"candidates_count": len(candidates)},
-            )
-        except httpx.TimeoutException as exc:
-            raise LLMTimeoutError(f"Gemini API request timed out after {timeout}s: {str(exc)}")
-        except (LLMRateLimitError, LLMProviderError, LLMTimeoutError):
-            raise
-        except Exception as exc:
-            raise LLMProviderError(f"Unexpected error communicating with Gemini API: {str(exc)}")
+        return LLMResponse(
+            text=generated_text,
+            model_name=self.model or "gemini-3.8-flash",
+            provider=self.provider_name,
+            usage={
+                "prompt_tokens": usage.get("promptTokenCount", 0),
+                "completion_tokens": usage.get("candidatesTokenCount", 0),
+                "total_tokens": usage.get("totalTokenCount", 0),
+            },
+            metadata={"candidates_count": len(candidates)},
+        )
 
     async def generate_chat(
         self,
@@ -89,16 +152,11 @@ class GeminiProvider(BaseLLMProvider):
         timeout: float = 30.0,
     ) -> LLMResponse:
         """Generate response from a list of chat messages."""
-        if not self.api_key:
-            raise LLMProviderError("GEMINI_API_KEY is not configured in environment.")
-
-        # Map LLMMessage roles to Gemini format
         gemini_contents = []
         for msg in messages:
             role = "model" if msg.role == "assistant" else "user"
             gemini_contents.append({"role": role, "parts": [{"text": msg.content}]})
 
-        url = f"{self.BASE_URL}/{self.model}:generateContent?key={self.api_key}"
         payload = {
             "contents": gemini_contents,
             "generationConfig": {
@@ -107,30 +165,15 @@ class GeminiProvider(BaseLLMProvider):
             },
         }
 
-        try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
-                resp = await client.post(url, json=payload)
+        data = await self._send_generate_content(payload=payload, timeout=timeout)
+        candidates = data.get("candidates", [])
+        if not candidates:
+            raise LLMProviderError("Gemini response contained no candidates.")
 
-            if resp.status_code == 429:
-                raise LLMRateLimitError(f"Gemini rate limit exceeded: {resp.text}")
-            elif resp.status_code >= 400:
-                raise LLMProviderError(f"Gemini API error {resp.status_code}: {resp.text}")
-
-            data = resp.json()
-            candidates = data.get("candidates", [])
-            if not candidates:
-                raise LLMProviderError("Gemini response contained no candidates.")
-
-            generated_text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-            return LLMResponse(
-                text=generated_text,
-                model_name=self.model or "gemini-2.5-flash",
-                provider=self.provider_name,
-                usage=data.get("usageMetadata", {}),
-            )
-        except httpx.TimeoutException as exc:
-            raise LLMTimeoutError(f"Gemini request timed out: {str(exc)}")
-        except (LLMRateLimitError, LLMProviderError, LLMTimeoutError):
-            raise
-        except Exception as exc:
-            raise LLMProviderError(f"Gemini chat generation failed: {str(exc)}")
+        generated_text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+        return LLMResponse(
+            text=generated_text,
+            model_name=self.model or "gemini-3.8-flash",
+            provider=self.provider_name,
+            usage=data.get("usageMetadata", {}),
+        )

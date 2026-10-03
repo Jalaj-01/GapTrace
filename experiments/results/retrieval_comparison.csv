@@ -1,0 +1,11 @@
+query_id,domain,tfidf_precision@5,semantic_precision@5,tfidf_recall@5,semantic_recall@5,tfidf_mrr,semantic_mrr
+q1,Biomedical & Clinical NLP,0.2,0.2,0.5,0.5,1.0,1.0
+q2,Efficient Sequence Modeling & Attention Scaling,0.2,0.2,0.5,0.5,1.0,1.0
+q3,Multimodal Scientific Extraction,0.2,0.2,0.5,0.5,0.25,0.2
+q4,Abstractive Summarization & Hallucination Evaluation,0.2,0.2,0.5,0.5,1.0,1.0
+q5,Graph Representation Learning & Citation Networks,0.4,0.4,1.0,1.0,1.0,1.0
+q6,Biomedical & Clinical NLP,0.2,0.2,1.0,1.0,1.0,1.0
+q7,Efficient Sequence Modeling & Attention Scaling,0.2,0.2,1.0,1.0,0.25,1.0
+q8,Abstractive Summarization & Hallucination Evaluation,0.2,0.2,1.0,1.0,0.3333,1.0
+q9,Graph Representation Learning & Citation Networks,0.2,0.2,1.0,1.0,0.3333,1.0
+q10,Efficient Sequence Modeling & Attention Scaling,0.0,0.2,0.0,1.0,0.0,1.0

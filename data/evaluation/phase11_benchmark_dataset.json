@@ -1,0 +1,2793 @@
+{
+  "metadata": {
+    "benchmark_name": "ResearchGapX Phase 11 Scientific Evaluation Benchmark",
+    "version": "1.0.0",
+    "created_at": "2026-10-01T21:40:00Z",
+    "domains": [
+      "Efficient Sequence Modeling & Attention Scaling",
+      "Biomedical & Clinical NLP",
+      "Abstractive Summarization & Hallucination Evaluation",
+      "Graph Representation Learning & Citation Networks",
+      "Multimodal Scientific Extraction"
+    ],
+    "total_papers": 10,
+    "years_covered": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "total_sentences": 150,
+    "total_labelled_limitations": 20,
+    "total_labelled_gaps": 6,
+    "total_labelled_relationships": 36,
+    "total_retrieval_queries": 10,
+    "total_nli_pairs": 15,
+    "total_lifecycle_scenarios": 12
+  },
+  "papers": [
+    {
+      "paper_id": 101,
+      "title": "Domain Adaptation in Low-Resource Scientific NLP",
+      "authors": [
+        "Chen, L.",
+        "Vasquez, M.",
+        "Kumar, S."
+      ],
+      "year": 2024,
+      "domain": "Biomedical & Clinical NLP",
+      "venue": "ACL 2024",
+      "abstract": "Cross-domain generalization degrades substantially when evaluating NLP architectures on out-of-distribution scientific texts without explicit target domain adaptation.",
+      "section_count": 8
+    },
+    {
+      "paper_id": 102,
+      "title": "Efficient Attention Mechanisms for Long-Context Scientific Retrieval",
+      "authors": [
+        "Tripathi, A.",
+        "Patel, R.",
+        "Nakamura, K."
+      ],
+      "year": 2023,
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "venue": "EMNLP 2023",
+      "abstract": "We investigate quadratic computational complexity in full self-attention and propose block-sparse memory approximations for long-document scientific retrieval.",
+      "section_count": 7
+    },
+    {
+      "paper_id": 103,
+      "title": "Multimodal Evidence Extraction from Clinical Case Reports",
+      "authors": [
+        "O'Connor, E.",
+        "Dubois, F.",
+        "Zhang, H."
+      ],
+      "year": 2024,
+      "domain": "Multimodal Scientific Extraction",
+      "venue": "NAACL 2024",
+      "abstract": "We introduce a multimodal evidence extraction framework for clinical case reports, highlighting annotated data scarcity and imaging alignment bottlenecks.",
+      "section_count": 9
+    },
+    {
+      "paper_id": 104,
+      "title": "Robustness and Evaluation Bias in Scientific Text Summarization",
+      "authors": [
+        "Goldberg, Y.",
+        "Schwartz, T.",
+        "Alvarez, D."
+      ],
+      "year": 2022,
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "venue": "COLING 2022",
+      "abstract": "N-gram overlap metrics fail to penalize factual hallucinations in abstractive summarization, motivating atomic sentence decomposition for claim checking.",
+      "section_count": 7
+    },
+    {
+      "paper_id": 105,
+      "title": "Contrastive Representation Learning for Scientific Citation Graphs",
+      "authors": [
+        "Grover, A.",
+        "Leskovec, J.",
+        "Sun, Y."
+      ],
+      "year": 2023,
+      "domain": "Graph Representation Learning & Citation Networks",
+      "venue": "KDD 2023",
+      "abstract": "Standard negative sampling assumes citation homophily, resulting in false negatives when embedding dense interdisciplinary subfields.",
+      "section_count": 8
+    },
+    {
+      "paper_id": 106,
+      "title": "Adversarial Robustness and Out-of-Distribution Generalization in Deep Learning",
+      "authors": [
+        "Schmidt, L.",
+        "Santurkar, S.",
+        "Tsipras, D."
+      ],
+      "year": 2021,
+      "domain": "Biomedical & Clinical NLP",
+      "venue": "NeurIPS 2021",
+      "abstract": "Empirical analysis showing deep neural networks suffer severe accuracy drops under slight covariate shift in domain distributions.",
+      "section_count": 6
+    },
+    {
+      "paper_id": 107,
+      "title": "Linear-Time Sequence Modeling via State Space Formulations",
+      "authors": [
+        "Gu, A.",
+        "Dao, T.",
+        "Re, C."
+      ],
+      "year": 2024,
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "venue": "ICML 2024",
+      "abstract": "Structured state space models achieve sub-quadratic memory complexity on ultra-long sequences while retaining expressive associative recall.",
+      "section_count": 8
+    },
+    {
+      "paper_id": 108,
+      "title": "Cross-Modal Biomedical Entity Linking from Electronic Health Records",
+      "authors": [
+        "Miller, T.",
+        "Bethard, S.",
+        "Savova, G."
+      ],
+      "year": 2022,
+      "domain": "Biomedical & Clinical NLP",
+      "venue": "JAMIA 2022",
+      "abstract": "Entity linking algorithms exhibit poor robustness when handling noisy social clinical narratives and sparse ontology mappings.",
+      "section_count": 7
+    },
+    {
+      "paper_id": 109,
+      "title": "Mitigating Hallucination via Fact-Checking Decomposition in Large Language Models",
+      "authors": [
+        "Min, S.",
+        "Krishna, K.",
+        "Zettlemoyer, L."
+      ],
+      "year": 2024,
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "venue": "TACL 2024",
+      "abstract": "Despite scale, generative language models hallucinate unsupported claims; we present an automated factuality audit framework.",
+      "section_count": 8
+    },
+    {
+      "paper_id": 110,
+      "title": "Topological Homophily and Citation Recommendation in Interdisciplinary Research",
+      "authors": [
+        "West, J.",
+        "Portenoy, J.",
+        "Bergstrom, C."
+      ],
+      "year": 2025,
+      "domain": "Graph Representation Learning & Citation Networks",
+      "venue": "WWW 2025",
+      "abstract": "Interdisciplinary discovery bridges disjoint citation communities, exposing vulnerabilities in local neighborhood graph embeddings.",
+      "section_count": 7
+    }
+  ],
+  "sentences": [
+    {
+      "id": 1,
+      "text": "However, existing transformer models suffer from quadratic memory complexity with respect to sequence length.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1001,
+      "paper_id": 101
+    },
+    {
+      "id": 2,
+      "text": "A major challenge in clinical NLP is the pervasive shortage of expert-annotated electronic health records.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1002,
+      "paper_id": 102
+    },
+    {
+      "id": 3,
+      "text": "Current graph neural networks struggle to capture long-range topological dependencies in sparse networks.",
+      "section_name": "Related Work",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1003,
+      "paper_id": 103
+    },
+    {
+      "id": 4,
+      "text": "Despite substantial progress, dense passage retrieval remains vulnerable to lexical mismatch and domain shifts.",
+      "section_name": "Background",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1004,
+      "paper_id": 104
+    },
+    {
+      "id": 5,
+      "text": "The fundamental bottleneck of autoregressive decoding lies in the strictly sequential generation process.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1005,
+      "paper_id": 105
+    },
+    {
+      "id": 6,
+      "text": "A key difficulty in multi-modal learning is aligning asynchronous video frames with unaligned audio signals.",
+      "section_name": "Related Work",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1006,
+      "paper_id": 106
+    },
+    {
+      "id": 7,
+      "text": "Previous approaches suffer from severe catastrophic forgetting when fine-tuned sequentially on disparate tasks.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1007,
+      "paper_id": 107
+    },
+    {
+      "id": 8,
+      "text": "Standard contrastive learning objectives often fail to prevent representation collapse in low-resource regimes.",
+      "section_name": "Motivation",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1008,
+      "paper_id": 108
+    },
+    {
+      "id": 9,
+      "text": "The primary shortcoming of unsupervised sentence representation methods is the pervasive anisotropy problem.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1009,
+      "paper_id": 109
+    },
+    {
+      "id": 10,
+      "text": "A notable drawback of diffusion models is their slow sampling speed during reverse trajectory estimation.",
+      "section_name": "Related Work",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1010,
+      "paper_id": 110
+    },
+    {
+      "id": 11,
+      "text": "Existing cross-lingual encoders struggle with low-resource languages that have morphological divergence from English.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1011,
+      "paper_id": 101
+    },
+    {
+      "id": 12,
+      "text": "This discrepancy highlights an unresolved issue regarding the calibration of predictive uncertainty in deep ensembles.",
+      "section_name": "Motivation",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1012,
+      "paper_id": 102
+    },
+    {
+      "id": 13,
+      "text": "Conventional heuristic-based entity linkers exhibit poor robustness when handling noisy social media texts.",
+      "section_name": "Related Work",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1013,
+      "paper_id": 103
+    },
+    {
+      "id": 14,
+      "text": "However, hallucination in large language models remains an open challenge that impedes reliable medical question answering.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1014,
+      "paper_id": 104
+    },
+    {
+      "id": 15,
+      "text": "The inability of attention heads to resolve co-reference in nested clauses presents an acute obstacle.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1015,
+      "paper_id": 105
+    },
+    {
+      "id": 16,
+      "text": "In this paper, we propose a novel linear attention mechanism that scales sub-quadratically with input length.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1016,
+      "paper_id": 106
+    },
+    {
+      "id": 17,
+      "text": "Our goal is to develop an evidence-grounded framework for automated research gap discovery across scientific corpora.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1017,
+      "paper_id": 107
+    },
+    {
+      "id": 18,
+      "text": "We aim to address the sample-inefficiency problem in reinforcement learning through self-supervised state abstractions.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1018,
+      "paper_id": 108
+    },
+    {
+      "id": 19,
+      "text": "This paper presents FastAlign, a lightweight algorithm designed to align multilingual representations without parallel data.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1019,
+      "paper_id": 109
+    },
+    {
+      "id": 20,
+      "text": "The primary objective of this study is to systematically evaluate the zero-shot reasoning capabilities of quantized language models.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1020,
+      "paper_id": 110
+    },
+    {
+      "id": 21,
+      "text": "To overcome these challenges, we introduce an adaptive curriculum learning strategy tailored for low-resource translation.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1021,
+      "paper_id": 101
+    },
+    {
+      "id": 22,
+      "text": "Here, we investigate whether parameter-efficient fine-tuning can match full-weight updates in cross-domain transfer.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1022,
+      "paper_id": 102
+    },
+    {
+      "id": 23,
+      "text": "We formulate the question answering task as a constrained path search over a dynamically constructed knowledge graph.",
+      "section_name": "Overview",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1023,
+      "paper_id": 103
+    },
+    {
+      "id": 24,
+      "text": "Our focus is on designing an end-to-end differentiable neural retriever that operates in linear time.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1024,
+      "paper_id": 104
+    },
+    {
+      "id": 25,
+      "text": "This study aims to quantify the environmental impact and carbon footprint of training extreme-scale vision models.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1025,
+      "paper_id": 105
+    },
+    {
+      "id": 26,
+      "text": "We present a comprehensive taxonomy of hallucination types in clinical summarization systems.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1026,
+      "paper_id": 106
+    },
+    {
+      "id": 27,
+      "text": "In this work, we propose a spectral clustering formulation for multi-document scientific claim verification.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1027,
+      "paper_id": 107
+    },
+    {
+      "id": 28,
+      "text": "The main contribution of this paper is an open-source evaluation benchmark for scientific entity recognition.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1028,
+      "paper_id": 108
+    },
+    {
+      "id": 29,
+      "text": "We develop a dual-branch neural architecture that concurrently models semantic syntax and lexical co-occurrence.",
+      "section_name": "Methodology",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1029,
+      "paper_id": 109
+    },
+    {
+      "id": 30,
+      "text": "Our paper investigates the theoretical bounds of gradient compression under non-IID client distributions.",
+      "section_name": "Introduction",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1030,
+      "paper_id": 110
+    },
+    {
+      "id": 31,
+      "text": "We optimize the network parameters using the AdamW optimizer with an initial learning rate of 2e-5 and cosine annealing.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1031,
+      "paper_id": 101
+    },
+    {
+      "id": 32,
+      "text": "The architecture consists of a 12-layer bidirectional transformer encoder followed by a multi-head self-attention pooling layer.",
+      "section_name": "Model Architecture",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1032,
+      "paper_id": 102
+    },
+    {
+      "id": 33,
+      "text": "Specifically, we compute the cross-entropy loss augmented with an L2 regularization penalty over all hidden representations.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1033,
+      "paper_id": 103
+    },
+    {
+      "id": 34,
+      "text": "We apply greedy decoding during inference and truncate sequences exceeding 512 tokens using BPE tokenization.",
+      "section_name": "Implementation Details",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1034,
+      "paper_id": 104
+    },
+    {
+      "id": 35,
+      "text": "The contrastive objective pulls positive sentence pairs together while pushing in-batch negative representations apart.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1035,
+      "paper_id": 105
+    },
+    {
+      "id": 36,
+      "text": "We implement the convolutional layers using depthwise separable convolutions with a kernel size of 3x3 and stride 1.",
+      "section_name": "Architecture",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1036,
+      "paper_id": 106
+    },
+    {
+      "id": 37,
+      "text": "To prevent overfitting, dropout with a probability of 0.1 is applied before each feed-forward projection.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1037,
+      "paper_id": 107
+    },
+    {
+      "id": 38,
+      "text": "We train our model for 40 epochs on 8 NVIDIA A100 GPUs using mixed-precision arithmetic (FP16).",
+      "section_name": "Experimental Setup",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1038,
+      "paper_id": 108
+    },
+    {
+      "id": 39,
+      "text": "The state transition probabilities are estimated using an expectation-maximization algorithm converged at 100 iterations.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1039,
+      "paper_id": 109
+    },
+    {
+      "id": 40,
+      "text": "We employ top-p nucleus sampling with p=0.9 and temperature tau=0.7 to generate diverse reasoning chains.",
+      "section_name": "Methods",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1040,
+      "paper_id": 110
+    },
+    {
+      "id": 41,
+      "text": "A soft nearest-neighbor lookup is conducted over the dense embedding index using approximate cosine similarity.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1041,
+      "paper_id": 101
+    },
+    {
+      "id": 42,
+      "text": "We adopt beam search with a beam width of 5 and length penalty alpha=0.6 for translating source documents.",
+      "section_name": "Methods",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1042,
+      "paper_id": 102
+    },
+    {
+      "id": 43,
+      "text": "The gradient updates are clipped to a maximum norm of 1.0 to ensure numerical stability during backpropagation.",
+      "section_name": "Training Setup",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1043,
+      "paper_id": 103
+    },
+    {
+      "id": 44,
+      "text": "We utilize Monte Carlo tree search to simulate exploratory trajectories across the decision state space.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1044,
+      "paper_id": 104
+    },
+    {
+      "id": 45,
+      "text": "To encode graph structure, we apply relational graph convolutional networks with two message-passing iterations.",
+      "section_name": "Methodology",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1045,
+      "paper_id": 105
+    },
+    {
+      "id": 46,
+      "text": "We evaluate our proposed method on the SQuAD 2.0 benchmark dataset consisting of 150,000 question-answer pairs.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1046,
+      "paper_id": 106
+    },
+    {
+      "id": 47,
+      "text": "Experiments are conducted across three standard NLP benchmarks: GLUE, SuperGLUE, and MNLI.",
+      "section_name": "Experimental Setup",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1047,
+      "paper_id": 107
+    },
+    {
+      "id": 48,
+      "text": "The training set comprises 80,000 synthetic clinical notes sampled from the MIMIC-III database.",
+      "section_name": "Data Collection",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1048,
+      "paper_id": 108
+    },
+    {
+      "id": 49,
+      "text": "For cross-lingual transfer, we utilize the XNLI corpus covering 15 distinct languages.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1049,
+      "paper_id": 109
+    },
+    {
+      "id": 50,
+      "text": "We partition the SciFact corpus into 800 training claims, 150 validation claims, and 300 test claims.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1050,
+      "paper_id": 110
+    },
+    {
+      "id": 51,
+      "text": "Our pre-training corpus contains 50 billion tokens extracted from PubMed Central biomedical articles.",
+      "section_name": "Corpus Details",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1051,
+      "paper_id": 101
+    },
+    {
+      "id": 52,
+      "text": "We evaluate image retrieval performance using MS COCO and Flickr30k benchmark collections.",
+      "section_name": "Experiments",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1052,
+      "paper_id": 102
+    },
+    {
+      "id": 53,
+      "text": "The dataset contains 25,000 customer reviews crawled from Yelp with binary sentiment labels.",
+      "section_name": "Data",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1053,
+      "paper_id": 103
+    },
+    {
+      "id": 54,
+      "text": "We test our approach on the WMT 2014 English-to-German and English-to-French translation corpora.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1054,
+      "paper_id": 104
+    },
+    {
+      "id": 55,
+      "text": "For scientific information extraction, we rely on the SciERC dataset annotated with scientific entities and relations.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1055,
+      "paper_id": 105
+    },
+    {
+      "id": 56,
+      "text": "The validation set is drawn from CoNLL-2003 named entity recognition gold annotations.",
+      "section_name": "Experimental Setup",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1056,
+      "paper_id": 106
+    },
+    {
+      "id": 57,
+      "text": "We curate a new benchmark dataset consisting of 12,000 multi-turn conversational dialogs.",
+      "section_name": "Dataset Construction",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1057,
+      "paper_id": 107
+    },
+    {
+      "id": 58,
+      "text": "Our evaluation is performed on the HotpotQA multi-hop reasoning benchmark under the distractor setting.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1058,
+      "paper_id": 108
+    },
+    {
+      "id": 59,
+      "text": "The test corpus comprises 5,000 high-resolution satellite images divided into training and test splits.",
+      "section_name": "Data Preparation",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1059,
+      "paper_id": 109
+    },
+    {
+      "id": 60,
+      "text": "We leverage the GSM8K dataset of grade-school math word problems to assess multi-step mathematical reasoning.",
+      "section_name": "Experiments",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1060,
+      "paper_id": 110
+    },
+    {
+      "id": 61,
+      "text": "We report performance using macro-averaged F1 score and exact match accuracy across all target classes.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1061,
+      "paper_id": 101
+    },
+    {
+      "id": 62,
+      "text": "Translation quality is quantified by BLEU, METEOR, and chrF score metrics against reference translations.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1062,
+      "paper_id": 102
+    },
+    {
+      "id": 63,
+      "text": "We assess retrieval effectiveness using Mean Reciprocal Rank (MRR@10) and Normalized Discounted Cumulative Gain (NDCG@10).",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1063,
+      "paper_id": 103
+    },
+    {
+      "id": 64,
+      "text": "Model calibration is evaluated using Expected Calibration Error (ECE) and negative log-likelihood (NLL).",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1064,
+      "paper_id": 104
+    },
+    {
+      "id": 65,
+      "text": "For text summarization, we compute ROUGE-1, ROUGE-2, and ROUGE-L F1 scores with standard stemming.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1065,
+      "paper_id": 105
+    },
+    {
+      "id": 66,
+      "text": "We measure computational efficiency via wall-clock inference latency in milliseconds and peak GPU memory allocated.",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1066,
+      "paper_id": 106
+    },
+    {
+      "id": 67,
+      "text": "Classification performance is evaluated using area under the receiver operating characteristic curve (AUROC).",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1067,
+      "paper_id": 107
+    },
+    {
+      "id": 68,
+      "text": "We assess entity boundary precision, recall, and micro F1 following the strict CoNLL evaluation script.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1068,
+      "paper_id": 108
+    },
+    {
+      "id": 69,
+      "text": "Speech synthesis output is evaluated through subjective Mean Opinion Score (MOS) user listening tests.",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1069,
+      "paper_id": 109
+    },
+    {
+      "id": 70,
+      "text": "We compute perplexity on the held-out test split of the WikiText-103 language modeling benchmark.",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1070,
+      "paper_id": 110
+    },
+    {
+      "id": 71,
+      "text": "Clustering accuracy and Adjusted Rand Index (ARI) serve as the primary metrics for unsupervised grouping.",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1071,
+      "paper_id": 101
+    },
+    {
+      "id": 72,
+      "text": "We evaluate reasoning consistency using the execution accuracy metric over generated Python programs.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1072,
+      "paper_id": 102
+    },
+    {
+      "id": 73,
+      "text": "Statistical significance is computed using a two-tailed paired Student's t-test with a threshold of p < 0.05.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1073,
+      "paper_id": 103
+    },
+    {
+      "id": 74,
+      "text": "Image fidelity is measured by Fr\u00e9chet Inception Distance (FID) and Inception Score (IS).",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1074,
+      "paper_id": 104
+    },
+    {
+      "id": 75,
+      "text": "We measure sample efficiency by tracking the cumulative reward achieved after 1 million environment steps.",
+      "section_name": "Evaluation Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1075,
+      "paper_id": 105
+    },
+    {
+      "id": 76,
+      "text": "Our model achieves an accuracy of 94.2% on the validation set, outperforming all previous baselines.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1076,
+      "paper_id": 106
+    },
+    {
+      "id": 77,
+      "text": "As shown in Table 2, our proposed method surpasses the strong baseline by 3.8 BLEU points (p < 0.01).",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1077,
+      "paper_id": 107
+    },
+    {
+      "id": 78,
+      "text": "Experimental results demonstrate a 15% reduction in inference latency without sacrificing classification accuracy.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1078,
+      "paper_id": 108
+    },
+    {
+      "id": 79,
+      "text": "We observe that increasing model capacity yields consistent gains of up to 4.2 F1 points across all benchmarks.",
+      "section_name": "Discussion",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1079,
+      "paper_id": 109
+    },
+    {
+      "id": 80,
+      "text": "The proposed approach attains a state-of-the-art exact match score of 88.6% on SQuAD 2.0.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1080,
+      "paper_id": 110
+    },
+    {
+      "id": 81,
+      "text": "Ablation results in Figure 3 confirm that removing the contrastive loss leads to a 5.6% drop in recall.",
+      "section_name": "Ablation Study",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1081,
+      "paper_id": 101
+    },
+    {
+      "id": 82,
+      "text": "Our framework achieves an MRR@10 of 0.742, outperforming dense retrieval by 8.3 relative percentage points.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1082,
+      "paper_id": 102
+    },
+    {
+      "id": 83,
+      "text": "The empirical findings show that pre-training on domain-specific texts significantly boosts zero-shot generalization.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1083,
+      "paper_id": 103
+    },
+    {
+      "id": 84,
+      "text": "Quantitatively, our system improves ROUGE-L by 2.1 points over the competitive Pegasus baseline.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1084,
+      "paper_id": 104
+    },
+    {
+      "id": 85,
+      "text": "We observe a statistically significant improvement across all five evaluation splits (p < 0.05).",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1085,
+      "paper_id": 105
+    },
+    {
+      "id": 86,
+      "text": "Our model reduces perplexity from 24.3 to 18.7 on the WikiText-103 benchmark.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1086,
+      "paper_id": 106
+    },
+    {
+      "id": 87,
+      "text": "The proposed architecture achieves 91.4% top-1 accuracy on ImageNet with 40% fewer parameters.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1087,
+      "paper_id": 107
+    },
+    {
+      "id": 88,
+      "text": "Table 4 shows that our method attains competitive performance while requiring only 25% of the training epochs.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1088,
+      "paper_id": 108
+    },
+    {
+      "id": 89,
+      "text": "Our approach yields a 6.2% improvement in sample efficiency compared to standard proximal policy optimization.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1089,
+      "paper_id": 109
+    },
+    {
+      "id": 90,
+      "text": "The experimental evaluation validates that our linear attention reduces memory consumption by 3.5x.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1090,
+      "paper_id": 110
+    },
+    {
+      "id": 91,
+      "text": "Our work has several limitations. First, training the 70B parameter model requires substantial GPU memory and compute budget.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "computational",
+      "is_future_work": false,
+      "sentence_id": 1091,
+      "paper_id": 101
+    },
+    {
+      "id": 92,
+      "text": "A notable limitation of our method is that quadratic attention memory complexity limits input contexts to 2048 tokens.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "computational",
+      "is_future_work": false,
+      "sentence_id": 1092,
+      "paper_id": 102
+    },
+    {
+      "id": 93,
+      "text": "However, high computational overhead prevents our algorithm from running in real-time edge environments.",
+      "section_name": "Discussion",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "computational",
+      "is_future_work": false,
+      "sentence_id": 1093,
+      "paper_id": 103
+    },
+    {
+      "id": 94,
+      "text": "Our evaluation is constrained by the small sample size of annotated clinical reports available in this cohort.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "data_scarcity",
+      "is_future_work": false,
+      "sentence_id": 1094,
+      "paper_id": 104
+    },
+    {
+      "id": 95,
+      "text": "A primary limitation is that our study relies on a single annotated benchmark dataset due to data scarcity.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "data_scarcity",
+      "is_future_work": false,
+      "sentence_id": 1095,
+      "paper_id": 105
+    },
+    {
+      "id": 96,
+      "text": "Because label annotations are extremely sparse in this domain, our supervised classifier may suffer from sample bias.",
+      "section_name": "Discussion",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "data_scarcity",
+      "is_future_work": false,
+      "sentence_id": 1096,
+      "paper_id": 106
+    },
+    {
+      "id": 97,
+      "text": "The primary limitation is that our empirical findings may not generalize well to non-English language corpora.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generalization",
+      "is_future_work": false,
+      "sentence_id": 1097,
+      "paper_id": 107
+    },
+    {
+      "id": 98,
+      "text": "Our approach was tested only on synthetic benchmarks, which may fail to capture the complexity of real-world noisy documents.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generalization",
+      "is_future_work": false,
+      "sentence_id": 1098,
+      "paper_id": 108
+    },
+    {
+      "id": 99,
+      "text": "Furthermore, whether these findings transfer across out-of-distribution domains remains an open empirical limitation.",
+      "section_name": "Discussion",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generalization",
+      "is_future_work": false,
+      "sentence_id": 1099,
+      "paper_id": 109
+    },
+    {
+      "id": 100,
+      "text": "A methodological limitation is our assumption of linear independence between latent graph representations.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "methodological",
+      "is_future_work": false,
+      "sentence_id": 1100,
+      "paper_id": 110
+    },
+    {
+      "id": 101,
+      "text": "Our heuristic filtering rule introduces potential selection bias into the extracted scientific entities.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "methodological",
+      "is_future_work": false,
+      "sentence_id": 1101,
+      "paper_id": 101
+    },
+    {
+      "id": 102,
+      "text": "We acknowledge that simplifying the objective function by omitting higher-order derivatives might overlook non-convex dynamics.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "methodological",
+      "is_future_work": false,
+      "sentence_id": 1102,
+      "paper_id": 102
+    },
+    {
+      "id": 103,
+      "text": "A clear limitation of our pipeline is that human evaluation was conducted with only three annotators.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generic",
+      "is_future_work": false,
+      "sentence_id": 1103,
+      "paper_id": 103
+    },
+    {
+      "id": 104,
+      "text": "Despite promising outcomes, our study has several notable limitations that warrant careful consideration.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generic",
+      "is_future_work": false,
+      "sentence_id": 1104,
+      "paper_id": 104
+    },
+    {
+      "id": 105,
+      "text": "The main limitation is that our evaluation does not account for temporal shifts in publication metadata over multi-decade intervals.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generic",
+      "is_future_work": false,
+      "sentence_id": 1105,
+      "paper_id": 105
+    },
+    {
+      "id": 106,
+      "text": "In future work, we plan to extend our framework to multilingual and cross-modal scientific paper corpora.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1106,
+      "paper_id": 106
+    },
+    {
+      "id": 107,
+      "text": "We leave the exploration of dynamic graph updates and continual learning for future research.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1107,
+      "paper_id": 107
+    },
+    {
+      "id": 108,
+      "text": "Future investigations should evaluate the scalability of this retriever on billion-scale document collections.",
+      "section_name": "Future Work",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1108,
+      "paper_id": 108
+    },
+    {
+      "id": 109,
+      "text": "We intend to incorporate reinforcement learning from human feedback to refine factual consistency.",
+      "section_name": "Discussion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1109,
+      "paper_id": 109
+    },
+    {
+      "id": 110,
+      "text": "An exciting direction for future work is integrating temporal knowledge graph embeddings into the verification pipeline.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1110,
+      "paper_id": 110
+    },
+    {
+      "id": 111,
+      "text": "We leave extending our theoretical bounds to non-convex loss surfaces as an avenue for future inquiry.",
+      "section_name": "Future Work",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1111,
+      "paper_id": 101
+    },
+    {
+      "id": 112,
+      "text": "Future research will focus on developing adaptive pruning algorithms to compress extreme-scale models.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1112,
+      "paper_id": 102
+    },
+    {
+      "id": 113,
+      "text": "We plan to release our annotated benchmark dataset and source code publicly upon paper acceptance.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1113,
+      "paper_id": 103
+    },
+    {
+      "id": 114,
+      "text": "Investigating how chain-of-thought prompting interacts with quantization remains a promising direction for future study.",
+      "section_name": "Discussion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1114,
+      "paper_id": 104
+    },
+    {
+      "id": 115,
+      "text": "Future work will explore whether diffusion priors can further enhance the resolution of generated molecular graphs.",
+      "section_name": "Future Work",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1115,
+      "paper_id": 105
+    },
+    {
+      "id": 116,
+      "text": "We intend to generalize our provenance tracking framework to biomedical patent documents and clinical trial registries.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1116,
+      "paper_id": 106
+    },
+    {
+      "id": 117,
+      "text": "Future studies should investigate the susceptibility of this architecture to adversarial input perturbations.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1117,
+      "paper_id": 107
+    },
+    {
+      "id": 118,
+      "text": "We leave the design of asynchronous distributed training implementations for future iterations of this framework.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1118,
+      "paper_id": 108
+    },
+    {
+      "id": 119,
+      "text": "Extending this approach to online continual learning settings represents a natural next step.",
+      "section_name": "Future Work",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1119,
+      "paper_id": 109
+    },
+    {
+      "id": 120,
+      "text": "In future work, we plan to validate our findings on longitudinal electronic health records across diverse hospital systems.",
+      "section_name": "Conclusion",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "sentence_id": 1120,
+      "paper_id": 110
+    },
+    {
+      "id": 121,
+      "text": "Natural language processing has witnessed transformative breakthroughs following the advent of pretrained foundation models.",
+      "section_name": "Introduction",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1121,
+      "paper_id": 101
+    },
+    {
+      "id": 122,
+      "text": "This paper is organized as follows: Section 2 reviews related literature and Section 3 details the architecture.",
+      "section_name": "Introduction",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1122,
+      "paper_id": 102
+    },
+    {
+      "id": 123,
+      "text": "The rest of this document is structured into experimental setup, discussion of findings, and concluding thoughts.",
+      "section_name": "Introduction",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1123,
+      "paper_id": 103
+    },
+    {
+      "id": 124,
+      "text": "Deep learning architectures have revolutionized diverse computer vision and speech recognition benchmarks.",
+      "section_name": "Background",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1124,
+      "paper_id": 104
+    },
+    {
+      "id": 125,
+      "text": "We thank the anonymous reviewers for their constructive comments and suggestions that improved this manuscript.",
+      "section_name": "Acknowledgements",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1125,
+      "paper_id": 105
+    },
+    {
+      "id": 126,
+      "text": "This research was supported in part by the National Science Foundation under Grant No. IIS-202401.",
+      "section_name": "Acknowledgements",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1126,
+      "paper_id": 106
+    },
+    {
+      "id": 127,
+      "text": "All experimental source code, pre-trained model checkpoints, and evaluation scripts will be hosted on GitHub.",
+      "section_name": "Code Availability",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1127,
+      "paper_id": 107
+    },
+    {
+      "id": 128,
+      "text": "Figure 1 illustrates an end-to-end overview of the proposed scientific gap discovery architecture.",
+      "section_name": "Overview",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1128,
+      "paper_id": 108
+    },
+    {
+      "id": 129,
+      "text": "Table 1 summarizes the notation and mathematical symbols used throughout the remainder of this paper.",
+      "section_name": "Notation",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1129,
+      "paper_id": 109
+    },
+    {
+      "id": 130,
+      "text": "Vaswani et al. (2017) pioneered the Transformer architecture based exclusively on self-attention mechanisms.",
+      "section_name": "Related Work",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1130,
+      "paper_id": 110
+    },
+    {
+      "id": 131,
+      "text": "Detailed hyperparameter configurations and hardware specifications are provided in Appendix A.",
+      "section_name": "Appendix",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1131,
+      "paper_id": 101
+    },
+    {
+      "id": 132,
+      "text": "The authors declare no competing financial or non-financial interests directly related to this research.",
+      "section_name": "Declarations",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1132,
+      "paper_id": 102
+    },
+    {
+      "id": 133,
+      "text": "We begin by establishing the formal notation and mathematical preliminaries required for our theoretical analysis.",
+      "section_name": "Preliminaries",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1133,
+      "paper_id": 103
+    },
+    {
+      "id": 134,
+      "text": "A comprehensive review of dense passage retrieval techniques can be found in Karpukhin et al. (2020).",
+      "section_name": "Related Work",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1134,
+      "paper_id": 104
+    },
+    {
+      "id": 135,
+      "text": "In this section, we present a detailed description of the experimental testbed and evaluation setup.",
+      "section_name": "Experiments",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "sentence_id": 1135,
+      "paper_id": 105
+    },
+    {
+      "id": 136,
+      "text": "The quadratic computational complexity and peak GPU memory overhead of vanilla self-attention severely constrain maximum context lengths beyond 8k tokens.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "computational",
+      "is_future_work": false,
+      "paper_id": 102,
+      "sentence_id": 1136
+    },
+    {
+      "id": 137,
+      "text": "Cross-domain generalization degrades substantially when evaluating the model on out-of-distribution biomedical abstracts without target domain adaptation.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "generalization",
+      "is_future_work": false,
+      "paper_id": 101,
+      "sentence_id": 1137
+    },
+    {
+      "id": 138,
+      "text": "The acute scarcity of expert-annotated clinical datasets and medical imaging pairs poses significant risk of overfitting in multi-task training.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "data_scarcity",
+      "is_future_work": false,
+      "paper_id": 103,
+      "sentence_id": 1138
+    },
+    {
+      "id": 139,
+      "text": "Standard n-gram overlap metrics such as ROUGE exhibit substantial lexical bias and fail to penalize factual hallucinations in generated summaries.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "methodological",
+      "is_future_work": false,
+      "paper_id": 104,
+      "sentence_id": 1139
+    },
+    {
+      "id": 140,
+      "text": "Uniform random negative sampling in graph contrastive learning produces false negatives due to high citation homophily in dense subfields.",
+      "section_name": "Limitations",
+      "gold_label": "LIMITATION",
+      "is_limitation": true,
+      "limitation_subtype": "methodological",
+      "is_future_work": false,
+      "paper_id": 105,
+      "sentence_id": 1140
+    },
+    {
+      "id": 141,
+      "text": "FlashAttention-2 reduces peak memory consumption by 65 percent while accelerating throughput by 2.4x across 16k context lengths.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 102,
+      "sentence_id": 1141
+    },
+    {
+      "id": 142,
+      "text": "We apply adversarial domain discrimination with gradient reversal layers to align source and target latent feature distributions.",
+      "section_name": "Methods",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 101,
+      "sentence_id": 1142
+    },
+    {
+      "id": 143,
+      "text": "Future research should explore zero-shot vision-language models and semi-supervised pseudolabeling to mitigate annotated clinical data shortages.",
+      "section_name": "Future Work",
+      "gold_label": "FUTURE_WORK",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": true,
+      "paper_id": 103,
+      "sentence_id": 1143
+    },
+    {
+      "id": 144,
+      "text": "We introduce FactScore-Sci, an entailing sentence decomposition framework that checks atomic factual claims against source research papers.",
+      "section_name": "Methods",
+      "gold_label": "METHOD",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 104,
+      "sentence_id": 1144
+    },
+    {
+      "id": 145,
+      "text": "Hard negative mining guided by co-citation proximity yields a 4.2 percent gain in mean reciprocal rank on downstream paper recommendation.",
+      "section_name": "Results",
+      "gold_label": "RESULT",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 105,
+      "sentence_id": 1145
+    },
+    {
+      "id": 146,
+      "text": "Our primary objective is to formulate state-space recurrence equations that maintain constant inference memory independent of sequence length.",
+      "section_name": "Objective",
+      "gold_label": "OBJECTIVE",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 107,
+      "sentence_id": 1146
+    },
+    {
+      "id": 147,
+      "text": "The evaluation benchmark consists of 2,500 annotated clinical discharge summaries extracted from multi-institutional health networks.",
+      "section_name": "Datasets",
+      "gold_label": "DATASET",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 108,
+      "sentence_id": 1147
+    },
+    {
+      "id": 148,
+      "text": "We evaluate performance using exact match accuracy and macro-averaged F1 score across all entity boundary classifications.",
+      "section_name": "Metrics",
+      "gold_label": "METRIC",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 108,
+      "sentence_id": 1148
+    },
+    {
+      "id": 149,
+      "text": "A fundamental difficulty in interdisciplinary science is that novel concepts often appear in isolated citation subgraphs without prior cross-links.",
+      "section_name": "Introduction",
+      "gold_label": "PROBLEM",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 110,
+      "sentence_id": 1149
+    },
+    {
+      "id": 150,
+      "text": "The experimental protocol was conducted on 4 NVIDIA A100 GPUs with mixed-precision floating-point arithmetic enabled.",
+      "section_name": "Experimental Setup",
+      "gold_label": "OTHER",
+      "is_limitation": false,
+      "limitation_subtype": null,
+      "is_future_work": false,
+      "paper_id": 107,
+      "sentence_id": 1150
+    }
+  ],
+  "relationships": [
+    {
+      "id": 1,
+      "source_paper_id": 101,
+      "source_type": "Paper",
+      "source_name": "Paper 101",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Adversarial Domain Discrimination",
+      "confidence": 0.95
+    },
+    {
+      "id": 2,
+      "source_paper_id": 101,
+      "source_type": "Paper",
+      "source_name": "Paper 101",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "OOD Generalization Degradation",
+      "confidence": 0.92
+    },
+    {
+      "id": 3,
+      "source_paper_id": 101,
+      "source_type": "Method",
+      "source_name": "Adversarial Domain Discrimination",
+      "relation": "addresses",
+      "target_type": "Limitation",
+      "target_name": "Covariate Domain Shift",
+      "confidence": 0.88
+    },
+    {
+      "id": 4,
+      "source_paper_id": 101,
+      "source_type": "Paper",
+      "source_name": "Paper 101",
+      "relation": "evaluates_on",
+      "target_type": "Dataset",
+      "target_name": "Biomedical Abstract Corpus",
+      "confidence": 0.94
+    },
+    {
+      "id": 5,
+      "source_paper_id": 102,
+      "source_type": "Paper",
+      "source_name": "Paper 102",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "FlashAttention-2 Kernel",
+      "confidence": 0.96
+    },
+    {
+      "id": 6,
+      "source_paper_id": 102,
+      "source_type": "Paper",
+      "source_name": "Paper 102",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "Quadratic Memory Complexity",
+      "confidence": 0.95
+    },
+    {
+      "id": 7,
+      "source_paper_id": 102,
+      "source_type": "Method",
+      "source_name": "FlashAttention-2 Kernel",
+      "relation": "addresses",
+      "target_type": "Limitation",
+      "target_name": "Peak GPU VRAM Overhead",
+      "confidence": 0.91
+    },
+    {
+      "id": 8,
+      "source_paper_id": 102,
+      "source_type": "Paper",
+      "source_name": "Paper 102",
+      "relation": "evaluates_on",
+      "target_type": "Dataset",
+      "target_name": "Scientific Retrieval Benchmark",
+      "confidence": 0.93
+    },
+    {
+      "id": 9,
+      "source_paper_id": 103,
+      "source_type": "Paper",
+      "source_name": "Paper 103",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Multimodal Case Parser",
+      "confidence": 0.9
+    },
+    {
+      "id": 10,
+      "source_paper_id": 103,
+      "source_type": "Paper",
+      "source_name": "Paper 103",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "Annotated Clinical Data Scarcity",
+      "confidence": 0.94
+    },
+    {
+      "id": 11,
+      "source_paper_id": 103,
+      "source_type": "Paper",
+      "source_name": "Paper 103",
+      "relation": "evaluates_on",
+      "target_type": "Dataset",
+      "target_name": "Clinical Case Reports",
+      "confidence": 0.92
+    },
+    {
+      "id": 12,
+      "source_paper_id": 104,
+      "source_type": "Paper",
+      "source_name": "Paper 104",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "FactScore-Sci Atomic Verifier",
+      "confidence": 0.93
+    },
+    {
+      "id": 13,
+      "source_paper_id": 104,
+      "source_type": "Paper",
+      "source_name": "Paper 104",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "ROUGE N-Gram Overlap Lexical Bias",
+      "confidence": 0.91
+    },
+    {
+      "id": 14,
+      "source_paper_id": 104,
+      "source_type": "Method",
+      "source_name": "FactScore-Sci Atomic Verifier",
+      "relation": "addresses",
+      "target_type": "Limitation",
+      "target_name": "Factual Hallucinations in Summaries",
+      "confidence": 0.89
+    },
+    {
+      "id": 15,
+      "source_paper_id": 105,
+      "source_type": "Paper",
+      "source_name": "Paper 105",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Co-Citation Negative Mining",
+      "confidence": 0.92
+    },
+    {
+      "id": 16,
+      "source_paper_id": 105,
+      "source_type": "Paper",
+      "source_name": "Paper 105",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "Citation Homophily False Negatives",
+      "confidence": 0.9
+    },
+    {
+      "id": 17,
+      "source_paper_id": 105,
+      "source_type": "Paper",
+      "source_name": "Paper 105",
+      "relation": "evaluates_on",
+      "target_type": "Dataset",
+      "target_name": "SciFact Citation Network",
+      "confidence": 0.95
+    },
+    {
+      "id": 18,
+      "source_paper_id": 106,
+      "source_type": "Paper",
+      "source_name": "Paper 106",
+      "relation": "supports",
+      "target_type": "Limitation",
+      "target_name": "OOD Generalization Degradation",
+      "confidence": 0.94
+    },
+    {
+      "id": 19,
+      "source_paper_id": 106,
+      "source_type": "Paper",
+      "source_name": "Paper 106",
+      "relation": "evaluates_on",
+      "target_type": "Dataset",
+      "target_name": "Adversarial GLUE Suite",
+      "confidence": 0.92
+    },
+    {
+      "id": 20,
+      "source_paper_id": 107,
+      "source_type": "Paper",
+      "source_name": "Paper 107",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Structured State Space (S4)",
+      "confidence": 0.97
+    },
+    {
+      "id": 21,
+      "source_paper_id": 107,
+      "source_type": "Method",
+      "source_name": "Structured State Space (S4)",
+      "relation": "addresses",
+      "target_type": "Limitation",
+      "target_name": "Quadratic Memory Complexity",
+      "confidence": 0.92
+    },
+    {
+      "id": 22,
+      "source_paper_id": 107,
+      "source_type": "Paper",
+      "source_name": "Paper 107",
+      "relation": "contradicts",
+      "target_type": "Claim",
+      "target_name": "Transformers Are Uniquely Optimal for Long Contexts",
+      "confidence": 0.89
+    },
+    {
+      "id": 23,
+      "source_paper_id": 108,
+      "source_type": "Paper",
+      "source_name": "Paper 108",
+      "relation": "uses",
+      "target_type": "Dataset",
+      "target_name": "MIMIC-III Clinical Records",
+      "confidence": 0.96
+    },
+    {
+      "id": 24,
+      "source_paper_id": 108,
+      "source_type": "Paper",
+      "source_name": "Paper 108",
+      "relation": "supports",
+      "target_type": "Limitation",
+      "target_name": "Annotated Clinical Data Scarcity",
+      "confidence": 0.93
+    },
+    {
+      "id": 25,
+      "source_paper_id": 109,
+      "source_type": "Paper",
+      "source_name": "Paper 109",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Decomposed Claim Audit",
+      "confidence": 0.94
+    },
+    {
+      "id": 26,
+      "source_paper_id": 109,
+      "source_type": "Paper",
+      "source_name": "Paper 109",
+      "relation": "supports",
+      "target_type": "Limitation",
+      "target_name": "Factual Hallucinations in Summaries",
+      "confidence": 0.95
+    },
+    {
+      "id": 27,
+      "source_paper_id": 109,
+      "source_type": "Paper",
+      "source_name": "Paper 109",
+      "relation": "contradicts",
+      "target_type": "Claim",
+      "target_name": "Scale Eliminates Hallucination in LLMs",
+      "confidence": 0.92
+    },
+    {
+      "id": 28,
+      "source_paper_id": 110,
+      "source_type": "Paper",
+      "source_name": "Paper 110",
+      "relation": "proposes",
+      "target_type": "Method",
+      "target_name": "Interdisciplinary Graph Bridge",
+      "confidence": 0.91
+    },
+    {
+      "id": 29,
+      "source_paper_id": 110,
+      "source_type": "Paper",
+      "source_name": "Paper 110",
+      "relation": "limited_by",
+      "target_type": "Limitation",
+      "target_name": "Citation Homophily False Negatives",
+      "confidence": 0.93
+    },
+    {
+      "id": 30,
+      "source_paper_id": 101,
+      "source_type": "Paper",
+      "source_name": "Paper 101",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Cross-Domain Generalization & Transfer",
+      "confidence": 0.98
+    },
+    {
+      "id": 31,
+      "source_paper_id": 102,
+      "source_type": "Paper",
+      "source_name": "Paper 102",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Efficient Self-Attention & Transformers",
+      "confidence": 0.98
+    },
+    {
+      "id": 32,
+      "source_paper_id": 103,
+      "source_type": "Paper",
+      "source_name": "Paper 103",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Multimodal Clinical Evidence Extraction",
+      "confidence": 0.97
+    },
+    {
+      "id": 33,
+      "source_paper_id": 104,
+      "source_type": "Paper",
+      "source_name": "Paper 104",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Evaluation Metrics & Factual Summarization",
+      "confidence": 0.97
+    },
+    {
+      "id": 34,
+      "source_paper_id": 105,
+      "source_type": "Paper",
+      "source_name": "Paper 105",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Graph Contrastive Learning & Citation Homophily",
+      "confidence": 0.99
+    },
+    {
+      "id": 35,
+      "source_paper_id": 107,
+      "source_type": "Paper",
+      "source_name": "Paper 107",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Efficient Self-Attention & Transformers",
+      "confidence": 0.96
+    },
+    {
+      "id": 36,
+      "source_paper_id": 109,
+      "source_type": "Paper",
+      "source_name": "Paper 109",
+      "relation": "belongs_to",
+      "target_type": "ResearchTopic",
+      "target_name": "Evaluation Metrics & Factual Summarization",
+      "confidence": 0.95
+    }
+  ],
+  "retrieval_benchmark": [
+    {
+      "query_id": "q1",
+      "query": "cross-domain generalization degradation in out-of-distribution low-resource NLP",
+      "domain": "Biomedical & Clinical NLP",
+      "relevant_sentence_ids": [
+        1137,
+        1001
+      ],
+      "relevant_paper_ids": [
+        101,
+        106
+      ]
+    },
+    {
+      "query_id": "q2",
+      "query": "quadratic computational complexity and GPU memory overhead of self-attention",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "relevant_sentence_ids": [
+        1136,
+        1141
+      ],
+      "relevant_paper_ids": [
+        102,
+        107
+      ]
+    },
+    {
+      "query_id": "q3",
+      "query": "annotated clinical dataset scarcity and electronic health records shortage",
+      "domain": "Multimodal Scientific Extraction",
+      "relevant_sentence_ids": [
+        1138,
+        1143
+      ],
+      "relevant_paper_ids": [
+        103,
+        108
+      ]
+    },
+    {
+      "query_id": "q4",
+      "query": "evaluation metric bias ROUGE failure and factual hallucinations in summarization",
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "relevant_sentence_ids": [
+        1139,
+        1144
+      ],
+      "relevant_paper_ids": [
+        104,
+        109
+      ]
+    },
+    {
+      "query_id": "q5",
+      "query": "negative sampling strategies and citation homophily failure in graph contrastive learning",
+      "domain": "Graph Representation Learning & Citation Networks",
+      "relevant_sentence_ids": [
+        1140,
+        1145
+      ],
+      "relevant_paper_ids": [
+        105,
+        110
+      ]
+    },
+    {
+      "query_id": "q6",
+      "query": "adversarial domain discrimination with gradient reversal layers",
+      "domain": "Biomedical & Clinical NLP",
+      "relevant_sentence_ids": [
+        1142
+      ],
+      "relevant_paper_ids": [
+        101
+      ]
+    },
+    {
+      "query_id": "q7",
+      "query": "sub-quadratic memory complexity linear-time state space models",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "relevant_sentence_ids": [
+        1146
+      ],
+      "relevant_paper_ids": [
+        107
+      ]
+    },
+    {
+      "query_id": "q8",
+      "query": "decomposed atomic claim verification for factual consistency checking in LLMs",
+      "domain": "Abstractive Summarization & Hallucination Evaluation",
+      "relevant_sentence_ids": [
+        1144
+      ],
+      "relevant_paper_ids": [
+        104,
+        109
+      ]
+    },
+    {
+      "query_id": "q9",
+      "query": "interdisciplinary citation bridges and concept isolation in graph networks",
+      "domain": "Graph Representation Learning & Citation Networks",
+      "relevant_sentence_ids": [
+        1149
+      ],
+      "relevant_paper_ids": [
+        110
+      ]
+    },
+    {
+      "query_id": "q10",
+      "query": "hardware memory constraints and sequence length bottleneck",
+      "domain": "Efficient Sequence Modeling & Attention Scaling",
+      "relevant_sentence_ids": [
+        1136
+      ],
+      "relevant_paper_ids": [
+        102
+      ]
+    }
+  ],
+  "gaps_benchmark": [
+    {
+      "gap_id": "gap-1",
+      "title": "Computational Memory Overhead in Long-Context Self-Attention",
+      "keywords": [
+        "memory",
+        "quadratic",
+        "overhead",
+        "attention",
+        "context length"
+      ],
+      "gap_type": "repeated_limitation",
+      "description": "Quadratic memory scaling bottleneck in self-attention prevents scaling beyond 16k tokens without severe GPU VRAM exhaustion.",
+      "expert_priority": 0.88,
+      "gold_lifecycle_status": "PERSISTENT",
+      "gold_verification_status": "VERIFIED_OPEN",
+      "first_year": 2021,
+      "latest_year": 2025,
+      "supporting_paper_ids": [
+        102,
+        107
+      ],
+      "attempted_solutions": [
+        {
+          "paper_id": 102,
+          "year": 2023,
+          "method": "FlashAttention-2",
+          "outcome": "Partial acceleration but still scales with length"
+        }
+      ],
+      "signals": {
+        "underexploration": 0.65,
+        "repeated_limitations": 0.95,
+        "methodological_concentration": 0.88,
+        "dataset_concentration": 0.72,
+        "temporal_opportunity": 0.92,
+        "conflicting_evidence": 0.35,
+        "graph_bridge": 0.7
+      }
+    },
+    {
+      "gap_id": "gap-2",
+      "title": "Cross-Domain Generalization Degradation in Low-Resource Scientific NLP",
+      "keywords": [
+        "cross-domain",
+        "generalization",
+        "transfer",
+        "domain shift",
+        "low-resource"
+      ],
+      "gap_type": "repeated_limitation",
+      "description": "Deep architectures suffer severe performance degradation when transferred to out-of-distribution biomedical abstracts without target adaptation.",
+      "expert_priority": 0.82,
+      "gold_lifecycle_status": "PARTIALLY_ADDRESSED",
+      "gold_verification_status": "PARTIALLY_ADDRESSED",
+      "first_year": 2021,
+      "latest_year": 2024,
+      "supporting_paper_ids": [
+        101,
+        106
+      ],
+      "attempted_solutions": [
+        {
+          "paper_id": 101,
+          "year": 2024,
+          "method": "Adversarial Domain Discrimination",
+          "outcome": "Mitigates covariate shift but residual degradation remains"
+        }
+      ],
+      "signals": {
+        "underexploration": 0.75,
+        "repeated_limitations": 0.85,
+        "methodological_concentration": 0.78,
+        "dataset_concentration": 0.8,
+        "temporal_opportunity": 0.7,
+        "conflicting_evidence": 0.4,
+        "graph_bridge": 0.65
+      }
+    },
+    {
+      "gap_id": "gap-3",
+      "title": "Annotated Dataset Scarcity in Multimodal Clinical Evidence Extraction",
+      "keywords": [
+        "scarcity",
+        "annotated",
+        "clinical",
+        "biomedical",
+        "medical imaging"
+      ],
+      "gap_type": "underexplored_area",
+      "description": "High annotation costs and clinical privacy constraints result in severe data scarcity for multimodal extraction models.",
+      "expert_priority": 0.79,
+      "gold_lifecycle_status": "PERSISTENT",
+      "gold_verification_status": "VERIFIED_OPEN",
+      "first_year": 2022,
+      "latest_year": 2024,
+      "supporting_paper_ids": [
+        103,
+        108
+      ],
+      "attempted_solutions": [],
+      "signals": {
+        "underexploration": 0.9,
+        "repeated_limitations": 0.82,
+        "methodological_concentration": 0.6,
+        "dataset_concentration": 0.92,
+        "temporal_opportunity": 0.85,
+        "conflicting_evidence": 0.2,
+        "graph_bridge": 0.78
+      }
+    },
+    {
+      "gap_id": "gap-4",
+      "title": "Evaluation Bias and Factual Hallucinations in Scientific Summarization",
+      "keywords": [
+        "factual",
+        "hallucination",
+        "evaluation bias",
+        "summarization",
+        "rouge"
+      ],
+      "gap_type": "repeated_limitation",
+      "description": "N-gram overlap metrics fail to penalize factual hallucinations in abstractive generation, recurring at larger model scales.",
+      "expert_priority": 0.84,
+      "gold_lifecycle_status": "REOPENED",
+      "gold_verification_status": "VERIFIED_OPEN",
+      "first_year": 2022,
+      "latest_year": 2024,
+      "supporting_paper_ids": [
+        104,
+        109
+      ],
+      "attempted_solutions": [
+        {
+          "paper_id": 104,
+          "year": 2022,
+          "method": "FactScore-Sci Atomic Verifier",
+          "outcome": "Mitigated in small models, but reopened in extreme LLM scale in 2024"
+        }
+      ],
+      "signals": {
+        "underexploration": 0.7,
+        "repeated_limitations": 0.88,
+        "methodological_concentration": 0.82,
+        "dataset_concentration": 0.75,
+        "temporal_opportunity": 0.88,
+        "conflicting_evidence": 0.55,
+        "graph_bridge": 0.8
+      }
+    },
+    {
+      "gap_id": "gap-5",
+      "title": "Homophily Assumption Failure in Interdisciplinary Scientific Citation Graphs",
+      "keywords": [
+        "citation",
+        "homophily",
+        "negative sampling",
+        "contrastive",
+        "interdisciplinary"
+      ],
+      "gap_type": "underexplored_area",
+      "description": "Citation graph representation learning assumes local homophily, failing for interdisciplinary research crossing subfields.",
+      "expert_priority": 0.76,
+      "gold_lifecycle_status": "EMERGING",
+      "gold_verification_status": "VERIFIED_OPEN",
+      "first_year": 2024,
+      "latest_year": 2025,
+      "supporting_paper_ids": [
+        105,
+        110
+      ],
+      "attempted_solutions": [],
+      "signals": {
+        "underexploration": 0.85,
+        "repeated_limitations": 0.74,
+        "methodological_concentration": 0.7,
+        "dataset_concentration": 0.65,
+        "temporal_opportunity": 0.9,
+        "conflicting_evidence": 0.25,
+        "graph_bridge": 0.85
+      }
+    },
+    {
+      "gap_id": "gap-6",
+      "title": "Solitary Benchmark Invariance in Dense Passage Retrieval",
+      "keywords": [
+        "retrieval",
+        "invariance",
+        "solitary",
+        "synthetic"
+      ],
+      "gap_type": "methodological_concentration",
+      "expert_priority": 0.42,
+      "description": "A single paper claims dense passage retrieval fails to handle inverted query indices on synthetic data.",
+      "gold_lifecycle_status": "UNCERTAIN",
+      "gold_verification_status": "UNCERTAIN",
+      "first_year": 2024,
+      "latest_year": 2024,
+      "supporting_paper_ids": [
+        101
+      ],
+      "attempted_solutions": [],
+      "signals": {
+        "underexploration": 0.35,
+        "repeated_limitations": 0.2,
+        "methodological_concentration": 0.4,
+        "dataset_concentration": 0.3,
+        "temporal_opportunity": 0.25,
+        "conflicting_evidence": 0.6,
+        "graph_bridge": 0.2
+      }
+    }
+  ],
+  "counter_evidence_benchmark": [
+    {
+      "id": "nli-1",
+      "gap_id": "gap-1",
+      "premise": "Full self-attention requires quadratic peak memory O(N^2) scaling with sequence length.",
+      "hypothesis": "We confirm that standard self-attention suffers from quadratic GPU VRAM allocation.",
+      "gold_label": "ENTAILMENT",
+      "evidence_type": "SUPPORTING",
+      "paper_id": 102
+    },
+    {
+      "id": "nli-2",
+      "gap_id": "gap-1",
+      "premise": "Full self-attention requires quadratic peak memory O(N^2) scaling with sequence length.",
+      "hypothesis": "FlashAttention eliminates intermediate quadratic matrices, reducing peak memory substantially.",
+      "gold_label": "CONTRADICTION",
+      "evidence_type": "COUNTER",
+      "paper_id": 102
+    },
+    {
+      "id": "nli-3",
+      "gap_id": "gap-1",
+      "premise": "Full self-attention requires quadratic peak memory O(N^2) scaling with sequence length.",
+      "hypothesis": "We train our models on 8 NVIDIA A100 GPUs using standard bfloat16 precision.",
+      "gold_label": "NEUTRAL",
+      "evidence_type": "NEUTRAL",
+      "paper_id": 107
+    },
+    {
+      "id": "nli-4",
+      "gap_id": "gap-2",
+      "premise": "Deep NLP architectures degrade significantly on out-of-distribution biomedical texts.",
+      "hypothesis": "Empirical results show a 22% accuracy drop when models are tested on unaligned clinical notes.",
+      "gold_label": "ENTAILMENT",
+      "evidence_type": "SUPPORTING",
+      "paper_id": 101
+    },
+    {
+      "id": "nli-5",
+      "gap_id": "gap-2",
+      "premise": "Deep NLP architectures degrade significantly on out-of-distribution biomedical texts.",
+      "hypothesis": "Our zero-shot biomedical model maintains invariant accuracy across all out-of-distribution datasets.",
+      "gold_label": "CONTRADICTION",
+      "evidence_type": "COUNTER",
+      "paper_id": 106
+    },
+    {
+      "id": "nli-6",
+      "gap_id": "gap-2",
+      "premise": "Deep NLP architectures degrade significantly on out-of-distribution biomedical texts.",
+      "hypothesis": "The corpus contains 15,000 biomedical abstracts collected from PubMed.",
+      "gold_label": "NEUTRAL",
+      "evidence_type": "NEUTRAL",
+      "paper_id": 101
+    },
+    {
+      "id": "nli-7",
+      "gap_id": "gap-3",
+      "premise": "High annotation costs and clinical privacy constraints cause severe multimodal data scarcity.",
+      "hypothesis": "Annotated pairs of radiological images and clinical case narratives remain acutely scarce.",
+      "gold_label": "ENTAILMENT",
+      "evidence_type": "SUPPORTING",
+      "paper_id": 103
+    },
+    {
+      "id": "nli-8",
+      "gap_id": "gap-3",
+      "premise": "High annotation costs and clinical privacy constraints cause severe multimodal data scarcity.",
+      "hypothesis": "Synthetic generative pipelines now provide millions of verified multimodal clinical case pairs.",
+      "gold_label": "CONTRADICTION",
+      "evidence_type": "COUNTER",
+      "paper_id": 108
+    },
+    {
+      "id": "nli-9",
+      "gap_id": "gap-3",
+      "premise": "High annotation costs and clinical privacy constraints cause severe multimodal data scarcity.",
+      "hypothesis": "All patient identifiers were anonymized in compliance with HIPAA privacy regulations.",
+      "gold_label": "NEUTRAL",
+      "evidence_type": "NEUTRAL",
+      "paper_id": 103
+    },
+    {
+      "id": "nli-10",
+      "gap_id": "gap-4",
+      "premise": "ROUGE overlap fails to penalize factual hallucinations in abstractive scientific summarization.",
+      "hypothesis": "High ROUGE scores frequently coincide with critical factual distortions and phantom claims.",
+      "gold_label": "ENTAILMENT",
+      "evidence_type": "SUPPORTING",
+      "paper_id": 104
+    },
+    {
+      "id": "nli-11",
+      "gap_id": "gap-4",
+      "premise": "ROUGE overlap fails to penalize factual hallucinations in abstractive scientific summarization.",
+      "hypothesis": "ROUGE-2 precision correlates perfectly with human factual consistency judgments.",
+      "gold_label": "CONTRADICTION",
+      "evidence_type": "COUNTER",
+      "paper_id": 109
+    },
+    {
+      "id": "nli-12",
+      "gap_id": "gap-4",
+      "premise": "ROUGE overlap fails to penalize factual hallucinations in abstractive scientific summarization.",
+      "hypothesis": "We compute ROUGE scores using the standard rouge-score Python library with Porter stemming.",
+      "gold_label": "NEUTRAL",
+      "evidence_type": "NEUTRAL",
+      "paper_id": 104
+    },
+    {
+      "id": "nli-13",
+      "gap_id": "gap-5",
+      "premise": "Random negative sampling assumes citation homophily, missing interdisciplinary connections.",
+      "hypothesis": "Dense subfield homophily leads to severe false negatives for papers crossing domain boundaries.",
+      "gold_label": "ENTAILMENT",
+      "evidence_type": "SUPPORTING",
+      "paper_id": 105
+    },
+    {
+      "id": "nli-14",
+      "gap_id": "gap-5",
+      "premise": "Random negative sampling assumes citation homophily, missing interdisciplinary connections.",
+      "hypothesis": "Uniform negative sampling provides completely unbiased negatives for all interdisciplinary graphs.",
+      "gold_label": "CONTRADICTION",
+      "evidence_type": "COUNTER",
+      "paper_id": 110
+    },
+    {
+      "id": "nli-15",
+      "gap_id": "gap-5",
+      "premise": "Random negative sampling assumes citation homophily, missing interdisciplinary connections.",
+      "hypothesis": "We evaluate node representations on multi-label paper category classification.",
+      "gold_label": "NEUTRAL",
+      "evidence_type": "NEUTRAL",
+      "paper_id": 105
+    }
+  ],
+  "lifecycle_benchmark": [
+    {
+      "case_id": "lc-1",
+      "title": "Quadratic Attention Scaling",
+      "gold_status": "PERSISTENT",
+      "first_year": 2021,
+      "latest_year": 2025,
+      "distinct_papers": 3,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "Bottleneck recurring unaddressed across 2021-2025 across multiple papers."
+    },
+    {
+      "case_id": "lc-2",
+      "title": "Annotated Clinical Data Scarcity",
+      "gold_status": "PERSISTENT",
+      "first_year": 2022,
+      "latest_year": 2024,
+      "distinct_papers": 2,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "Chronic data scarcity documented across 2 years without solution."
+    },
+    {
+      "case_id": "lc-3",
+      "title": "Homophily in Citation Graphs",
+      "gold_status": "EMERGING",
+      "first_year": 2024,
+      "latest_year": 2025,
+      "distinct_papers": 2,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "First surfaced in 2024-2025 literature with 2 supporting papers, no solutions proposed yet."
+    },
+    {
+      "case_id": "lc-4",
+      "title": "Multimodal Spatial Grounding",
+      "gold_status": "EMERGING",
+      "first_year": 2024,
+      "latest_year": 2025,
+      "distinct_papers": 2,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "Recent 2024 multimodal bottleneck gaining interest."
+    },
+    {
+      "case_id": "lc-5",
+      "title": "Cross-Domain Generalization in Clinical NLP",
+      "gold_status": "PARTIALLY_ADDRESSED",
+      "first_year": 2021,
+      "latest_year": 2024,
+      "distinct_papers": 3,
+      "has_solutions": true,
+      "is_addressed": false,
+      "description": "Adversarial domain adaptation proposed in 2024, but residual OOD degradation explicitly noted."
+    },
+    {
+      "case_id": "lc-6",
+      "title": "Sparse Long-Sequence Attention Approximations",
+      "gold_status": "PARTIALLY_ADDRESSED",
+      "first_year": 2022,
+      "latest_year": 2024,
+      "distinct_papers": 2,
+      "has_solutions": true,
+      "is_addressed": false,
+      "description": "Local window attention solves memory but incurs approximation error on associative recall."
+    },
+    {
+      "case_id": "lc-7",
+      "title": "Exact Kernel Gradient Computation in SVMs",
+      "gold_status": "ADDRESSED",
+      "first_year": 2020,
+      "latest_year": 2022,
+      "distinct_papers": 2,
+      "has_solutions": true,
+      "is_addressed": true,
+      "description": "Random Fourier features and Nystrom approximations solved kernel scaling without recurrence."
+    },
+    {
+      "case_id": "lc-8",
+      "title": "Word Vector Fixed Vocabulary OOV Problem",
+      "gold_status": "ADDRESSED",
+      "first_year": 2020,
+      "latest_year": 2021,
+      "distinct_papers": 2,
+      "has_solutions": true,
+      "is_addressed": true,
+      "description": "Byte-pair encoding and WordPiece subword tokenization conclusively resolved fixed vocabulary bottlenecks."
+    },
+    {
+      "case_id": "lc-9",
+      "title": "Summarization Hallucination at Scale",
+      "gold_status": "REOPENED",
+      "first_year": 2022,
+      "latest_year": 2024,
+      "distinct_papers": 3,
+      "has_solutions": true,
+      "is_addressed": false,
+      "description": "FactScore solved extractive verification in 2022, but generative LLM scale in 2024 reopened severe hallucination issues."
+    },
+    {
+      "case_id": "lc-10",
+      "title": "Catastrophic Forgetting in Foundation Models",
+      "gold_status": "REOPENED",
+      "first_year": 2021,
+      "latest_year": 2024,
+      "distinct_papers": 3,
+      "has_solutions": true,
+      "is_addressed": false,
+      "description": "Replay buffers mitigated forgetting in CNNs, but parameter-efficient instruction tuning reopened forgetting on specialized reasoning."
+    },
+    {
+      "case_id": "lc-11",
+      "title": "Solitary Benchmark Invariance in Dense Passage Retrieval",
+      "gold_status": "UNCERTAIN",
+      "first_year": 2024,
+      "latest_year": 2024,
+      "distinct_papers": 1,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "Reported by only a single paper without temporal cross-verification."
+    },
+    {
+      "case_id": "lc-12",
+      "title": "Quantum Attention Circuit Simulation",
+      "gold_status": "UNCERTAIN",
+      "first_year": 2025,
+      "latest_year": 2025,
+      "distinct_papers": 1,
+      "has_solutions": false,
+      "is_addressed": false,
+      "description": "Solitary speculative assertion with no multi-paper consensus."
+    }
+  ]
+}

@@ -120,27 +120,27 @@ export default function GapDetailPage() {
   return (
     <div className="gap-detail-page p-6 space-y-6 max-w-7xl mx-auto">
       {/* Top Header & Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-subtle">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-subtle">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
           <button
             onClick={() => setActiveView('gaps')}
-            className="p-1.5 border border-subtle rounded-md hover:bg-muted text-secondary hover:text-primary transition"
+            className="p-1.5 border border-subtle rounded-md hover:bg-muted text-secondary hover:text-primary transition flex-shrink-0"
             title="Back to Potential Gaps"
           >
             <ArrowLeft size={16} />
           </button>
-          <div>
-            <span className="text-xs uppercase tracking-wider text-secondary font-mono">
+          <div className="min-w-0">
+            <span className="text-xs uppercase tracking-wider text-secondary font-mono block">
               Research Gap Deep Dive
             </span>
-            <h1 className="text-xl font-bold text-primary truncate max-w-2xl">
+            <h1 className="text-xl font-bold text-primary truncate">
               {candidate?.title || currentGapId}
             </h1>
           </div>
         </div>
 
         {/* Gap Selector Dropdown & Quick Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
           <select
             value={currentGapId || ''}
             onChange={(e) => {

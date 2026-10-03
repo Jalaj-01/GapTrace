@@ -1,0 +1,73 @@
+{
+  "experiment_name": "Experiment 4: Research Gap Candidate Detection Comparison",
+  "total_gold_gaps": 6,
+  "approaches": {
+    "frequency_only": {
+      "name": "Frequency-Only Baseline",
+      "precision@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 1.0,
+      "spearman_rho": 1.0,
+      "spearman_p_value": 0.0,
+      "kendall_tau": 1.0,
+      "cohens_kappa": 1.0,
+      "ranking": [
+        "gap-1",
+        "gap-4",
+        "gap-2",
+        "gap-3",
+        "gap-5",
+        "gap-6"
+      ]
+    },
+    "semantic_only": {
+      "name": "Semantic-Only Baseline",
+      "precision@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 0.2,
+      "spearman_rho": -0.0286,
+      "spearman_p_value": 0.957155,
+      "kendall_tau": -0.0667,
+      "cohens_kappa": 1.0,
+      "ranking": [
+        "gap-3",
+        "gap-5",
+        "gap-4",
+        "gap-2",
+        "gap-1",
+        "gap-6"
+      ]
+    },
+    "hybrid_multi_signal": {
+      "name": "Hybrid Multi-Signal (ResearchGapX)",
+      "precision@5": 1.0,
+      "recall@10": 1.0,
+      "mrr": 0.5,
+      "spearman_rho": 0.7714,
+      "spearman_p_value": 0.072397,
+      "kendall_tau": 0.6,
+      "cohens_kappa": 1.0,
+      "ranking": [
+        "gap-4",
+        "gap-1",
+        "gap-3",
+        "gap-5",
+        "gap-2",
+        "gap-6"
+      ],
+      "precision@5_ci95": [
+        0.6,
+        1.0
+      ],
+      "recall@10_ci95": [
+        0.8333,
+        1.0
+      ]
+    }
+  },
+  "statistical_comparison": {
+    "spearman_gain_hybrid_vs_freq": -0.2286,
+    "spearman_gain_hybrid_vs_sem": 0.8,
+    "expert_agreement_kappa_hybrid": 1.0
+  }
+}

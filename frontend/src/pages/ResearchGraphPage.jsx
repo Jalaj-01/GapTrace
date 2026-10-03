@@ -16,6 +16,7 @@ import {
   ExternalLink,
   Download,
   Sparkles,
+  Info,
 } from 'lucide-react';
 import {
   fetchGraphOverview,
@@ -190,19 +191,74 @@ export default function ResearchGraphPage() {
     );
   }, [edges, activeNodeIds]);
 
-  // Compute 2D node layout coordinates
+  // Compute clean radial / concentric node layout coordinates
   const layoutedNodes = useMemo(() => {
-    const total = filteredNodes.length;
     const centerX = 400;
-    const centerY = 280;
-    const radius = Math.min(220, Math.max(120, total * 15));
+    const centerY = 270;
 
-    return filteredNodes.map((node, idx) => {
-      const angle = (idx / Math.max(1, total)) * 2 * Math.PI;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
-      return { ...node, x, y };
+    // Group nodes by category
+    const centerNodes = filteredNodes.filter((n) => n.type === 'Paper');
+    const innerNodes = filteredNodes.filter((n) => n.type === 'Topic');
+    const midNodes = filteredNodes.filter((n) => n.type === 'Method' || n.type === 'Dataset');
+    const outerNodes = filteredNodes.filter(
+      (n) => n.type === 'Claim' || n.type === 'Limitation' || n.type === 'FutureDirection'
+    );
+    const otherNodes = filteredNodes.filter(
+      (n) => !['Paper', 'Topic', 'Method', 'Dataset', 'Claim', 'Limitation', 'FutureDirection'].includes(n.type)
+    );
+
+    const result = [];
+
+    // Center layer: Papers
+    centerNodes.forEach((node, idx) => {
+      if (centerNodes.length === 1) {
+        result.push({ ...node, x: centerX, y: centerY, layer: 'center' });
+      } else {
+        const angle = (idx / centerNodes.length) * 2 * Math.PI;
+        result.push({
+          ...node,
+          x: centerX + 50 * Math.cos(angle),
+          y: centerY + 50 * Math.sin(angle),
+          layer: 'center',
+        });
+      }
     });
+
+    // Inner layer: Topics (r = 115)
+    innerNodes.forEach((node, idx) => {
+      const angle = (idx / Math.max(1, innerNodes.length)) * 2 * Math.PI - Math.PI / 4;
+      result.push({
+        ...node,
+        x: centerX + 115 * Math.cos(angle),
+        y: centerY + 115 * Math.sin(angle),
+        layer: 'inner',
+      });
+    });
+
+    // Mid layer: Methods & Datasets (r = 180)
+    midNodes.forEach((node, idx) => {
+      const angle = (idx / Math.max(1, midNodes.length)) * 2 * Math.PI + Math.PI / 6;
+      result.push({
+        ...node,
+        x: centerX + 180 * Math.cos(angle),
+        y: centerY + 180 * Math.sin(angle),
+        layer: 'mid',
+      });
+    });
+
+    // Outer layer: Claims, Limitations, Directions, Others (r = 235)
+    const combinedOuter = [...outerNodes, ...otherNodes];
+    combinedOuter.forEach((node, idx) => {
+      const angle = (idx / Math.max(1, combinedOuter.length)) * 2 * Math.PI;
+      result.push({
+        ...node,
+        x: centerX + 235 * Math.cos(angle),
+        y: centerY + 235 * Math.sin(angle),
+        layer: 'outer',
+      });
+    });
+
+    return result;
   }, [filteredNodes]);
 
   const nodeMap = useMemo(() => {
@@ -311,9 +367,9 @@ export default function ResearchGraphPage() {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-card border border-subtle rounded-lg p-3">
-        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
-          <span className="text-xs font-semibold text-secondary flex items-center gap-1">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 bg-card border border-subtle rounded-lg p-3">
+        <div className="flex flex-wrap items-center gap-1.5 w-full lg:w-auto">
+          <span className="text-xs font-semibold text-secondary flex items-center gap-1 mr-1">
             <Filter size={13} />
             <span>Type:</span>
           </span>
@@ -324,7 +380,7 @@ export default function ResearchGraphPage() {
               className={`px-2.5 py-1 text-xs rounded-md transition font-medium whitespace-nowrap ${
                 selectedType === t
                   ? 'bg-primary text-primary-contrast'
-                  : 'bg-muted/40 text-secondary hover:text-primary'
+                  : 'bg-muted/40 text-secondary hover:text-primary hover:bg-muted'
               }`}
             >
               {TYPE_CONFIG[t]?.label || t}
@@ -332,15 +388,26 @@ export default function ResearchGraphPage() {
           ))}
         </div>
 
-        <div className="relative w-full sm:w-64">
+        <div className="relative w-full lg:w-64">
           <Search size={14} className="absolute left-3 top-2.5 text-secondary" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search nodes..."
-            className="w-full pl-8 pr-3 py-1 text-xs bg-muted/30 border border-subtle rounded-md text-primary"
+            className="w-full pl-8 pr-3 py-1.5 text-xs bg-muted/30 border border-subtle rounded-md text-primary"
           />
+        </div>
+      </div>
+
+      {/* Clean Helper Hint Banner (outside canvas) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-3.5 py-2 bg-muted/20 border border-subtle rounded-lg text-xs text-secondary">
+        <div className="flex items-center gap-2">
+          <Info size={14} className="text-primary flex-shrink-0" />
+          <span>Click any node to reveal exact source provenance, discourse edges, and extracted passages.</span>
+        </div>
+        <div className="text-[11px] font-mono text-muted">
+          Active: {filteredNodes.length} nodes &bull; {filteredEdges.length} edges
         </div>
       </div>
 
@@ -416,37 +483,34 @@ export default function ResearchGraphPage() {
                       onClick={() => handleNodeClick(node)}
                       className="cursor-pointer group"
                     >
+                      <title>{node.label} ({node.type})</title>
                       <circle
                         cx={node.x}
                         cy={node.y}
-                        r={isSelected ? 18 : 13}
+                        r={isSelected ? 18 : node.layer === 'center' ? 16 : 12}
                         fill={cfg.color}
-                        fillOpacity={isSelected ? 0.95 : 0.75}
-                        stroke={isSelected ? '#ffffff' : 'rgba(255,255,255,0.2)'}
+                        fillOpacity={isSelected ? 0.95 : 0.8}
+                        stroke={isSelected ? '#ffffff' : 'rgba(255,255,255,0.25)'}
                         strokeWidth={isSelected ? 2.5 : 1}
                         className="transition-all hover:scale-110"
                       />
+                      {/* Dynamic label positioning without collision */}
                       <text
                         x={node.x}
-                        y={node.y + 24}
+                        y={node.y + (isSelected ? 24 : 20)}
                         textAnchor="middle"
                         fill="currentColor"
-                        fontSize="10"
+                        fontSize={isSelected ? '11' : node.layer === 'center' ? '11' : '9.5'}
                         fontWeight={isSelected ? '600' : '400'}
-                        className="text-primary pointer-events-none"
+                        className="text-primary pointer-events-none select-none"
                       >
-                        {node.label.length > 20 ? node.label.slice(0, 18) + '...' : node.label}
+                        {node.label.length > 18 ? node.label.slice(0, 16) + '…' : node.label}
                       </text>
                     </g>
                   );
                 })}
               </g>
             </svg>
-
-            {/* Instruction tooltip */}
-            <div className="absolute bottom-3 left-3 text-[11px] text-secondary bg-card/90 px-2.5 py-1 rounded border border-subtle">
-              Click any node to reveal exact source provenance & discourse edges.
-            </div>
           </div>
 
           {/* Node Provenance Drawer (4 cols) */}

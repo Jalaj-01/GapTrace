@@ -140,9 +140,9 @@ export default function PapersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-subtle">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary flex items-center gap-2">
-            <BookOpen size={24} className="text-blue-400" />
-            Scientific Paper Library
+          <h1 className="text-2xl font-bold tracking-tight text-primary flex items-center gap-2.5">
+            <BookOpen size={24} className="text-blue-400 flex-shrink-0" />
+            <span>Scientific Paper Library</span>
           </h1>
           <p className="text-sm text-secondary mt-1">
             Browse ingested publications, search evidence passages, and view structured scientific extractions.
@@ -150,14 +150,14 @@ export default function PapersPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="cursor-pointer px-3 py-1.5 text-xs font-semibold bg-primary text-primary-contrast rounded-md hover:opacity-90 transition flex items-center gap-1.5">
-            <UploadCloud size={14} />
+          <label className="cursor-pointer px-3 py-1.5 text-xs font-semibold bg-primary text-primary-contrast rounded-md hover:opacity-90 transition inline-flex items-center gap-1.5 shadow-sm">
+            <UploadCloud size={14} className="flex-shrink-0" />
             <span>Upload PDF</span>
             <input
               type="file"
               accept=".pdf"
               onChange={handleInlineFileUpload}
-              className="hidden"
+              style={{ display: 'none' }}
               disabled={isUploading}
             />
           </label>
@@ -268,12 +268,12 @@ export default function PapersPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-muted/50 border-b border-subtle text-secondary uppercase font-mono tracking-wider">
                   <tr>
-                    <th className="py-3 px-4">ID</th>
-                    <th className="py-3 px-4">Title & Publication</th>
-                    <th className="py-3 px-4">Authors</th>
-                    <th className="py-3 px-4">Year</th>
-                    <th className="py-3 px-4">Sections</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
+                    <th className="py-3 px-4" style={{ width: '70px' }}>ID</th>
+                    <th className="py-3 px-4" style={{ minWidth: '340px' }}>Title & Publication</th>
+                    <th className="py-3 px-4" style={{ width: '220px' }}>Authors</th>
+                    <th className="py-3 px-4" style={{ width: '90px' }}>Year</th>
+                    <th className="py-3 px-4" style={{ width: '90px' }}>Sections</th>
+                    <th className="py-3 px-4 text-right" style={{ width: '110px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-subtle">
@@ -283,39 +283,39 @@ export default function PapersPage() {
                       className="hover:bg-muted/20 transition group cursor-pointer"
                       onClick={() => openPaperDetail(paper.id)}
                     >
-                      <td className="py-3 px-4 font-mono text-secondary">
+                      <td className="py-3 px-4 font-mono text-secondary" style={{ width: '70px' }}>
                         #{paper.id}
                       </td>
-                      <td className="py-3 px-4 max-w-md">
+                      <td className="py-3 px-4" style={{ minWidth: '340px' }}>
                         <div className="font-semibold text-primary group-hover:text-blue-400 transition">
                           {paper.title || paper.filename}
                         </div>
                         {paper.abstract && (
-                          <div className="text-[11px] text-secondary line-clamp-1 mt-0.5">
+                          <div className="text-[11px] text-secondary line-clamp-2 mt-1">
                             {paper.abstract}
                           </div>
                         )}
                       </td>
-                      <td className="py-3 px-4 text-secondary max-w-xs truncate">
+                      <td className="py-3 px-4 text-secondary truncate" style={{ width: '220px', maxWidth: '220px' }}>
                         {Array.isArray(paper.authors)
                           ? paper.authors.join(', ')
                           : paper.authors || 'Unknown'}
                       </td>
-                      <td className="py-3 px-4 font-mono text-secondary">
+                      <td className="py-3 px-4 font-mono text-secondary" style={{ width: '90px' }}>
                         {paper.year || '—'}
                       </td>
-                      <td className="py-3 px-4 font-mono text-secondary">
+                      <td className="py-3 px-4 font-mono text-secondary" style={{ width: '90px' }}>
                         {paper.section_count || paper.sections?.length || 0}
                       </td>
-                      <td className="py-3 px-4 text-right">
+                      <td className="py-3 px-4 text-right" style={{ width: '110px' }}>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             openPaperDetail(paper.id);
                           }}
-                          className="px-2.5 py-1 text-[11px] font-medium border border-subtle rounded hover:bg-muted text-primary transition inline-flex items-center gap-1"
+                          className="px-2.5 py-1 text-[11px] font-medium border border-subtle rounded hover:bg-muted text-primary transition inline-flex items-center gap-1 shadow-sm"
                         >
-                          <Eye size={12} />
+                          <Eye size={12} className="flex-shrink-0" />
                           <span>Inspect</span>
                         </button>
                       </td>

@@ -1,0 +1,149 @@
+{
+  "benchmark_name": "ResearchGapX Phase 3 Evidence Retrieval Benchmark",
+  "version": "1.0.0",
+  "description": "Manually labelled scientific retrieval queries with evidence provenance ground truth.",
+  "corpus": [
+    {
+      "id": 1,
+      "paper_id": 101,
+      "sentence_id": 1001,
+      "paper_title": "Domain Adaptation in Low-Resource Scientific NLP",
+      "year": 2024,
+      "section": "Limitations",
+      "page": 8,
+      "extraction_type": "LIMITATION",
+      "text": "Cross-domain generalization degrades substantially when evaluating the model on out-of-distribution biomedical abstracts without target domain adaptation."
+    },
+    {
+      "id": 2,
+      "paper_id": 101,
+      "sentence_id": 1002,
+      "paper_title": "Domain Adaptation in Low-Resource Scientific NLP",
+      "year": 2024,
+      "section": "Methods",
+      "page": 4,
+      "extraction_type": "METHOD",
+      "text": "We apply adversarial domain discrimination with gradient reversal layers to align source and target latent feature distributions."
+    },
+    {
+      "id": 3,
+      "paper_id": 102,
+      "sentence_id": 1003,
+      "paper_title": "Efficient Attention Mechanisms for Long-Context Scientific Retrieval",
+      "year": 2023,
+      "section": "Limitations",
+      "page": 7,
+      "extraction_type": "LIMITATION",
+      "text": "The quadratic computational complexity and peak GPU memory overhead of vanilla self-attention severely constrain maximum context lengths beyond 8k tokens."
+    },
+    {
+      "id": 4,
+      "paper_id": 102,
+      "sentence_id": 1004,
+      "paper_title": "Efficient Attention Mechanisms for Long-Context Scientific Retrieval",
+      "year": 2023,
+      "section": "Results",
+      "page": 6,
+      "extraction_type": "RESULT",
+      "text": "FlashAttention-2 reduces peak memory consumption by 65 percent while accelerating throughput by 2.4x across 16k context lengths."
+    },
+    {
+      "id": 5,
+      "paper_id": 103,
+      "sentence_id": 1005,
+      "paper_title": "Multimodal Evidence Extraction from Clinical Case Reports",
+      "year": 2024,
+      "section": "Limitations",
+      "page": 9,
+      "extraction_type": "LIMITATION",
+      "text": "The acute scarcity of expert-annotated clinical datasets and medical imaging pairs poses significant risk of overfitting in multi-task training."
+    },
+    {
+      "id": 6,
+      "paper_id": 103,
+      "sentence_id": 1006,
+      "paper_title": "Multimodal Evidence Extraction from Clinical Case Reports",
+      "year": 2024,
+      "section": "Future Work",
+      "page": 10,
+      "extraction_type": "FUTURE_WORK",
+      "text": "Future research should explore zero-shot vision-language models and semi-supervised pseudolabeling to mitigate annotated clinical data shortages."
+    },
+    {
+      "id": 7,
+      "paper_id": 104,
+      "sentence_id": 1007,
+      "paper_title": "Robustness and Evaluation Bias in Scientific Text Summarization",
+      "year": 2022,
+      "section": "Limitations",
+      "page": 7,
+      "extraction_type": "LIMITATION",
+      "text": "Standard n-gram overlap metrics such as ROUGE exhibit substantial lexical bias and fail to penalize factual hallucinations in generated summaries."
+    },
+    {
+      "id": 8,
+      "paper_id": 104,
+      "sentence_id": 1008,
+      "paper_title": "Robustness and Evaluation Bias in Scientific Text Summarization",
+      "year": 2022,
+      "section": "Methods",
+      "page": 3,
+      "extraction_type": "METHOD",
+      "text": "We introduce FactScore-Sci, an entailing sentence decomposition framework that checks atomic factual claims against source research papers."
+    },
+    {
+      "id": 9,
+      "paper_id": 105,
+      "sentence_id": 1009,
+      "paper_title": "Contrastive Representation Learning for Scientific Citation Graphs",
+      "year": 2023,
+      "section": "Limitations",
+      "page": 8,
+      "extraction_type": "LIMITATION",
+      "text": "Uniform random negative sampling in graph contrastive learning produces false negatives due to high citation homophily in dense subfields."
+    },
+    {
+      "id": 10,
+      "paper_id": 105,
+      "sentence_id": 1010,
+      "paper_title": "Contrastive Representation Learning for Scientific Citation Graphs",
+      "year": 2023,
+      "section": "Results",
+      "page": 5,
+      "extraction_type": "RESULT",
+      "text": "Hard negative mining guided by co-citation proximity yields a 4.2 percent gain in mean reciprocal rank on downstream paper recommendation."
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "q1",
+      "query": "cross-domain generalization in out-of-distribution low-resource settings",
+      "relevant_sentence_ids": [1001],
+      "relevant_paper_ids": [101]
+    },
+    {
+      "query_id": "q2",
+      "query": "computational complexity and memory overhead of self-attention",
+      "relevant_sentence_ids": [1003, 1004],
+      "relevant_paper_ids": [102]
+    },
+    {
+      "query_id": "q3",
+      "query": "annotated clinical dataset scarcity and medical imaging pairs",
+      "relevant_sentence_ids": [1005, 1006],
+      "relevant_paper_ids": [103]
+    },
+    {
+      "query_id": "q4",
+      "query": "evaluation metric bias and factual hallucinations in summarization",
+      "relevant_sentence_ids": [1007, 1008],
+      "relevant_paper_ids": [104]
+    },
+    {
+      "query_id": "q5",
+      "query": "negative sampling strategies and citation homophily in contrastive learning",
+      "relevant_sentence_ids": [1009, 1010],
+      "relevant_paper_ids": [105]
+    }
+  ]
+}

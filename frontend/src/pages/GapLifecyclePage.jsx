@@ -134,27 +134,27 @@ export default function GapLifecyclePage() {
   return (
     <div className="gap-lifecycle-page p-6 space-y-6 max-w-7xl mx-auto">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-subtle">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-subtle">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
           <button
             onClick={() => setActiveView('gaps')}
-            className="p-1.5 border border-subtle rounded-md hover:bg-muted text-secondary hover:text-primary transition"
+            className="p-1.5 border border-subtle rounded-md hover:bg-muted text-secondary hover:text-primary transition flex-shrink-0"
             title="Back to Gaps Catalogue"
           >
             <ArrowLeft size={16} />
           </button>
-          <div>
-            <span className="text-xs uppercase tracking-wider text-secondary font-mono">
+          <div className="min-w-0">
+            <span className="text-xs uppercase tracking-wider text-secondary font-mono block">
               Temporal Evidence & Trajectory Analysis
             </span>
-            <h1 className="text-xl font-bold text-primary flex items-center gap-2">
-              <Clock size={22} className="text-amber-400" />
-              Gap Lifecycle State Machine
+            <h1 className="text-xl font-bold text-primary flex items-center gap-2 truncate">
+              <Clock size={22} className="text-amber-400 flex-shrink-0" />
+              <span>Gap Lifecycle State Machine</span>
             </h1>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
           <select
             value={currentGapId || ''}
             onChange={(e) => {

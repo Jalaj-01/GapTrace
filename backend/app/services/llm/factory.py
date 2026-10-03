@@ -39,7 +39,8 @@ def get_llm_provider(
     elif target_provider == "gemini":
         return GeminiProvider(
             api_key=api_key or settings.GEMINI_API_KEY,
-            model=model or settings.DEFAULT_LLM_MODEL or "gemini-2.5-flash",
+            backup_api_key=kwargs.pop("backup_api_key", None) or settings.GEMINI_API_KEY_BACKUP,
+            model=model or settings.DEFAULT_LLM_MODEL or "gemini-3.8-flash",
             **kwargs,
         )
     elif target_provider == "openai":
